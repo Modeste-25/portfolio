@@ -1,0 +1,205 @@
+/* CSS START */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        background-color: #f8f8f8;
+        color: #333;
+        scroll-behavior: smooth; /* Smooth scrolling */
+      }
+
+      header {
+        background-color: black;
+        color: aquamarine;
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      header.container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+      }
+
+      header h1 {
+        font-size: 24px;
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+      }
+
+      nav li {
+        margin: 0 15px;
+      }
+
+      nav ul li a {
+        color: blanchedalmond;
+        text-decoration: none;
+        font-size: 20px;
+        transition: color 0.3s;
+      }
+
+      nav ul li a:hover {
+        color: coral;
+      }
+
+      .hero {
+        background: floralwhite;
+        height: 400px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color:#333;
+      }
+
+      .hero h2 {
+        font-size: 40px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 20px;
+      }
+
+      .Produits {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+      }
+
+      .Produit {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        overflow: hidden;
+        transition: transform 0.4s, box-shadow 0.4s;
+      }
+
+      .Produit:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .Détails {
+        padding: 15px;
+        text-align: center;
+      }
+
+      .Produit h3 {
+        font-size: 20px;
+        margin-bottom: 10px;
+        text-transform: capitalize;
+      }
+
+      .Produit p {
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+
+      .Produit button {
+        background-color: #333;
+        color: cadetblue;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        transition: background-color 0.4s, transform 0.3s;
+      }
+
+      .Produit button:hover {
+        background-color: #555;
+        transform: translateY(-2px);
+      }
+
+      .Cart {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        width: 320px;
+        max-height: 500px;
+        overflow-y: auto;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .Cart h2 {
+        background: #333;
+        color: #fff;
+        padding: 10px;
+        font-size: 18px;
+      }
+
+      .cart-items {
+        padding: 15px;
+        flex-grow: 1;
+        overflow-y: auto;
+      }
+
+      .cart-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 12px;
+        align-items: center;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 6px;
+      }
+
+      .cart-item span {
+        font-size: 16px;
+      }
+
+      .cart-item button {
+        background: #e74c3c;
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        transition: background 0.3s;
+        border-radius: 3px;
+      }
+
+      .cart-item button:hover {
+        background: #c0392b;
+      }
+
+      .total {
+        text-align: center;
+        font-size: 18px;
+        margin: 10px 0;
+        font-weight: bold;
+        border-top: 1px solid #ddd;
+        padding-top: 10px;
+      }
+
+      .checkout {
+        padding: 10px;
+        text-align: center;
+      }
+
+      .checkout button {
+        background-color: #27ae60;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 18px;
+      }
+
+      .checkout button:hover {
+        background: #219150;
+      }

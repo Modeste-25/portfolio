@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Quiz Interactif - 20 Questions</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+  
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    padding: 20px;
+  }
+
+  #quiz-container {
+    background: #1f1f38;
+    border-radius: 12px;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    padding: 30px 30px 10px;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    user-select: none;
+  }
+
+  #progress-bar {
+    height: 8px;
+    background: #44476b;
+    width: 100%;
+    border-radius: 20px;
+    margin: 15px 0 20px;
+    overflow: hidden;
+  }
+  #progress-bar-inner {
+    height: 100%;
+    background: #d76ef5;
+    width: 0%;
+    transition: width 0.5s ease;
+    border-radius: 20px;
+  }
+
+  #question-container {
+    padding: 0 30px 40px 30px;
+    min-height: 220px;
+    position: relative;
+  }
+
+  .question {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    line-height: 1.3;
+    animation: fadeInUp 0.5s ease forwards;
+  }
+
+  #answers {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  #answers li {
+    background: #2c2c50;
+    margin-bottom: 12px;
+    padding: 15px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    color: #ccc;
+    user-select: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    position: relative;
+  }
+  #answers li:hover {
+    background: #764ba2;
+    color: #fff;
+  }
+  #answers li.selected {
+    background: #d76ef5;
+    color: #fff;
+  }
+
+  #answers li.correct {
+    background: #4caf50;
+    color: white;
+    font-weight: 600;
+  }
+  #answers li.incorrect {
+    background: #e74c3c;
+    color: white;
+    font-weight: 600;
+  }
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 30px 30px 30px;
+  }
+
+  button {
+    background: #d76ef5;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 30px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(215,110,245,0.4);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    user-select: none;
+  }
+
+  button:disabled {
+    background: #6a4b90;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  button:hover:not(:disabled) {
+    background: #b741ef;
+    box-shadow: 0 8px 20px rgba(183,65,239,0.7);
+  }
+
+  #result {
+    padding: 40px 30px;
+    font-size: 1.4rem;
+    text-align: center;
+  }
+
+  #result-score {
+    font-weight: 700;
+    font-size: 2.4rem;
+    margin-top: 12px;
+    color: #d76ef5;
+  }
+
+  /* Animations */
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fade-out {
+    animation: fadeOutDown 0.4s ease forwards;
+  }
+  @keyframes fadeOutDown {
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+  }
+
+</style>
+</head>
+<body>
+  <div id="quiz-container" role="main" aria-live="polite">
+    <header>Quiz Interactif: 20 Questions</header>
+    <div id="progress-bar" aria-label="Progression du quiz">
+      <div id="progress-bar-inner"></div>
+    </div>
+    <section id="question-container">
+      <div class="question" id="question"></div>
+      <ul id="answers" role="list"></ul>
+    </section>
+    <nav>
+      <button id="prev-btn" aria-label="Question précédente" disabled>Précédent</button>
+      <button id="next-btn" aria-label="Question suivante" disabled>Suivant</button>
+    </nav>
+  </div>
+
+<script>
+  const quizData = [
+    { question: "Quelle est la capitale de la France ?", answers: ["Paris", "Lyon", "Marseille", "Toulouse"], correct: 0 },
+    { question: "Lequel est un langage de programmation ?", answers: ["HTML", "CSS", "JavaScript", "Photoshop"], correct: 2 },
+    { question: "Quelle planète est la plus proche du Soleil ?", answers: ["Vénus", "Mars", "Mercure", "Jupiter"], correct: 2 },
+    { question: "Quel est l'élément chimique avec le symbole O ?", answers: ["Or", "Oxygène", "Osmium", "Argon"], correct: 1 },
+    { question: "Quelle est la langue la plus parlée au monde ?", answers: ["Anglais", "Mandarin", "Espagnol", "Hindi"], correct: 1 },
+    { question: "Qui a peint la Joconde ?", answers: ["Van Gogh", "Picasso", "Léonard de Vinci", "Michel-Ange"], correct: 2 },
+    { question: "Combien de continents y a-t-il ?", answers: ["5", "6", "7", "8"], correct: 2 },
+    { question: "Quel océan est le plus grand ?", answers: ["Atlantique", "Arctique", "Pacifique", "Indien"], correct: 2 },
+    { question: "Laquelle de ces villes est en Allemagne ?", answers: ["Vienne", "Berlin", "Zurich", "Bruxelles"], correct: 1 },
+    { question: "Quel animal est le plus rapide ?", answers: ["Guépard", "Tigre", "Lion", "Léopard"], correct: 0 },
+    { question: "Quel est le plus haut sommet du monde ?", answers: ["K2", "Everest", "Kangchenjunga", "Lhotse"], correct: 1 },
+    { question: "Quelle devise est utilisée au Japon ?", answers: ["Yen", "Won", "Dollar", "Euro"], correct: 0 },
+    { question: "Quelle est la formule chimique de l'eau ?", answers: ["H2", "CO2", "O2", "H2O"], correct: 3 },
+    { question: "Qui est l'auteur de « Les Misérables » ?", answers: ["Victor Hugo", "Albert Camus", "Émile Zola", "Gustave Flaubert"], correct: 0 },
+    { question: "Quel est le plus grand pays du monde ?", answers: ["Canada", "Chine", "États-Unis", "Russie"], correct: 3 },
+    { question: "Quelle ville est connue comme « La ville lumière » ?", answers: ["Rome", "Paris", "Venise", "Barcelone"], correct: 1 },
+    { question: "Qui a découvert la gravité ?", answers: ["Galilée", "Einstein", "Newton", "Tesla"], correct: 2 },
+    { question: "Lequel est un système d'exploitation ?", answers: ["Linux", "HTML", "Firefox", "Google"], correct: 0 },
+    { question: "Quelle est la capitale de l'Australie ?", answers: ["Sydney", "Melbourne", "Canberra", "Adélaïde"], correct: 2 },
+    { question: "Quel gaz est essentiel pour respirer ?", answers: ["Azote", "Oxygène", "Dioxyde de carbone", "Hélium"], correct: 1 },
+  ];
+
+  let currentIndex = 0;
+  let score = 0;
+  let userAnswers = new Array(quizData.length).fill(null);
+
+  const questionEl = document.getElementById('question');
+  const answersEl = document.getElementById('answers');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const progressBarInner = document.getElementById('progress-bar-inner');
+  const quizContainer = document.getElementById('quiz-container');
+
+  function updateProgress() {
+    const progressPercent = ((currentIndex) / quizData.length) * 100;
+    progressBarInner.style.width = progressPercent + '%';
+  }
+
+  function clearAnswersSelection() {
+    Array.from(answersEl.children).forEach(li => {
+      li.classList.remove('selected', 'correct', 'incorrect');
+      li.removeAttribute('aria-checked');
+    });
+  }
+
+  function renderQuestion() {
+    const data = quizData[currentIndex];
+    // Animate fade out before changing question
+    questionEl.classList.add('fade-out');
+    answersEl.classList.add('fade-out');
+
+    setTimeout(() => {
+      questionEl.classList.remove('fade-out');
+      answersEl.classList.remove('fade-out');
+
+      questionEl.textContent = `Q${currentIndex + 1}. ${data.question}`;
+      answersEl.innerHTML = "";
+
+      data.answers.forEach((answer, i) => {
+        const li = document.createElement('li');
+        li.setAttribute('role', 'option');
+        li.setAttribute('tabindex', '0');
+        li.textContent = answer;
+
+        if (userAnswers[currentIndex] === i) {
+          li.classList.add('selected');
+          li.setAttribute('aria-checked', 'true');
+        } else {
+          li.setAttribute('aria-checked', 'false');
+        }
+
+        li.addEventListener('click', () => selectAnswer(i));
+        li.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            selectAnswer(i);
+          }
+        });
+
+        answersEl.appendChild(li);
+      });
+
+      updateProgress();
+      updateNavigationButtons();
+    }, 400);
+  }
+
+  function selectAnswer(index) {
+    userAnswers[currentIndex] = index;
+    score = 0;
+    // Recalculate score counting correct answers so far
+    userAnswers.forEach((ans, idx) => {
+      if (ans === quizData[idx].correct) {
+        score++;
+      }
+    });
+    // Update UI selected state
+    clearAnswersSelection();
+    const items = answersEl.children;
+    if (items[index]) {
+      items[index].classList.add('selected');
+      items[index].setAttribute('aria-checked', 'true');
+    }
+    updateNavigationButtons();
+  }
+
+  function updateNavigationButtons() {
+    prevBtn.disabled = currentIndex === 0;
+    nextBtn.disabled = userAnswers[currentIndex] === null;
+    if(currentIndex === quizData.length - 1) {
+      nextBtn.textContent = "Terminer";
+    } else {
+      nextBtn.textContent = "Suivant";
+    }
+  }
+
+  function showResult() {
+    quizContainer.innerHTML = `
+      <header>Résultat du quiz</header>
+      <div id="result" aria-live="polite">
+        Vous avez répondu correctement à <span id="result-score">${score}</span> sur <span>${quizData.length}</span> questions
+      </div>
+      <div style="text-align:center; padding-bottom: 30px;">
+        <button id="restart-btn">Recommencer</button>
+      </div>
+    `;
+
+    const restartBtn = document.getElementById('restart-btn');
+    restartBtn.addEventListener('click', () => {
+      currentIndex = 0;
+      score = 0;
+      userAnswers.fill(null);
+      location.reload();
+    });
+  }
+
+  prevBtn.addEventListener('click', () => {
+    if (currentIndex > 0) {
+      currentIndex--;
+      renderQuestion();
+    }
+  });
+
+  nextBtn.addEventListener('click', () => {
+    if (userAnswers[currentIndex] === null) return; // safety check
+    if (currentIndex < quizData.length - 1) {
+      currentIndex++;
+      renderQuestion();
+    } else {
+      showResult();
+    }
+  });
+
+  // Initialize quiz
+  renderQuestion();
+</script>
+</body>
+</html>
+

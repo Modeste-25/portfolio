@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Inscription aux Cours en Ligne</title>
+<link rel="stylesheet" href="Cours.css">
+</head>
+<body>
+
+<header>
+  <div class="nav-container">
+    <div class="logo">CoursEnLigne</div>
+    <nav>
+      <a href="#home">Accueil</a>
+      <a href="#courses">Cours</a>
+      <a href="#register">Inscription</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="home">
+  <h1>Apprenez. Progressez. Réussissez.</h1>
+  <p>Découvrez nos formations en ligne et inscrivez-vous facilement pour booster votre avenir.</p>
+  <button class="btn-primary" onclick="document.getElementById('courses').scrollIntoView({behavior:'smooth'});">Voir les cours</button>
+</section>
+<section class="courses" id="courses">
+  <h2 class="section-title">Cours Populaires</h2>
+  <div class="course-list" id="courseCards">
+    <article class="course-card" data-course="Programmation Python">
+      <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80" alt="Programmation Python" class="course-img" />
+      <div class="course-content">
+        <h3 class="course-title">Programmation Python</h3>
+        <p class="course-desc">Apprenez les bases de la programmation en Python, parfait pour débutants.</p>
+      </div>
+    </article>
+    <article class="course-card" data-course="Design Graphique">
+      <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80" alt="Design Graphique" class="course-img" />
+      <div class="course-content">
+        <h3 class="course-title">Design Graphique</h3>
+        <p class="course-desc">Maîtrisez les concepts visuels et les outils modernes de design.</p>
+      </div>
+    </article>
+    <article class="course-card" data-course="Marketing Digital">
+      <img src="image.png" alt="Marketing Digital" class="course-img" />
+      <div class="course-content">
+        <h3 class="course-title">Marketing Digital</h3>
+        <p class="course-desc">Apprenez à promouvoir vos produits avec efficacité sur les plateformes en ligne.</p>
+      </div>
+    </article>
+    <article class="course-card" data-course="Développement Web">
+      <img src="Capture d'écran 2025-05-18 070449.png" alt="Développement Web" class="course-img" />
+      <div class="course-content">
+        <h3 class="course-title">Développement Web</h3>
+        <p class="course-desc">Devenez développeur full stack avec nos cours HTML, CSS et JavaScript.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="registration" id="register">
+  <h2>Inscription Étudiant</h2>
+  <form id="registrationForm">
+    <label for="fullname">Nom complet</label>
+    <input type="text" id="fullname" name="fullname" placeholder="Votre nom complet" required />
+
+    <label for="email">Adresse email</label>
+    <input type="email" id="email" name="email" placeholder="votre.email@example.com" required />
+
+    <label for="courseSelect">Choisissez un cours</label>
+    <select id="courseSelect" name="courseSelect" required>
+      <option value="" disabled selected>-- Sélectionnez un cours --</option>
+    </select>
+
+    <button type="submit">S'inscrire</button>
+  </form>
+</section>
+
+<footer id="contact">
+  <p>Contact : <a href="mailto:contact@coursenligne.com">contact@coursenligne.com</a> | 
+    Suivez-nous : 
+    <a href="#" aria-label="Facebook">Facebook</a> - 
+    <a href="#" aria-label="Twitter">Twitter</a> - 
+    <a href="#" aria-label="LinkedIn">LinkedIn</a>
+  </p>
+</footer>
+<script>
+  // Populate course dropdown dynamically based on displayed courses
+  const courses = document.querySelectorAll('.course-card');
+  const courseSelect = document.getElementById('courseSelect');
+  courses.forEach(card => {
+    const courseName = card.getAttribute('data-course');
+    if (courseName) {
+      const option = document.createElement('option');
+      option.value = courseName;
+      option.textContent = courseName;
+      courseSelect.appendChild(option);
+    }
+  });
+
+  // Form submission handling with simple confirmation
+  const form = document.getElementById('registrationForm');
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const fullname = form.fullname.value.trim();
+    const email = form.email.value.trim();
+    const course = form.courseSelect.value;
+
+    if (!fullname || !email || !course) {
+      alert("Merci de compléter tous les champs du formulaire.");
+      return;
+    }
+
+    // Basic email validation
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      alert("Veuillez saisir une adresse email valide.");
+      return;
+    }
+
+    alert(`Merci ${fullname} pour votre inscription au cours : "${course}". Nous vous contacterons bientôt par email.`);
+    form.reset();
+  });
+</script>
+
+</body>
+</html>
+

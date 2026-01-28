@@ -1,0 +1,314 @@
+ <!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Site de vente de vêtements et accessoires</title>
+    <link rel="stylesheet" href="ventes.css">
+</head>
+<body>
+   <header>
+    <div class="container">
+        <h1>Shopping</h1>
+        <nav>
+            <ul id="nav-links">
+                <li><a href="#Chaussures">Chaussures</a></li>
+                <li><a href="#Pantalons">Pantalons</a></li>
+                <li><a href="#Tee-shirts">Tee-shirts</a></li>
+                <li><a href="#Sacs">Sacs</a></li>
+                <li><a href="#Godasses">Godasses</a></li>
+            </ul>
+        </nav>
+    </div>
+   </header> 
+   <section class="hero">
+    <h2>Bienvenue dans votre boutique préférée!</h2>
+   </section>
+   <section class="container">
+    <h2 id="Chaussures">Chaussures</h2>
+    <div class="Produits">
+        <div class="Produit">
+            <img src="Capture d'écran 2025-05-09 195548.png" alt="Chaussure 1" />
+            <div class="Détails">
+                <h3>Chaussure 1</h3>
+                <p>10000 FCFA</p>
+                <button onclick="addTocart('Chaussure 1', 10000)">Ajouter au panier</button>
+            </div>
+        </div>
+        <div class="Produit">
+            <img src="Capture d'écran 2025-05-09 195616.png" alt="Chaussure 2" />
+            <div class="Détails">
+                <h3>Chaussure 2</h3>
+                <p>11000 FCFA</p>
+                <button onclick="addTocart('Chaussure 2', 11000)">Ajouter au panier</button>
+            </div>
+        </div>
+        <div class="Produit">
+            <img src="Capture d'écran 2025-05-09 195736.png" alt="Chaussure 3" />
+            <div class="Détails">
+                <h3>Chaussure 3</h3>
+                <p>10000 FCFA</p>
+                <button onclick="addTocart('Chaussure 3', 10000)">Ajouter au panier</button>
+            </div>
+        </div>
+        <div class="Produit">
+            <img src="Capture d'écran 2025-05-09 195751.png" alt="Chaussure 4" />
+            <div class="Détails">
+                <h3>Chaussure 4</h3>
+                <p>11000 FCFA</p>
+                <button onclick="addTocart('Chaussure 4', 11000)">Ajouter au panier</button>
+            </div>
+        </div>
+        <div class="Produit">
+            <img src="Capture d'écran 2025-05-09 195817.png" alt="Chaussure 5" />
+            <div class="Détails">
+                <h3>Chaussure 5</h3>
+                <p>12000 FCFA</p>
+                <button onclick="addTocart('Chaussure 5', 12000)">Ajouter au panier</button>
+            </div>
+        </div>
+    </div>
+
+    <h2 id="Pantalons">Pantalons</h2>
+    <div class="Produits">
+        <div class="Produit">
+            <img src="Capture d'écran 2025-05-09 202217.png" alt="Pantalon 1" />
+            <div class="Détails">
+                <h3>Pantalon 1</h3>
+                <p>10000 FCFA</p>
+                <button onclick="addTocart('Pantalon 1', 10000)">Ajouter au panier</button>
+            </div>
+        </div>
+        <div class="Produit">
+            <img src="Capture d'écran 2025-05-09 202248.png" alt="Pantalon 2" />
+            <div class="Détails">
+                <h3>Pantalon 2</h3>
+                <p>8000 FCFA</p>
+                <button onclick="addTocart('Pantalon 2', 8000)">Ajouter au panier</button>
+            </div>
+        </div>
+        <div class="Produit">
+            <img src="Capture d'écran 2025-05-09 202301.png" alt="Pantalon 3" />
+            <div class="Détails">
+                <h3>Pantalon 3</h3>
+                <p>7000 FCFA</p>
+                <button onclick="addTocart('Pantalon 3', 7000)">Ajouter au panier</button>
+            </div>
+        </div>
+        <div class="Produit">
+            <img src="Capture d'écran 2025-05-09 202358.png" alt="Pantalon 4" />
+            <div class="Détails">
+                <h3>Pantalon 4</h3>
+                <p>9000 FCFA</p>
+                <button onclick="addTocart('Pantalon 4', 9000)">Ajouter au panier</button>
+            </div>
+        </div>
+        <div class="Produit">
+            <img src="Capture d'écran 2025-05-09 202438.png" alt="Pantalon 5" />
+            <div class="Détails">
+                <h3>Pantalon 5</h3>
+                <p>10000 FCFA</p>
+                <button onclick="addTocart('Pantalon 5', 10000)">Ajouter au panier</button>
+            </div>
+        </div>
+    </div>
+
+    <h2 id="Tee-shirts">Tee-shirts</h2>
+    <div class="Produits">
+        <div class="Produit">
+            <img src="Images ventes/Capture d'écran 2025-05-09 204516.png" alt="Tee-shirt 1" />
+            <div class="Détails">
+                <h3>Tee-shirt 1</h3>
+                <p>6000 FCFA</p>
+                <button onclick="addTocart('Tee-shirt 1', 6000)">Ajouter au panier</button>
+            </div>
+        </div>
+        <div class="Produit">
+            <img src="Images ventes/Capture d'écran 2025-05-09 204538.png" alt="Tee-shirt 2" />
+            <div class="Détails">
+                <h3>Tee-shirt 2</h3>
+                <p>6000 FCFA</p>
+                <button onclick="addTocart('Tee-shirt 2', 6000)">Ajouter au panier</button>
+            </div>
+        </div>
+        <div class="Produit">
+            <img src="Images ventes/Capture d'écran 2025-05-09 204611.png" alt="Tee-shirt 3" />
+            <div class="Détails">
+                <h3>Tee-shirt 3</h3>
+                <p>5000 FCFA</p>
+                <button onclick="addTocart('Tee-shirt 3', 5000)">Ajouter au panier</button>
+            </div>
+        </div>
+        <div class="Produit">
+            <img src="Images ventes/Capture d'écran 2025-05-09 204631.png" alt="Tee-shirt 4" />
+            <div class="Détails">
+                <h3>Tee-shirt 4</h3>
+                <p>6000 FCFA</p>
+                <button onclick="addTocart('Tee-shirt 4', 6000)">Ajouter au panier</button>
+            </div>
+        </div>
+        <div class="Produit">
+            <img src="Images ventes/Capture d'écran 2025-05-09 204658.png" alt="Tee-shirt 5" />
+            <div class="Détails">
+                <h3>Tee-shirt 5</h3>
+                <p>7000 FCFA</p>
+                <button onclick="addTocart('Tee-shirt 5', 7000)">Ajouter au panier</button>
+            </div>
+        </div>
+    </div>
+
+    <h2 id="Sacs">Sacs</h2>
+    <div class="Produits">
+        <div class="Produit">
+            <img src="Capture d'écran 2025-05-09 211107.png" alt="Sac 1" />
+            <div class="Détails">
+                <h3>Sac 1</h3>
+                <p>11000 FCFA</p>
+                <button onclick="addTocart('Sac 1', 11000)">Ajouter au panier</button>
+            </div>
+        </div>
+        <div class="Produit">
+            <img src="Capture d'écran 2025-05-09 211136.png" alt="Sac 2" />
+            <div class="Détails">
+                <h3>Sac 2</h3>
+                <p>12000 FCFA</p>
+                <button onclick="addTocart('Sac 2', 12000)">Ajouter au panier</button>
+            </div>
+        </div>
+        <div class="Produit">
+            <img src="Capture d'écran 2025-05-09 211238.png" alt="Sac 3" />
+            <div class="Détails">
+                <h3>Sac 3</h3>
+                <p>10000 FCFA</p>
+                <button onclick="addTocart('Sac 3', 10000)">Ajouter au panier</button>
+            </div>
+        </div>
+        <div class="Produit">
+            <img src="Capture d'écran 2025-05-09 211313.png" alt="Sac 4" />
+            <div class="Détails">
+                <h3>Sac 4</h3>
+                <p>11000 FCFA</p>
+                <button onclick="addTocart('Sac 4', 11000)">Ajouter au panier</button>
+            </div>
+        </div>
+        <div class="Produit">
+            <img src="Capture d'écran 2025-05-09 211341.png" alt="Sac 5" />
+            <div class="Détails">
+                <h3>Sac 5</h3>
+                <p>12000 FCFA</p>
+                <button onclick="addTocart('Sac 5', 12000)">Ajouter au panier</button>
+            </div>
+        </div>
+    </div>
+
+    <h2 id="Godasses">Godasses</h2>
+    <div class="Produits">
+        <div class="Produit">
+            <img src="Capture d'écran 2025-05-09 212840.png" alt="Godasse 1" />
+            <div class="Détails">
+                <h3>Godasse 1</h3>
+                <p>15000 FCFA</p>
+                <button onclick="addTocart('Godasse 1', 15000)">Ajouter au panier</button>
+            </div>
+        </div>
+        <div class="Produit">
+            <img src="Capture d'écran 2025-05-09 212751.png" alt="Godasse 2" />
+            <div class="Détails">
+                <h3>Godasse 2</h3>
+                <p>16000 FCFA</p>
+                <button onclick="addTocart('Godasse 2', 16000)">Ajouter au panier</button>
+            </div>
+        </div>
+        <div class="Produit">
+            <img src="Capture d'écran 2025-05-09 212825.png" alt="Godasse 3" />
+            <div class="Détails">
+                <h3>Godasse 3</h3>
+                <p>16900 FCFA</p>
+                <button onclick="addTocart('Godasse 3', 16900)">Ajouter au panier</button>
+            </div>
+        </div>
+        <div class="Produit">
+            <img src="Capture d'écran 2025-05-09 212856.png" alt="Godasse 4" />
+            <div class="Détails">
+                <h3>Godasse 4</h3>
+                <p>17000 FCFA</p>
+                <button onclick="addTocart('Godasse 4', 17000)">Ajouter au panier</button>
+            </div>
+        </div>
+        <div class="Produit">
+            <img src="Capture d'écran 2025-05-09 212907.png" alt="Godasse 5" />
+            <div class="Détails">
+                <h3>Godasse 5</h3>
+                <p>15500 FCFA</p>
+                <button onclick="addTocart('Godasse 5', 15500)">Ajouter au panier</button>
+            </div>
+        </div>
+    </div>
+   </section>
+    <div class="Cart">
+        <h2>Panier</h2>
+        <div class="cart-items"></div>
+        <div class="total">Total: 0 FCFA</div>
+        <div class="checkout">
+          <button onclick="checkout()">Passer à la caisse</button>
+        </div>
+    </div>
+
+   <script>
+    // Tableau pour stocker les articles du panier
+    const cartItems = [];
+
+    // Fonction pour ajouter un produit au panier
+    function addTocart(name, price) {
+      cartItems.push({ name, price });
+      displayCart();
+    }
+
+    // Fonction pour afficher le contenu du panier et mettre à jour le total
+    function displayCart() {
+      const cartContainer = document.querySelector('.cart-items');
+      const totalContainer = document.querySelector('.total');
+      cartContainer.innerHTML = ''; // Efface le contenu précédent du panier
+      
+      let total = 0;
+
+      cartItems.forEach((item, index) => {
+        total += item.price;
+        const cartItem = document.createElement('div');
+        cartItem.classList.add('cart-item');
+        cartItem.innerHTML = `
+          <span>${item.name} - ${item.price.toLocaleString()} FCFA</span>
+          <button onclick="removeFromCart(${index})" aria-label="Supprimer ${item.name} du panier">&times;</button>
+        `;
+        cartContainer.appendChild(cartItem);
+      });
+      
+      totalContainer.textContent = 'Total: ' + total.toLocaleString() + ' FCFA';
+    }
+
+    // Fonction pour supprimer un produit du panier
+    function removeFromCart(index) {
+      cartItems.splice(index, 1); // Supprime l'article à l'indice donné
+      displayCart(); // Met à jour l'affichage du panier
+    }
+
+    // Fonction pour passer à la caisse
+    function checkout() {
+      if (cartItems.length === 0) {
+        alert('Votre panier est vide !');
+        return;
+      }
+      const total = cartItems.reduce((sum, item) => sum + item.price, 0);
+      alert(`Merci pour votre achat ! Le montant total est de ${total.toLocaleString()} FCFA.`);
+      cartItems.length = 0; // Vide le panier après la validation
+      displayCart(); // Met à jour le panier (vide)
+    }
+
+    // Initial display
+    displayCart();
+   </script>
+</body>
+</html>
+
+  
+   

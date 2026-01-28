@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Réservation de Billet de Bus - Choix d'Agence</title>
+<link rel="stylesheet" href="Billet.css">
+</head>
+<body>
+<nav>
+  <h1>Agence de voyage</h1>
+  <ul>
+    <li><a href="#home" tabindex="1">Accueil</a></li>
+    <li><a href="#agencies" tabindex="2">Agences</a></li>
+    <li><a href="#booking" tabindex="3">Réserver</a></li>
+    <li><a href="#contact" tabindex="4">Contact</a></li>
+  </ul>
+</nav>
+
+<header id="home" role="banner" aria-label="Bannière principale">
+  <div>
+    <h2>Réservez votre billet de bus en toute simplicité</h2>
+    <p>Choisissez votre agence préférée, remplissez vos informations et partez à l'aventure !</p>
+    <a href="#agencies" class="btn-primary" tabindex="5">Voir les agences</a>
+  </div>
+</header>
+
+<main>
+  <section id="agencies" aria-label="Liste des agences de bus">
+    <h3>Nos Agences de Bus</h3>
+    <div class="agency-grid" role="list">
+      <article tabindex="0" class="agency-card" role="listitem" aria-label="Agence Global voyage">
+        <img src="image 25.png" alt="Bus moderne de l'agence Global voyage" loading="lazy" class="agency-img" />
+        <h4 class="agency-name">Global voyage</h4>
+        <div class="agency-reserve">
+          <button type="button" class="reserve-btn" data-agency="Global voyage">Réserver</button>
+        </div>
+      </article>
+      <article tabindex="0" class="agency-card" role="listitem" aria-label="Agence GeneralVoyages">
+        <img src="Capture d'écran 2025-05-18 083934.png" alt="Bus rapide de l'agence GeneralVoyages" loading="lazy" class="agency-img" />
+        <h4 class="agency-name">GeneralVoyages</h4>
+        <div class="agency-reserve">
+          <button type="button" class="reserve-btn" data-agency="GeneralVoyages">Réserver</button>
+        </div>
+      </article>
+      <article tabindex="0" class="agency-card" role="listitem" aria-label="Agence de Touristiques express">
+        <img src="Capture d'écran 2025-06-10 215640.png" alt="Bus de l'agence Touristiques express" loading="lazy" class="agency-img" />
+        <h4 class="agency-name">Touristiques express</h4>
+        <div class="agency-reserve">
+          <button type="button" class="reserve-btn" data-agency="Touristiques express">Réserver</button>
+        </div>
+      </article>
+      <article tabindex="0" class="agency-card" role="listitem" aria-label="Agence Men travel">
+        <img src="image copy.png" alt="Bus de l'agence Men travel" loading="lazy" class="agency-img" />
+        <h4 class="agency-name">Men travel</h4>
+        <div class="agency-reserve">
+          <button type="button" class="reserve-btn" data-agency="Men travel">Réserver</button>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="booking" aria-label="Formulaire de réservation de billets">
+    <h3>Réserver un billet</h3>
+    <form id="ticketForm" novalidate>
+      <label for="agencySelect">Agence sélectionnée</label>
+      <select id="agencySelect" name="agency" required aria-required="true" disabled>
+        <option value="">Choisissez une agence depuis la liste</option>
+        <option value="Global voyage">Global voyage</option>
+        <option value="GeneralVoyages">GeneralVoyages</option>
+        <option value="Touristiques express">Touristiques express</option>
+        <option value="Men travel">Men travel</option>
+      </select>
+
+      <label for="passengerName">Nom complet du passager</label>
+      <input type="text" id="passengerName" name="passengerName" placeholder="tchouheuk modeste" required aria-required="true" autocomplete="name" />
+
+      <label for="passengerContact">Email ou téléphone</label>
+      <input type="text" id="passengerContact" name="passengerContact" placeholder="email@example.com ou +237 694542801" required aria-required="true" autocomplete="email tel" />
+
+      <label for="departure">Ville de départ</label>
+      <select id="departure" name="departure" required aria-required="true">
+        <option value="" disabled selected>Choisir une ville</option>
+        <option value="Douala">Douala</option>
+        <option value="Yaoundé">Yaoundé</option>
+        <option value="Buéa">Buéa</option>
+        <option value="Bafoussam">Bafoussam</option>
+        <option value="Ebolowa">Ebolowa</option>
+        <option value="Bafia">Bafia</option>
+        <option value="Nkongsamba">Nkongsamba</option>
+        <option value="Dschang">Dschang</option>
+        <option value="Mbouda">Mbouda</option>
+        <option value="Foumban">Foumban</option>
+        <option value="Bangangté">Bangangté</option>
+        <option value="Bamenda">Bamenda</option>
+        <option value="Limbé">Limbé</option>
+        <option value="Kumba">Kumba</option>
+        <option value="Tiko">Tiko</option>
+        <option value="Sangmélima">Sangmélima</option>
+        <option value="Kribi">Kribi</option>
+        <option value="Bertoua">Bertoua</option>
+        <option value="Maroua">Maroua</option>
+        <option value="Garoua">Garoua</option>
+        <option value="Ngaroundéré">Ngaroundéré</option>
+      </select>
+
+      <label for="destination">Ville d'arrivée</label>
+      <select id="destination" name="destination" required aria-required="true">
+        <option value="" disabled selected>Choisir une ville</option>
+        <option value="Douala">Douala</option>
+        <option value="Yaoundé">Yaoundé</option>
+        <option value="Buéa">Buéa</option>
+        <option value="Bafoussam">Bafoussam</option>
+        <option value="Ebolowa">Ebolowa</option>
+        <option value="Nkongsamba">Nkongsamba</option>
+        <option value="Dschang">Dschang</option>
+        <option value="Mbouda">Mbouda</option>
+        <option value="Foumban">Foumban</option>
+        <option value="Bangangté">Bangangté</option>
+        <option value="Bamenda">Bamenda</option>
+        <option value="Limbé">Limbé</option>
+        <option value="Kumba">Kumba</option>
+        <option value="Tiko">Tiko</option>
+        <option value="Sangmélima">Sangmélima</option>
+        <option value="Kribi">Kribi</option>
+        <option value="Bertoua">Bertoua</option>
+        <option value="Maroua">Maroua</option>
+        <option value="Garoua">Garoua</option>
+        <option value="Ngaroundéré">Ngaroundéré</option>
+      </select>
+
+      <label for="travelDate">Date du voyage</label>
+      <input type="date" id="travelDate" name="travelDate" required aria-required="true" min="" />
+
+      <label for="ticketsNumber">Nombre de billets</label>
+      <input type="number" id="ticketsNumber" name="ticketsNumber" required aria-required="true" min="1" max="10" value="1" />
+
+      <button type="submit">Confirmer la réservation</button>
+    </form>
+  </section>
+
+  <section id="contact" aria-label="Informations de contact">
+    <h3>Contactez-nous</h3>
+    <p>Pour toute question, contactez-nous à <a href="mailto:tchouheukmodeste@Agence de voyage.com" tabindex="6" style="color: #ffd500;">tchouheukmodeste@Agence de voyage.com</a>.</p>
+  </section>
+</main>
+
+<footer>
+  &copy; 2025 Agence de voyage.
+</footer>
+
+<script>
+  // Set min date on travelDate input to today
+  const travelDateInput = document.getElementById('travelDate');
+  const todayStr = new Date().toISOString().split('T')[0];
+  travelDateInput.setAttribute('min', todayStr);
+
+  // Reference form and agency select
+  const form = document.getElementById('ticketForm');
+  const agencySelect = document.getElementById('agencySelect');
+
+  // Buttons that trigger booking with agency preset
+  const reserveButtons = document.querySelectorAll('.reserve-btn');
+
+  reserveButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const agencyName = button.getAttribute('data-agency');
+      agencySelect.value = agencyName;
+      // Scroll to booking smoothly
+      document.getElementById('booking').scrollIntoView({behavior: 'smooth'});
+      // Focus passengerName input for convenience
+      document.getElementById('passengerName').focus();
+    });
+  });
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const agency = agencySelect.value;
+    const passengerName = form.passengerName.value.trim();
+    const passengerContact = form.passengerContact.value.trim();
+    const departure = form.departure.value;
+    const destination = form.destination.value;
+    const date = form.travelDate.value;
+    const tickets = parseInt(form.ticketsNumber.value, 10);
+
+    // Validation
+    if (!agency) {
+      alert('Veuillez sélectionner une agence en utilisant le bouton "Réserver" d\'une agence.');
+      return;
+    }
+    if (!passengerName) {
+      alert('Veuillez entrer le nom complet du passager.');
+      return;
+    }
+    if (!passengerContact) {
+      alert('Veuillez entrer un email ou un téléphone valide.');
+      return;
+    }
+    // Basic email/phone format check (simple)
+    const emailPhonePattern = /^([\w\.-]+@[\w\.-]+\.\w{2,}|(\+?\d[\d\s\-\.]{6,}\d))$/;
+    if (!emailPhonePattern.test(passengerContact)) {
+      alert('Veuillez entrer un email ou un numéro de téléphone valide.');
+      return;
+    }
+    if (!departure || !destination) {
+      alert('Veuillez sélectionner les villes de départ et d\'arrivée.');
+      return;
+    }
+    if (departure === destination) {
+      alert('La ville de départ et la ville d\'arrivée doivent être différentes.');
+      return;
+    }
+    if (!date) {
+      alert('Veuillez sélectionner la date du voyage.');
+      return;
+    }
+    if (date < todayStr) {
+      alert('La date du voyage doit être égale ou postérieure à aujourd\'hui.');
+      return;
+    }
+    if (isNaN(tickets) || tickets < 1 || tickets > 10) {
+      alert('Veuillez choisir un nombre de billets entre 1 et 10.');
+      return;
+    }
+
+    // Confirmation message
+    alert(
+      `Réservation confirmée !\n\n` +
+      `Agence: ${agency}\n` +
+      `Passager: ${passengerName}\n` +
+      `Contact: ${passengerContact}\n` +
+      `Trajet: ${departure} → ${destination}\n` +
+      `Date: ${date}\n` +
+      `Nombre de billet(s): ${tickets}\n\n` +
+      `Merci de votre confiance !`
+    );
+
+    // Reset form except agency (disable reset agency to keep selection)
+    form.reset();
+    agencySelect.value = agency;
+    travelDateInput.setAttribute('min', todayStr);
+  });
+</script>
+</body>
+</html>
+

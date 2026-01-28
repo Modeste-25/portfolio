@@ -1,0 +1,237 @@
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+
+  * {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background: #f0f4f8;
+    color: #333;
+    line-height: 1.6;
+  }
+  header {
+    background-color: #3f72af;
+    color: white;
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  .nav-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo {
+    font-weight: 700;
+    font-size: 1.6rem;
+    letter-spacing: 1.2px;
+    cursor: default;
+  }
+  nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 2rem;
+    font-weight: 600;
+    transition: color 0.3s ease;
+  }
+  nav a:hover {
+    color: #dbe9ff;
+  }
+
+  /* Hero Section */
+  .hero {
+    background: linear-gradient(135deg, #3f72af 0%, #112d4e 100%);
+    color: white;
+    padding: 6rem 2rem 4rem;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+  .hero p {
+    font-size: 1.3rem;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    line-height: 1.4;
+  }
+  .btn-primary {
+    background-color: #f9bc60;
+    border: none;
+    padding: 1rem 3rem;
+    border-radius: 40px;
+    color: #112d4e;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 7px 15px rgba(249,188,96,0.45);
+  }
+  .btn-primary:hover {
+    background-color: #ffbf49;
+    transform: scale(1.05);
+    box-shadow: 0 12px 25px rgba(255,191,73,0.6);
+  }
+
+  /* Courses Section */
+  .courses {
+    max-width: 1100px;
+    margin: 4rem auto 6rem;
+    padding: 0 2rem;
+  }
+  .section-title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #112d4e;
+    text-align: center;
+    margin-bottom: 3rem;
+    letter-spacing: 1.3px;
+  }
+  .course-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+    gap: 2.5rem;
+  }
+  .course-card {
+    background: white;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 14px 25px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    cursor: pointer;
+    will-change: transform;
+  }
+  .course-card:hover {
+    transform: translateY(-18px) rotateX(8deg) scale(1.05);
+    box-shadow: 0 25px 45px rgba(0,0,0,0.18);
+  }
+  .course-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    flex-shrink: 0;
+    transition: transform 0.4s ease;
+  }
+  .course-card:hover .course-img {
+    transform: scale(1.1);
+  }
+  .course-content {
+    padding: 1.8rem 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .course-title {
+    font-size: 1.4rem;
+    margin-bottom: 0.6rem;
+    font-weight: 700;
+    color: #3f72af;
+    user-select: none;
+  }
+  .course-desc {
+    flex-grow: 1;
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 1.4rem;
+  }
+
+  /* Registration Section */
+  .registration {
+    background: white;
+    max-width: 600px;
+    margin: 0 auto 6rem;
+    padding: 3rem 2.5rem 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  }
+  .registration h2 {
+    color: #112d4e;
+    font-size: 2.4rem;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    text-align: center;
+  }
+  form label {
+    display: block;
+    font-weight: 600;
+    color: #3f72af;
+    margin-bottom: 0.5rem;
+  }
+  form input[type="text"],
+  form input[type="email"],
+  form select {
+    width: 100%;
+    padding: 0.85rem 1.1rem;
+    margin-bottom: 1.7rem;
+    border: 2px solid #d1d9e6;
+    border-radius: 12px;
+    font-size: 1.05rem;
+    transition: border-color 0.3s ease;
+  }
+  form input[type="text"]:focus,
+  form input[type="email"]:focus,
+  form select:focus {
+    border-color: #f9bc60;
+    outline: none;
+    box-shadow: 0 0 8px #f9bc60aa;
+  }
+  form button {
+    background-color: #f9bc60;
+    border: none;
+    padding: 1rem 0;
+    border-radius: 40px;
+    color: #112d4e;
+    font-size: 1.25rem;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 6px 18px rgba(249,188,96,0.4);
+  }
+  form button:hover {
+    background-color: #ffbf49;
+    transform: scale(1.05);
+    box-shadow: 0 12px 35px rgba(255,191,73,0.55);
+  }
+
+  /* Footer */
+  footer {
+    background-color: #112d4e;
+    color: #ccc;
+    padding: 2rem 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+  footer a {
+    color: #f9bc60;
+    text-decoration: none;
+    margin: 0 0.6rem;
+    font-weight: 600;
+  }
+  footer a:hover {
+    text-decoration: underline;
+  }
+
+  /* Responsive tweaks */
+  @media (max-width: 480px) {
+    .hero h1 {
+      font-size: 2rem;
+    }
+    .section-title {
+      font-size: 2rem;
+    }
+    .registration {
+      padding: 2rem 1.5rem;
+    }
+  }
