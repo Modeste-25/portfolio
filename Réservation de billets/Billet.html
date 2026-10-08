@@ -1,247 +1,1280 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Réservation de Billet de Bus - Choix d'Agence</title>
-<link rel="stylesheet" href="Billet.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agence de voyage | Réservation de billets de bus</title>
+  <meta name="description"
+    content="Choisissez votre agence, votre trajet et vos places, puis recevez votre billet de bus en quelques clics." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --navy: #0B1F3A;
+      --navy-2: #13315A;
+      --yellow: #FFC400;
+      --bg: #EEF1F6;
+      --surface: #fff;
+      --ink: #0F1B2D;
+      --muted: #5A6678;
+      --line: #D6DCE6;
+      --ok: #12805C;
+      --err: #C0261B;
+      --head: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+      --body: 'Barlow', 'Segoe UI', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 84px
+    }
+
+    body {
+      font-family: var(--body);
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+      font-size: 1.05rem;
+      overflow-x: hidden
+    }
+
+    img {
+      max-width: 100%;
+      display: block
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--yellow);
+      outline-offset: 3px;
+      border-radius: 6px
+    }
+
+    .wrap {
+      width: min(1120px, 100% - 40px);
+      margin-inline: auto
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: var(--head);
+      line-height: 1.05;
+      letter-spacing: .01em
+    }
+
+    /* Nav */
+    nav.top {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--navy);
+      color: #fff
+    }
+
+    .nav-in {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font: 800 1.6rem var(--head);
+      text-decoration: none;
+      color: #fff
+    }
+
+    .brand i {
+      color: var(--navy);
+      background: var(--yellow);
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      display: grid;
+      place-items: center;
+      font-size: 1rem
+    }
+
+    .links {
+      display: flex;
+      gap: 26px;
+      list-style: none
+    }
+
+    .links a {
+      color: #C9D3E3;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 6px 0;
+      border-bottom: 2px solid transparent
+    }
+
+    .links a:hover {
+      color: #fff;
+      border-color: var(--yellow)
+    }
+
+    .burger {
+      display: none;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.4rem
+    }
+
+    /* Hero */
+    .hero {
+      background: var(--navy);
+      color: #fff;
+      padding: 70px 0 0;
+      position: relative;
+      overflow: hidden
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 7vw, 5.4rem);
+      font-weight: 800;
+      max-width: 14ch;
+      margin-bottom: 18px
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--yellow)
+    }
+
+    .hero p {
+      color: #C9D3E3;
+      font-size: 1.2rem;
+      max-width: 48ch;
+      margin-bottom: 30px
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: none;
+      border-radius: 10px;
+      padding: 15px 28px;
+      font: 700 1.05rem var(--body);
+      text-decoration: none;
+      transition: transform .2s, background .2s
+    }
+
+    .btn:hover {
+      transform: translateY(-3px)
+    }
+
+    .btn-y {
+      background: var(--yellow);
+      color: var(--navy)
+    }
+
+    .btn-y:hover {
+      background: #FFD33D
+    }
+
+    .btn-n {
+      background: var(--navy);
+      color: #fff
+    }
+
+    .btn-o {
+      background: transparent;
+      color: var(--navy);
+      border: 2px solid var(--navy)
+    }
+
+    .btn[disabled] {
+      opacity: .5;
+      pointer-events: none
+    }
+
+    .road {
+      position: relative;
+      height: 84px;
+      margin-top: 50px
+    }
+
+    .road::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 22px;
+      height: 0;
+      border-top: 4px dashed #3B5A88
+    }
+
+    .road::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 18px;
+      background: #0A1930
+    }
+
+    .road i {
+      position: absolute;
+      bottom: 26px;
+      left: -60px;
+      font-size: 2.6rem;
+      color: var(--yellow);
+      animation: drive 7s ease-out .4s forwards
+    }
+
+    @keyframes drive {
+      to {
+        left: calc(100% - 140px)
+      }
+    }
+
+    section {
+      padding: 84px 0
+    }
+
+    .head {
+      margin-bottom: 38px
+    }
+
+    .head h2 {
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      font-weight: 800;
+      color: var(--navy)
+    }
+
+    .head p {
+      color: var(--muted);
+      margin-top: 8px
+    }
+
+    /* Agences */
+    .agencies {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px
+    }
+
+    .ag {
+      background: var(--surface);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid transparent;
+      box-shadow: 0 6px 20px rgba(11, 31, 58, .08);
+      transition: transform .25s, border-color .25s;
+      display: flex;
+      flex-direction: column
+    }
+
+    .ag:hover {
+      transform: translateY(-6px)
+    }
+
+    .ag.on {
+      border-color: var(--yellow)
+    }
+
+    .ag .img {
+      aspect-ratio: 16/10;
+      background: var(--navy-2);
+      position: relative;
+      display: grid;
+      place-items: center;
+      color: var(--yellow);
+      font-size: 2.4rem
+    }
+
+    .ag .img img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover
+    }
+
+    .ag .body {
+      padding: 18px 20px 22px;
+      display: grid;
+      gap: 14px
+    }
+
+    .ag h3 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--navy)
+    }
+
+    .ag .btn {
+      justify-content: center;
+      width: 100%;
+      padding: 12px
+    }
+
+    .ag.on .btn {
+      background: var(--yellow);
+      color: var(--navy)
+    }
+
+    /* Réservation */
+    .book {
+      background: var(--surface);
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(11, 31, 58, .12);
+      overflow: hidden
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      list-style: none;
+      background: var(--navy);
+      color: #8FA3C2
+    }
+
+    .steps li {
+      padding: 18px 12px;
+      text-align: center;
+      font: 600 1.1rem var(--head);
+      letter-spacing: .03em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border-bottom: 4px solid transparent
+    }
+
+    .steps li span {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid currentColor;
+      display: grid;
+      place-items: center;
+      font-size: .9rem
+    }
+
+    .steps li.cur {
+      color: #fff;
+      border-color: var(--yellow)
+    }
+
+    .steps li.cur span {
+      background: var(--yellow);
+      color: var(--navy);
+      border-color: var(--yellow)
+    }
+
+    .steps li.done {
+      color: var(--yellow)
+    }
+
+    .panel {
+      display: none;
+      padding: 36px
+    }
+
+    .panel.on {
+      display: block
+    }
+
+    .panel h3 {
+      font-size: 2rem;
+      color: var(--navy);
+      margin-bottom: 6px
+    }
+
+    .panel .sub {
+      color: var(--muted);
+      margin-bottom: 26px
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px 22px
+    }
+
+    .full {
+      grid-column: 1/-1
+    }
+
+    .fld {
+      display: grid;
+      gap: 6px
+    }
+
+    .fld label {
+      font-weight: 600;
+      font-size: .95rem
+    }
+
+    .fld input,
+    .fld select {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1.5px solid var(--line);
+      border-radius: 10px;
+      font: 500 1rem var(--body);
+      background: #F8FAFC;
+      color: var(--ink)
+    }
+
+    .fld input:focus,
+    .fld select:focus {
+      outline: none;
+      border-color: var(--navy);
+      background: #fff
+    }
+
+    .route-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 12px;
+      align-items: end
+    }
+
+    .swap {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 1.5px solid var(--line);
+      background: #fff;
+      color: var(--navy);
+      font-size: 1rem;
+      margin-bottom: 2px
+    }
+
+    .swap:hover {
+      background: var(--yellow);
+      border-color: var(--yellow)
+    }
+
+    .counter {
+      display: inline-flex;
+      align-items: center;
+      border: 1.5px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+      background: #F8FAFC;
+      width: max-content
+    }
+
+    .counter button {
+      width: 46px;
+      height: 46px;
+      border: none;
+      background: none;
+      font-size: 1.3rem;
+      color: var(--navy)
+    }
+
+    .counter button:hover {
+      background: var(--yellow)
+    }
+
+    .counter output {
+      min-width: 50px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1.1rem
+    }
+
+    .err {
+      color: var(--err);
+      font-weight: 500;
+      min-height: 1.4em;
+      margin-top: 14px
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: space-between;
+      margin-top: 26px
+    }
+
+    /* Plan de bus */
+    .busmap {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 250px;
+      gap: 36px;
+      align-items: start
+    }
+
+    .bus {
+      background: #F3F6FA;
+      border: 3px solid var(--navy);
+      border-radius: 36px 36px 16px 16px;
+      padding: 18px 22px 22px;
+      max-width: 330px;
+      margin-inline: auto;
+      width: 100%
+    }
+
+    .cab {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px dashed var(--line);
+      padding: 6px 4px 14px;
+      margin-bottom: 14px;
+      color: var(--navy)
+    }
+
+    .cab small {
+      color: var(--muted)
+    }
+
+    .seats {
+      display: grid;
+      grid-template-columns: 1fr 1fr 22px 1fr 1fr;
+      gap: 9px
+    }
+
+    .seat {
+      aspect-ratio: 1;
+      border-radius: 9px 9px 5px 5px;
+      border: 2px solid var(--navy);
+      background: #fff;
+      font: 700 .85rem var(--body);
+      color: var(--navy);
+      transition: .15s
+    }
+
+    .seat:hover:not(:disabled) {
+      background: #FFF3C2
+    }
+
+    .seat.sel {
+      background: var(--yellow);
+      border-color: var(--yellow)
+    }
+
+    .seat:disabled {
+      background: #CBD3DF;
+      border-color: #CBD3DF;
+      color: #8794A8;
+      cursor: not-allowed
+    }
+
+    .legend {
+      display: grid;
+      gap: 12px;
+      font-size: .98rem
+    }
+
+    .legend div {
+      display: flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    .legend i {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      border: 2px solid var(--navy);
+      display: inline-block
+    }
+
+    .legend .i-sel {
+      background: var(--yellow);
+      border-color: var(--yellow)
+    }
+
+    .legend .i-occ {
+      background: #CBD3DF;
+      border-color: #CBD3DF
+    }
+
+    .picked {
+      background: var(--bg);
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 8px
+    }
+
+    .picked b {
+      font: 700 1.5rem var(--head);
+      color: var(--navy)
+    }
+
+    .pass {
+      display: grid;
+      gap: 14px
+    }
+
+    .pass .fld span {
+      color: var(--muted);
+      font-weight: 400
+    }
+
+    .recap {
+      background: var(--bg);
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 22px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 26px;
+      font-weight: 500
+    }
+
+    .recap i {
+      color: var(--navy);
+      margin-right: 6px
+    }
+
+    /* Billet */
+    .tickets {
+      display: grid;
+      gap: 22px
+    }
+
+    .ticket {
+      display: grid;
+      grid-template-columns: 1fr 190px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 28px rgba(11, 31, 58, .14);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line)
+    }
+
+    .t-main {
+      padding: 22px 26px
+    }
+
+    .t-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px
+    }
+
+    .t-top strong {
+      font: 800 1.5rem var(--head);
+      color: var(--navy)
+    }
+
+    .t-top span {
+      background: var(--yellow);
+      color: var(--navy);
+      font: 700 .85rem var(--body);
+      padding: 3px 12px;
+      border-radius: 99px
+    }
+
+    .t-route {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 18px
+    }
+
+    .t-route b {
+      font: 800 2.2rem var(--head);
+      color: var(--navy);
+      display: block;
+      line-height: 1
+    }
+
+    .t-route small,
+    .t-grid small {
+      color: var(--muted);
+      display: block;
+      font-size: .82rem
+    }
+
+    .t-route i {
+      color: var(--navy);
+      font-size: 1.3rem;
+      flex: 1;
+      text-align: center;
+      position: relative
+    }
+
+    .t-route i::before,
+    .t-route i::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: calc(50% - 20px);
+      border-top: 2px dashed var(--line)
+    }
+
+    .t-route i::before {
+      left: 0
+    }
+
+    .t-route i::after {
+      right: 0
+    }
+
+    .t-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px
+    }
+
+    .t-grid b {
+      font-weight: 600
+    }
+
+    .t-stub {
+      border-left: 2px dashed var(--line);
+      padding: 22px 18px;
+      background: #F8FAFC;
+      display: grid;
+      gap: 10px;
+      place-items: center;
+      text-align: center
+    }
+
+    .t-stub svg {
+      width: 100%;
+      height: 60px
+    }
+
+    .t-stub code {
+      font: 600 .95rem monospace;
+      letter-spacing: .08em;
+      color: var(--navy)
+    }
+
+    .ticket::before,
+    .ticket::after {
+      content: '';
+      position: absolute;
+      right: 171px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--surface)
+    }
+
+    .ticket::before {
+      top: -11px
+    }
+
+    .ticket::after {
+      bottom: -11px
+    }
+
+    /* Contact */
+    .contact {
+      background: var(--navy);
+      color: #fff
+    }
+
+    .contact h2 {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      margin-bottom: 10px
+    }
+
+    .contact p {
+      color: #C9D3E3
+    }
+
+    .contact a {
+      color: var(--yellow)
+    }
+
+    .contact .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-top: 22px
+    }
+
+    footer {
+      background: #071529;
+      color: #8FA3C2;
+      padding: 22px 0;
+      font-size: .95rem
+    }
+
+    @media(max-width:860px) {
+      .burger {
+        display: block
+      }
+
+      .links {
+        position: fixed;
+        top: 68px;
+        left: 0;
+        right: 0;
+        background: var(--navy);
+        flex-direction: column;
+        gap: 0;
+        padding: 6px 22px 20px;
+        transform: translateY(-130%);
+        transition: transform .3s;
+        z-index: -1
+      }
+
+      .links.open {
+        transform: none
+      }
+
+      .links a {
+        display: block;
+        padding: 14px 0
+      }
+
+      .busmap {
+        grid-template-columns: 1fr
+      }
+
+      .steps li {
+        font-size: .95rem;
+        padding: 14px 4px
+      }
+
+      .steps li span {
+        display: none
+      }
+
+      .ticket {
+        grid-template-columns: 1fr
+      }
+
+      .t-stub {
+        border-left: none;
+        border-top: 2px dashed var(--line);
+        grid-template-columns: 1fr 1fr;
+        align-items: center
+      }
+
+      .ticket::before,
+      .ticket::after {
+        display: none
+      }
+
+      .t-grid {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    @media(max-width:600px) {
+      .panel {
+        padding: 24px 18px
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr
+      }
+
+      .route-row {
+        grid-template-columns: 1fr
+      }
+
+      .swap {
+        justify-self: center;
+        transform: rotate(90deg)
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      * {
+        animation: none !important;
+        transition: none !important
+      }
+
+      .road i {
+        left: calc(100% - 140px)
+      }
+
+      html {
+        scroll-behavior: auto
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff
+      }
+
+      nav.top,
+      .hero,
+      #agencies,
+      .steps,
+      .panel:not(#p4),
+      .contact,
+      footer,
+      .noprint {
+        display: none !important
+      }
+
+      #booking {
+        padding: 0
+      }
+
+      .book {
+        box-shadow: none
+      }
+
+      .panel#p4 {
+        display: block !important;
+        padding: 0
+      }
+
+      .ticket {
+        break-inside: avoid;
+        box-shadow: none
+      }
+    }
+  </style>
 </head>
+
 <body>
-<nav>
-  <h1>Agence de voyage</h1>
-  <ul>
-    <li><a href="#home" tabindex="1">Accueil</a></li>
-    <li><a href="#agencies" tabindex="2">Agences</a></li>
-    <li><a href="#booking" tabindex="3">Réserver</a></li>
-    <li><a href="#contact" tabindex="4">Contact</a></li>
-  </ul>
-</nav>
 
-<header id="home" role="banner" aria-label="Bannière principale">
-  <div>
-    <h2>Réservez votre billet de bus en toute simplicité</h2>
-    <p>Choisissez votre agence préférée, remplissez vos informations et partez à l'aventure !</p>
-    <a href="#agencies" class="btn-primary" tabindex="5">Voir les agences</a>
-  </div>
-</header>
-
-<main>
-  <section id="agencies" aria-label="Liste des agences de bus">
-    <h3>Nos Agences de Bus</h3>
-    <div class="agency-grid" role="list">
-      <article tabindex="0" class="agency-card" role="listitem" aria-label="Agence Global voyage">
-        <img src="image 25.png" alt="Bus moderne de l'agence Global voyage" loading="lazy" class="agency-img" />
-        <h4 class="agency-name">Global voyage</h4>
-        <div class="agency-reserve">
-          <button type="button" class="reserve-btn" data-agency="Global voyage">Réserver</button>
-        </div>
-      </article>
-      <article tabindex="0" class="agency-card" role="listitem" aria-label="Agence GeneralVoyages">
-        <img src="Capture d'écran 2025-05-18 083934.png" alt="Bus rapide de l'agence GeneralVoyages" loading="lazy" class="agency-img" />
-        <h4 class="agency-name">GeneralVoyages</h4>
-        <div class="agency-reserve">
-          <button type="button" class="reserve-btn" data-agency="GeneralVoyages">Réserver</button>
-        </div>
-      </article>
-      <article tabindex="0" class="agency-card" role="listitem" aria-label="Agence de Touristiques express">
-        <img src="Capture d'écran 2025-06-10 215640.png" alt="Bus de l'agence Touristiques express" loading="lazy" class="agency-img" />
-        <h4 class="agency-name">Touristiques express</h4>
-        <div class="agency-reserve">
-          <button type="button" class="reserve-btn" data-agency="Touristiques express">Réserver</button>
-        </div>
-      </article>
-      <article tabindex="0" class="agency-card" role="listitem" aria-label="Agence Men travel">
-        <img src="image copy.png" alt="Bus de l'agence Men travel" loading="lazy" class="agency-img" />
-        <h4 class="agency-name">Men travel</h4>
-        <div class="agency-reserve">
-          <button type="button" class="reserve-btn" data-agency="Men travel">Réserver</button>
-        </div>
-      </article>
+  <nav class="top">
+    <div class="wrap nav-in">
+      <a class="brand" href="#home"><i class="fa-solid fa-bus"></i> Agence de voyage</a>
+      <ul class="links" id="links">
+        <li><a href="#home">Accueil</a></li>
+        <li><a href="#agencies">Agences</a></li>
+        <li><a href="#booking">Réserver</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false"><i
+          class="fa-solid fa-bars"></i></button>
     </div>
-  </section>
+  </nav>
 
-  <section id="booking" aria-label="Formulaire de réservation de billets">
-    <h3>Réserver un billet</h3>
-    <form id="ticketForm" novalidate>
-      <label for="agencySelect">Agence sélectionnée</label>
-      <select id="agencySelect" name="agency" required aria-required="true" disabled>
-        <option value="">Choisissez une agence depuis la liste</option>
-        <option value="Global voyage">Global voyage</option>
-        <option value="GeneralVoyages">GeneralVoyages</option>
-        <option value="Touristiques express">Touristiques express</option>
-        <option value="Men travel">Men travel</option>
-      </select>
+  <header class="hero" id="home">
+    <div class="wrap">
+      <h1>Votre billet de bus, en <em>quelques clics</em>.</h1>
+      <p>Choisissez votre agence, votre trajet et votre place. Votre billet est prêt à imprimer ou à présenter sur votre
+        téléphone.</p>
+      <a href="#agencies" class="btn btn-y"><i class="fa-solid fa-arrow-down"></i> Voir les agences</a>
+      <div class="road" aria-hidden="true"><i class="fa-solid fa-bus-simple"></i></div>
+    </div>
+  </header>
 
-      <label for="passengerName">Nom complet du passager</label>
-      <input type="text" id="passengerName" name="passengerName" placeholder="tchouheuk modeste" required aria-required="true" autocomplete="name" />
+  <main>
+    <section id="agencies">
+      <div class="wrap">
+        <div class="head">
+          <h2>Nos agences de bus</h2>
+          <p>Sélectionnez l'agence avec laquelle vous voulez voyager.</p>
+        </div>
+        <div class="agencies" id="agList"></div>
+      </div>
+    </section>
 
-      <label for="passengerContact">Email ou téléphone</label>
-      <input type="text" id="passengerContact" name="passengerContact" placeholder="email@example.com ou +237 694542801" required aria-required="true" autocomplete="email tel" />
+    <section id="booking" style="padding-top:0">
+      <div class="wrap">
+        <div class="head">
+          <h2>Réserver un billet</h2>
+          <p>Quatre étapes rapides, sans création de compte.</p>
+        </div>
+        <div class="book">
+          <ol class="steps" id="steps">
+            <li><span>1</span>Trajet</li>
+            <li><span>2</span>Places</li>
+            <li><span>3</span>Passagers</li>
+            <li><span>4</span>Billet</li>
+          </ol>
 
-      <label for="departure">Ville de départ</label>
-      <select id="departure" name="departure" required aria-required="true">
-        <option value="" disabled selected>Choisir une ville</option>
-        <option value="Douala">Douala</option>
-        <option value="Yaoundé">Yaoundé</option>
-        <option value="Buéa">Buéa</option>
-        <option value="Bafoussam">Bafoussam</option>
-        <option value="Ebolowa">Ebolowa</option>
-        <option value="Bafia">Bafia</option>
-        <option value="Nkongsamba">Nkongsamba</option>
-        <option value="Dschang">Dschang</option>
-        <option value="Mbouda">Mbouda</option>
-        <option value="Foumban">Foumban</option>
-        <option value="Bangangté">Bangangté</option>
-        <option value="Bamenda">Bamenda</option>
-        <option value="Limbé">Limbé</option>
-        <option value="Kumba">Kumba</option>
-        <option value="Tiko">Tiko</option>
-        <option value="Sangmélima">Sangmélima</option>
-        <option value="Kribi">Kribi</option>
-        <option value="Bertoua">Bertoua</option>
-        <option value="Maroua">Maroua</option>
-        <option value="Garoua">Garoua</option>
-        <option value="Ngaroundéré">Ngaroundéré</option>
-      </select>
+          <!-- Étape 1 -->
+          <div class="panel" id="p1">
+            <h3>Votre trajet</h3>
+            <p class="sub">Indiquez l'agence, les villes, la date et le nombre de billets.</p>
+            <div class="form-grid">
+              <div class="fld full"><label for="agency">Agence</label>
+                <select id="agency">
+                  <option value="">Choisir une agence</option>
+                </select>
+              </div>
+              <div class="full route-row">
+                <div class="fld"><label for="from">Ville de départ</label><select id="from"></select></div>
+                <button type="button" class="swap" id="swap" aria-label="Inverser départ et arrivée"><i
+                    class="fa-solid fa-right-left"></i></button>
+                <div class="fld"><label for="to">Ville d'arrivée</label><select id="to"></select></div>
+              </div>
+              <div class="fld"><label for="date">Date du voyage</label><input type="date" id="date"></div>
+              <div class="fld"><label for="time">Heure de départ</label>
+                <select id="time">
+                  <option>05:30</option>
+                  <option>07:00</option>
+                  <option selected>09:00</option>
+                  <option>12:00</option>
+                  <option>15:00</option>
+                  <option>21:00</option>
+                </select>
+              </div>
+              <div class="fld"><label>Nombre de billets</label>
+                <div class="counter"><button type="button" id="minus" aria-label="Un billet de moins">−</button><output
+                    id="nOut">1</output><button type="button" id="plus" aria-label="Un billet de plus">+</button></div>
+              </div>
+            </div>
+            <p class="err" id="e1" role="alert"></p>
+            <div class="actions"><span></span><button class="btn btn-n" id="to2">Choisir mes places <i
+                  class="fa-solid fa-arrow-right"></i></button></div>
+          </div>
 
-      <label for="destination">Ville d'arrivée</label>
-      <select id="destination" name="destination" required aria-required="true">
-        <option value="" disabled selected>Choisir une ville</option>
-        <option value="Douala">Douala</option>
-        <option value="Yaoundé">Yaoundé</option>
-        <option value="Buéa">Buéa</option>
-        <option value="Bafoussam">Bafoussam</option>
-        <option value="Ebolowa">Ebolowa</option>
-        <option value="Nkongsamba">Nkongsamba</option>
-        <option value="Dschang">Dschang</option>
-        <option value="Mbouda">Mbouda</option>
-        <option value="Foumban">Foumban</option>
-        <option value="Bangangté">Bangangté</option>
-        <option value="Bamenda">Bamenda</option>
-        <option value="Limbé">Limbé</option>
-        <option value="Kumba">Kumba</option>
-        <option value="Tiko">Tiko</option>
-        <option value="Sangmélima">Sangmélima</option>
-        <option value="Kribi">Kribi</option>
-        <option value="Bertoua">Bertoua</option>
-        <option value="Maroua">Maroua</option>
-        <option value="Garoua">Garoua</option>
-        <option value="Ngaroundéré">Ngaroundéré</option>
-      </select>
+          <!-- Étape 2 -->
+          <div class="panel" id="p2">
+            <h3>Choisissez vos places</h3>
+            <p class="sub" id="seatSub"></p>
+            <div class="busmap">
+              <div class="bus">
+                <div class="cab"><span><i class="fa-solid fa-user-tie"></i> <small>Chauffeur</small></span><small>Avant
+                    du bus</small></div>
+                <div class="seats" id="seats"></div>
+              </div>
+              <div>
+                <div class="legend">
+                  <div><i></i> Libre</div>
+                  <div><i class="i-sel"></i> Votre sélection</div>
+                  <div><i class="i-occ"></i> Occupée</div>
+                </div>
+                <div class="picked"><small>Places choisies</small><br><b id="picked">Aucune</b></div>
+              </div>
+            </div>
+            <p class="err" id="e2" role="alert"></p>
+            <div class="actions"><button class="btn btn-o" data-back="1"><i class="fa-solid fa-arrow-left"></i>
+                Retour</button><button class="btn btn-n" id="to3">Continuer <i
+                  class="fa-solid fa-arrow-right"></i></button></div>
+          </div>
 
-      <label for="travelDate">Date du voyage</label>
-      <input type="date" id="travelDate" name="travelDate" required aria-required="true" min="" />
+          <!-- Étape 3 -->
+          <div class="panel" id="p3">
+            <h3>Informations des passagers</h3>
+            <p class="sub">Un nom par place, et un contact pour vous joindre.</p>
+            <div class="recap" id="recap3"></div>
+            <div class="pass" id="pass"></div>
+            <div class="fld" style="margin-top:14px"><label for="contact">Email ou téléphone</label><input id="contact"
+                placeholder="email@exemple.com ou +237 6…" autocomplete="email tel"></div>
+            <p class="err" id="e3" role="alert"></p>
+            <div class="actions"><button class="btn btn-o" data-back="2"><i class="fa-solid fa-arrow-left"></i>
+                Retour</button><button class="btn btn-y" id="confirm"><i class="fa-solid fa-check"></i> Confirmer la
+                réservation</button></div>
+          </div>
 
-      <label for="ticketsNumber">Nombre de billets</label>
-      <input type="number" id="ticketsNumber" name="ticketsNumber" required aria-required="true" min="1" max="10" value="1" />
+          <!-- Étape 4 -->
+          <div class="panel" id="p4">
+            <h3>Réservation confirmée</h3>
+            <p class="sub">Voici votre billet. Présentez-le avec une pièce d'identité à l'embarquement.</p>
+            <div class="tickets" id="tickets"></div>
+            <div class="actions noprint"><button class="btn btn-o" id="again"><i class="fa-solid fa-rotate-left"></i>
+                Nouvelle réservation</button><button class="btn btn-y" id="print"><i class="fa-solid fa-print"></i>
+                Imprimer le billet</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-      <button type="submit">Confirmer la réservation</button>
-    </form>
-  </section>
+    <section class="contact" id="contact">
+      <div class="wrap">
+        <h2>Contactez-nous</h2>
+        <p>Une question sur votre voyage ? Écrivez-nous ou appelez-nous.</p>
+        <div class="row">
+          <a href="mailto:tchouheukmodeste@gmail.com"><i class="fa-solid fa-envelope"></i>
+            tchouheukmodeste@gmail.com</a>
+          <a href="tel:+237694542801"><i class="fa-solid fa-phone"></i> +237 694 54 28 01</a>
+        </div>
+      </div>
+    </section>
+  </main>
 
-  <section id="contact" aria-label="Informations de contact">
-    <h3>Contactez-nous</h3>
-    <p>Pour toute question, contactez-nous à <a href="mailto:tchouheukmodeste@Agence de voyage.com" tabindex="6" style="color: #ffd500;">tchouheukmodeste@Agence de voyage.com</a>.</p>
-  </section>
-</main>
+  <footer>
+    <div class="wrap">© <span id="yr"></span> Agence de voyage. Tous droits réservés.</div>
+  </footer>
 
-<footer>
-  &copy; 2025 Agence de voyage.
-</footer>
+  <script>
+    const $ = s => document.querySelector(s);
+    const CITIES = ["Douala", "Yaoundé", "Buéa", "Bafoussam", "Ebolowa", "Bafia", "Nkongsamba", "Dschang", "Mbouda", "Foumban", "Bangangté", "Bamenda", "Limbé", "Kumba", "Tiko", "Sangmélima", "Kribi", "Bertoua", "Maroua", "Garoua", "Ngaoundéré"];
+    const AGENCIES = [
+      { n: 'Global voyage', img: 'image 25.png' },
+      { n: 'GeneralVoyages', img: "Capture d'écran 2025-05-18 083934.png" },
+      { n: 'Touristiques express', img: "Capture d'écran 2025-06-10 215640.png" },
+      { n: 'Men travel', img: 'image copy.png' }
+    ];
+    const ROWS = 12;
+    const today = (() => { const d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 10); })();
+    const S = { agency: '', from: '', to: '', date: '', time: '09:00', n: 1, seats: [], names: [], contact: '' };
+    let step = 1;
 
-<script>
-  // Set min date on travelDate input to today
-  const travelDateInput = document.getElementById('travelDate');
-  const todayStr = new Date().toISOString().split('T')[0];
-  travelDateInput.setAttribute('min', todayStr);
+    /* Générateur pseudo-aléatoire déterministe (places occupées stables pour un même trajet) */
+    function rng(str) {
+      let h = 1779033703 ^ str.length;
+      for (let i = 0; i < str.length; i++) { h = Math.imul(h ^ str.charCodeAt(i), 3432918353); h = h << 13 | h >>> 19; }
+      return () => { h = Math.imul(h ^ h >>> 16, 2246822507); h = Math.imul(h ^ h >>> 13, 3266489909); return ((h ^= h >>> 16) >>> 0) / 4294967296; };
+    }
 
-  // Reference form and agency select
-  const form = document.getElementById('ticketForm');
-  const agencySelect = document.getElementById('agencySelect');
+    /* ===== Initialisation ===== */
+    $('#yr').textContent = new Date().getFullYear();
+    $('#date').min = today;
+    $('#agList').innerHTML = AGENCIES.map(a => `
+  <article class="ag" data-ag="${a.n}">
+    <div class="img"><i class="fa-solid fa-bus"></i><img src="${a.img}" alt="Bus de l'agence ${a.n}" loading="lazy" onerror="this.remove()"></div>
+    <div class="body"><h3>${a.n}</h3><button class="btn btn-n" data-pick="${a.n}">Réserver</button></div>
+  </article>`).join('');
+    $('#agency').innerHTML += AGENCIES.map(a => `<option>${a.n}</option>`).join('');
+    const cityOpts = '<option value="">Choisir une ville</option>' + CITIES.map(c => `<option>${c}</option>`).join('');
+    $('#from').innerHTML = cityOpts; $('#to').innerHTML = cityOpts;
 
-  // Buttons that trigger booking with agency preset
-  const reserveButtons = document.querySelectorAll('.reserve-btn');
+    function markAgency() {
+      document.querySelectorAll('.ag').forEach(el => {
+        const on = el.dataset.ag === S.agency;
+        el.classList.toggle('on', on);
+        el.querySelector('button').textContent = on ? 'Agence choisie' : 'Réserver';
+      });
+    }
 
-  reserveButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      const agencyName = button.getAttribute('data-agency');
-      agencySelect.value = agencyName;
-      // Scroll to booking smoothly
-      document.getElementById('booking').scrollIntoView({behavior: 'smooth'});
-      // Focus passengerName input for convenience
-      document.getElementById('passengerName').focus();
+    /* ===== Navigation par étapes ===== */
+    function show(n) {
+      step = n;
+      document.querySelectorAll('.panel').forEach((p, i) => p.classList.toggle('on', i + 1 === n));
+      document.querySelectorAll('#steps li').forEach((li, i) => {
+        li.classList.toggle('cur', i + 1 === n);
+        li.classList.toggle('done', i + 1 < n);
+      });
+    }
+    function scrollBooking() { $('#booking').scrollIntoView({ behavior: 'smooth' }); }
+    const fmtDate = d => new Date(d + 'T00:00').toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+    /* ===== Choix de l'agence ===== */
+    $('#agList').addEventListener('click', e => {
+      const b = e.target.closest('[data-pick]'); if (!b) return;
+      S.agency = b.dataset.pick; $('#agency').value = S.agency; markAgency();
+      show(1); scrollBooking();
     });
-  });
+    $('#agency').addEventListener('change', e => { S.agency = e.target.value; markAgency(); });
 
-  form.addEventListener('submit', e => {
-    e.preventDefault();
+    /* ===== Étape 1 ===== */
+    $('#swap').onclick = () => { const f = $('#from').value; $('#from').value = $('#to').value; $('#to').value = f; };
+    $('#minus').onclick = () => { S.n = Math.max(1, S.n - 1); $('#nOut').textContent = S.n; };
+    $('#plus').onclick = () => { S.n = Math.min(10, S.n + 1); $('#nOut').textContent = S.n; };
 
-    const agency = agencySelect.value;
-    const passengerName = form.passengerName.value.trim();
-    const passengerContact = form.passengerContact.value.trim();
-    const departure = form.departure.value;
-    const destination = form.destination.value;
-    const date = form.travelDate.value;
-    const tickets = parseInt(form.ticketsNumber.value, 10);
+    $('#to2').onclick = () => {
+      const e = $('#e1');
+      S.agency = $('#agency').value; S.from = $('#from').value; S.to = $('#to').value;
+      S.date = $('#date').value; S.time = $('#time').value;
+      if (!S.agency) return e.textContent = 'Veuillez choisir une agence.';
+      if (!S.from || !S.to) return e.textContent = 'Veuillez choisir la ville de départ et la ville d\'arrivée.';
+      if (S.from === S.to) return e.textContent = 'La ville de départ et la ville d\'arrivée doivent être différentes.';
+      if (!S.date) return e.textContent = 'Veuillez choisir la date du voyage.';
+      if (S.date < today) return e.textContent = 'La date du voyage doit être aujourd\'hui ou plus tard.';
+      e.textContent = '';
+      S.seats = [];
+      buildSeats(); show(2); scrollBooking();
+    };
 
-    // Validation
-    if (!agency) {
-      alert('Veuillez sélectionner une agence en utilisant le bouton "Réserver" d\'une agence.');
-      return;
+    /* ===== Étape 2 : plan du bus ===== */
+    function buildSeats() {
+      const rand = rng([S.agency, S.from, S.to, S.date, S.time].join('|'));
+      let html = '';
+      for (let r = 1; r <= ROWS; r++) {
+        ['A', 'B', null, 'C', 'D'].forEach(c => {
+          if (!c) { html += '<span></span>'; return; }
+          const id = r + c, occ = rand() < 0.3;
+          html += `<button type="button" class="seat" data-seat="${id}" ${occ ? 'disabled aria-label="Place ' + id + ' occupée"' : 'aria-label="Place ' + id + '"'}>${id}</button>`;
+        });
+      }
+      $('#seats').innerHTML = html;
+      $('#seatSub').textContent = `${S.agency} · ${S.from} → ${S.to} · ${fmtDate(S.date)} à ${S.time}. Sélectionnez ${S.n} place${S.n > 1 ? 's' : ''}.`;
+      updatePicked();
     }
-    if (!passengerName) {
-      alert('Veuillez entrer le nom complet du passager.');
-      return;
+    function updatePicked() {
+      document.querySelectorAll('.seat').forEach(b => {
+        const on = S.seats.includes(b.dataset.seat);
+        b.classList.toggle('sel', on); b.setAttribute('aria-pressed', on);
+      });
+      $('#picked').textContent = S.seats.length ? S.seats.join(', ') + ` (${S.seats.length}/${S.n})` : `Aucune (0/${S.n})`;
     }
-    if (!passengerContact) {
-      alert('Veuillez entrer un email ou un téléphone valide.');
-      return;
-    }
-    // Basic email/phone format check (simple)
-    const emailPhonePattern = /^([\w\.-]+@[\w\.-]+\.\w{2,}|(\+?\d[\d\s\-\.]{6,}\d))$/;
-    if (!emailPhonePattern.test(passengerContact)) {
-      alert('Veuillez entrer un email ou un numéro de téléphone valide.');
-      return;
-    }
-    if (!departure || !destination) {
-      alert('Veuillez sélectionner les villes de départ et d\'arrivée.');
-      return;
-    }
-    if (departure === destination) {
-      alert('La ville de départ et la ville d\'arrivée doivent être différentes.');
-      return;
-    }
-    if (!date) {
-      alert('Veuillez sélectionner la date du voyage.');
-      return;
-    }
-    if (date < todayStr) {
-      alert('La date du voyage doit être égale ou postérieure à aujourd\'hui.');
-      return;
-    }
-    if (isNaN(tickets) || tickets < 1 || tickets > 10) {
-      alert('Veuillez choisir un nombre de billets entre 1 et 10.');
-      return;
-    }
+    $('#seats').addEventListener('click', e => {
+      const b = e.target.closest('[data-seat]'); if (!b) return;
+      const id = b.dataset.seat, err = $('#e2');
+      if (S.seats.includes(id)) S.seats = S.seats.filter(s => s !== id);
+      else if (S.seats.length >= S.n) { err.textContent = `Vous avez déjà choisi ${S.n} place${S.n > 1 ? 's' : ''}. Désélectionnez-en une d'abord.`; return; }
+      else S.seats.push(id);
+      err.textContent = ''; updatePicked();
+    });
+    $('#to3').onclick = () => {
+      if (S.seats.length !== S.n) return $('#e2').textContent = `Veuillez choisir ${S.n} place${S.n > 1 ? 's' : ''}.`;
+      $('#e2').textContent = '';
+      S.seats.sort((a, b) => parseInt(a) - parseInt(b) || a.localeCompare(b));
+      $('#recap3').innerHTML = `<span><i class="fa-solid fa-bus"></i>${S.agency}</span><span><i class="fa-solid fa-route"></i>${S.from} → ${S.to}</span><span><i class="fa-solid fa-calendar"></i>${fmtDate(S.date)}, ${S.time}</span>`;
+      $('#pass').innerHTML = S.seats.map((s, i) => `<div class="fld"><label for="pn${i}">Passager ${i + 1} <span>(place ${s})</span></label><input id="pn${i}" autocomplete="${i ? 'off' : 'name'}" placeholder="Nom complet"></div>`).join('');
+      show(3); scrollBooking();
+    };
+    document.querySelectorAll('[data-back]').forEach(b => b.onclick = () => { show(+b.dataset.back); scrollBooking(); });
 
-    // Confirmation message
-    alert(
-      `Réservation confirmée !\n\n` +
-      `Agence: ${agency}\n` +
-      `Passager: ${passengerName}\n` +
-      `Contact: ${passengerContact}\n` +
-      `Trajet: ${departure} → ${destination}\n` +
-      `Date: ${date}\n` +
-      `Nombre de billet(s): ${tickets}\n\n` +
-      `Merci de votre confiance !`
-    );
+    /* ===== Étape 3 : confirmation ===== */
+    $('#confirm').onclick = () => {
+      const e = $('#e3');
+      const names = S.seats.map((_, i) => $('#pn' + i).value.trim());
+      const contact = $('#contact').value.trim();
+      if (names.some(n => n.length < 3)) return e.textContent = 'Veuillez saisir le nom complet de chaque passager.';
+      if (!/^([\w.+-]+@[\w-]+\.[\w.-]{2,}|\+?\d[\d\s.-]{7,}\d)$/.test(contact)) return e.textContent = 'Entrez un email ou un numéro de téléphone valide.';
+      e.textContent = ''; S.names = names; S.contact = contact;
+      const prefix = S.agency.replace(/[^A-Za-z]/g, '').slice(0, 2).toUpperCase();
+      $('#tickets').innerHTML = S.seats.map((seat, i) => {
+        const ref = prefix + '-' + Math.random().toString(36).slice(2, 8).toUpperCase();
+        return `<article class="ticket">
+      <div class="t-main">
+        <div class="t-top"><strong>${S.agency}</strong><span>Billet de bus</span></div>
+        <div class="t-route"><div><small>Départ</small><b>${S.from}</b></div><i class="fa-solid fa-bus"></i><div style="text-align:right"><small>Arrivée</small><b>${S.to}</b></div></div>
+        <div class="t-grid">
+          <div><small>Date</small><b>${new Date(S.date + 'T00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })}</b></div>
+          <div><small>Heure</small><b>${S.time}</b></div>
+          <div><small>Place</small><b>${seat}</b></div>
+          <div><small>Passager</small><b>${names[i]}</b></div>
+        </div>
+      </div>
+      <div class="t-stub">${barcode(ref)}<code>${ref}</code></div>
+    </article>`;
+      }).join('');
+      show(4); scrollBooking();
+    };
+    function barcode(seed) {
+      const r = rng(seed); let x = 0, bars = '';
+      while (x < 150) { const w = 1 + Math.floor(r() * 4); if (r() > 0.4) bars += `<rect x="${x}" y="0" width="${w}" height="60"/>`; x += w + 2; }
+      return `<svg viewBox="0 0 150 60" preserveAspectRatio="none" fill="#0B1F3A" aria-hidden="true">${bars}</svg>`;
+    }
+    $('#print').onclick = () => window.print();
+    $('#again').onclick = () => {
+      Object.assign(S, { from: '', to: '', date: '', n: 1, seats: [], names: [], contact: '' });
+      $('#from').value = ''; $('#to').value = ''; $('#date').value = ''; $('#nOut').textContent = 1; $('#contact').value = '';
+      show(1); scrollBooking();
+    };
 
-    // Reset form except agency (disable reset agency to keep selection)
-    form.reset();
-    agencySelect.value = agency;
-    travelDateInput.setAttribute('min', todayStr);
-  });
-</script>
+    /* ===== Menu mobile ===== */
+    const links = $('#links'), burger = $('#burger');
+    burger.onclick = () => { const o = links.classList.toggle('open'); burger.setAttribute('aria-expanded', o); };
+    links.querySelectorAll('a').forEach(a => a.onclick = () => { links.classList.remove('open'); burger.setAttribute('aria-expanded', false); });
+
+    show(1);
+  </script>
 </body>
-</html>
 
+</html>
