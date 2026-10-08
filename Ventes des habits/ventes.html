@@ -1,314 +1,1061 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Site de vente de vêtements et accessoires</title>
-    <link rel="stylesheet" href="ventes.css">
+    <title>Shopping | Chaussures, pantalons, tee-shirts, sacs</title>
+    <meta name="description"
+        content="Boutique en ligne : chaussures, pantalons, tee-shirts, sacs et godasses à prix doux." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Syne:wght@600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #F3F4FA;
+            --surface: #fff;
+            --ink: #101828;
+            --muted: #5B6478;
+            --line: #DDE1EE;
+            --cobalt: #2438F0;
+            --cobalt-d: #1A2AC4;
+            --sky: #E6EAFF;
+            --tomato: #FF5A36;
+            --ok: #12805C;
+            --display: 'Syne', 'Segoe UI', sans-serif;
+            --body: 'Manrope', 'Segoe UI', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px
+        }
+
+        body {
+            font-family: var(--body);
+            background: var(--bg);
+            color: var(--ink);
+            line-height: 1.55;
+            overflow-x: hidden
+        }
+
+        img {
+            max-width: 100%;
+            display: block
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer
+        }
+
+        :focus-visible {
+            outline: 3px solid var(--tomato);
+            outline-offset: 3px;
+            border-radius: 8px
+        }
+
+        .wrap {
+            width: min(1240px, 100% - 40px);
+            margin-inline: auto
+        }
+
+        /* Header */
+        .top {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            background: rgba(243, 244, 250, .92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--line)
+        }
+
+        .bar {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            height: 72px
+        }
+
+        .logo {
+            font: 800 1.7rem var(--display);
+            text-decoration: none;
+            color: var(--ink);
+            letter-spacing: -.02em
+        }
+
+        .logo span {
+            color: var(--tomato)
+        }
+
+        .search {
+            flex: 1;
+            max-width: 520px;
+            margin-inline: auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--surface);
+            border: 1.5px solid var(--line);
+            border-radius: 999px;
+            padding: 0 18px;
+            height: 46px
+        }
+
+        .search:focus-within {
+            border-color: var(--cobalt)
+        }
+
+        .search i {
+            color: var(--muted)
+        }
+
+        .search input {
+            border: none;
+            outline: none;
+            background: none;
+            width: 100%;
+            font: 500 1rem var(--body);
+            color: var(--ink)
+        }
+
+        .cart-btn {
+            position: relative;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: none;
+            background: var(--ink);
+            color: #fff;
+            font-size: 1.1rem
+        }
+
+        .cart-btn b {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            min-width: 22px;
+            height: 22px;
+            border-radius: 99px;
+            background: var(--tomato);
+            font-size: .78rem;
+            display: grid;
+            place-items: center;
+            padding: 0 5px
+        }
+
+        .cart-btn.bump {
+            animation: bump .4s
+        }
+
+        @keyframes bump {
+            40% {
+                transform: scale(1.18)
+            }
+        }
+
+        /* Hero */
+        .hero {
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            gap: 48px;
+            align-items: center;
+            padding: 56px 0 40px
+        }
+
+        .hero h1 {
+            font: 800 clamp(2.4rem, 5.4vw, 4.4rem)/1.04 var(--display);
+            letter-spacing: -.03em;
+            margin-bottom: 18px
+        }
+
+        .hero p {
+            color: var(--muted);
+            font-size: 1.15rem;
+            max-width: 46ch;
+            margin-bottom: 28px
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--cobalt);
+            color: #fff;
+            border: none;
+            border-radius: 999px;
+            padding: 15px 30px;
+            font: 700 1rem var(--body);
+            text-decoration: none;
+            transition: transform .2s, background .2s
+        }
+
+        .btn:hover {
+            background: var(--cobalt-d);
+            transform: translateY(-3px)
+        }
+
+        .collage {
+            position: relative;
+            height: 380px
+        }
+
+        .collage .pic {
+            position: absolute;
+            width: 52%;
+            aspect-ratio: 4/5;
+            border-radius: 22px;
+            overflow: hidden;
+            background: var(--sky);
+            box-shadow: 0 20px 40px rgba(16, 24, 40, .18);
+            border: 5px solid #fff
+        }
+
+        .collage .pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        .collage .p1 {
+            left: 0;
+            top: 30px;
+            transform: rotate(-5deg)
+        }
+
+        .collage .p2 {
+            right: 0;
+            top: 0;
+            transform: rotate(4deg)
+        }
+
+        .collage .p3 {
+            left: 24%;
+            bottom: -20px;
+            transform: rotate(-1deg);
+            width: 46%
+        }
+
+        /* Toolbar */
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            align-items: center;
+            justify-content: space-between;
+            margin: 34px 0 28px
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px
+        }
+
+        .chip {
+            border: 1.5px solid var(--line);
+            background: var(--surface);
+            color: var(--ink);
+            border-radius: 999px;
+            padding: 9px 18px;
+            font: 600 .95rem var(--body);
+            transition: .2s
+        }
+
+        .chip small {
+            color: var(--muted);
+            margin-left: 6px;
+            font-weight: 600
+        }
+
+        .chip:hover {
+            border-color: var(--cobalt)
+        }
+
+        .chip.on {
+            background: var(--ink);
+            border-color: var(--ink);
+            color: #fff
+        }
+
+        .chip.on small {
+            color: #B8C0D6
+        }
+
+        .sort {
+            border: 1.5px solid var(--line);
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 10px 14px;
+            font: 600 .95rem var(--body);
+            color: var(--ink)
+        }
+
+        /* Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 24px;
+            padding-bottom: 80px
+        }
+
+        .card {
+            background: var(--surface);
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--line);
+            transition: transform .25s, box-shadow .25s
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 36px rgba(16, 24, 40, .12)
+        }
+
+        .ph {
+            position: relative;
+            aspect-ratio: 4/5;
+            background: var(--sky);
+            overflow: hidden
+        }
+
+        .ph img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .5s
+        }
+
+        .card:hover .ph img {
+            transform: scale(1.05)
+        }
+
+        .ph.noimg::after {
+            content: "\f290";
+            font: 900 2.4rem "Font Awesome 6 Free";
+            color: var(--cobalt);
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center
+        }
+
+        .fav {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: #fff;
+            color: #B6BCCD;
+            display: grid;
+            place-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .12)
+        }
+
+        .fav.on {
+            color: var(--tomato)
+        }
+
+        .info {
+            padding: 16px 18px 6px;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            align-items: flex-start
+        }
+
+        .info h3 {
+            font: 700 1.05rem var(--body)
+        }
+
+        .info small {
+            color: var(--muted)
+        }
+
+        .info strong {
+            font: 800 1rem var(--display);
+            color: var(--cobalt);
+            white-space: nowrap
+        }
+
+        .add {
+            margin: 12px 18px 18px;
+            border: none;
+            border-radius: 12px;
+            background: var(--sky);
+            color: var(--cobalt-d);
+            font: 700 .95rem var(--body);
+            padding: 12px;
+            transition: .2s
+        }
+
+        .add:hover {
+            background: var(--cobalt);
+            color: #fff
+        }
+
+        .empty {
+            text-align: center;
+            color: var(--muted);
+            padding: 60px 0 100px
+        }
+
+        /* Drawer */
+        .veil {
+            position: fixed;
+            inset: 0;
+            background: rgba(16, 24, 40, .5);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .3s;
+            z-index: 50
+        }
+
+        .veil.on {
+            opacity: 1;
+            pointer-events: auto
+        }
+
+        .drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: min(440px, 100%);
+            background: var(--surface);
+            z-index: 60;
+            transform: translateX(100%);
+            transition: transform .35s cubic-bezier(.2, .8, .2, 1);
+            display: flex;
+            flex-direction: column
+        }
+
+        .drawer.on {
+            transform: none
+        }
+
+        .dh {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 22px 24px;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .dh h2 {
+            font: 800 1.4rem var(--display)
+        }
+
+        .x {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--line);
+            background: #fff;
+            font-size: 1rem
+        }
+
+        .items {
+            flex: 1;
+            overflow: auto;
+            padding: 12px 24px
+        }
+
+        .line {
+            display: grid;
+            grid-template-columns: 64px 1fr auto;
+            gap: 14px;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .line .t {
+            width: 64px;
+            height: 64px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--sky)
+        }
+
+        .line .t img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        .line b {
+            display: block;
+            font-size: .98rem
+        }
+
+        .line small {
+            color: var(--muted)
+        }
+
+        .qty {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 6px;
+            border: 1px solid var(--line);
+            border-radius: 99px
+        }
+
+        .qty button {
+            width: 30px;
+            height: 30px;
+            border: none;
+            background: none;
+            font-size: 1rem;
+            border-radius: 50%
+        }
+
+        .qty button:hover {
+            background: var(--sky)
+        }
+
+        .qty span {
+            min-width: 22px;
+            text-align: center;
+            font-weight: 700
+        }
+
+        .rm {
+            border: none;
+            background: none;
+            color: var(--muted);
+            font-size: 1rem;
+            padding: 8px
+        }
+
+        .rm:hover {
+            color: var(--tomato)
+        }
+
+        .df {
+            padding: 20px 24px;
+            border-top: 1px solid var(--line);
+            display: grid;
+            gap: 14px
+        }
+
+        .tot {
+            display: flex;
+            justify-content: space-between;
+            font: 800 1.25rem var(--display)
+        }
+
+        .df .btn {
+            justify-content: center;
+            width: 100%
+        }
+
+        .df .btn[disabled] {
+            opacity: .45;
+            pointer-events: none
+        }
+
+        .link {
+            background: none;
+            border: none;
+            color: var(--muted);
+            text-decoration: underline;
+            font-size: .92rem
+        }
+
+        .none {
+            text-align: center;
+            color: var(--muted);
+            padding: 70px 10px
+        }
+
+        .none i {
+            font-size: 2.4rem;
+            color: var(--line);
+            display: block;
+            margin-bottom: 14px
+        }
+
+        /* Checkout */
+        dialog {
+            border: none;
+            border-radius: 24px;
+            padding: 0;
+            width: min(520px, calc(100% - 28px));
+            max-height: 92vh;
+            overflow: auto;
+            box-shadow: 0 30px 80px rgba(16, 24, 40, .35);
+            color: var(--ink)
+        }
+
+        dialog::backdrop {
+            background: rgba(16, 24, 40, .55)
+        }
+
+        .dg {
+            padding: 30px
+        }
+
+        .dg h2 {
+            font: 800 1.5rem var(--display);
+            margin-bottom: 6px
+        }
+
+        .dg p.sub {
+            color: var(--muted);
+            margin-bottom: 20px
+        }
+
+        .recap {
+            background: var(--bg);
+            border-radius: 14px;
+            padding: 14px 16px;
+            margin-bottom: 20px;
+            font-size: .95rem;
+            display: grid;
+            gap: 6px
+        }
+
+        .recap div {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px
+        }
+
+        .recap .sum {
+            font-weight: 800;
+            border-top: 1px dashed var(--line);
+            padding-top: 8px;
+            margin-top: 4px
+        }
+
+        .fld {
+            display: grid;
+            gap: 6px;
+            margin-bottom: 14px
+        }
+
+        .fld label {
+            font-weight: 600;
+            font-size: .92rem
+        }
+
+        .fld input {
+            border: 1.5px solid var(--line);
+            border-radius: 12px;
+            padding: 13px 14px;
+            font: 500 1rem var(--body);
+            width: 100%
+        }
+
+        .fld input:focus {
+            outline: none;
+            border-color: var(--cobalt)
+        }
+
+        .pay {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 18px
+        }
+
+        .pay label {
+            border: 1.5px solid var(--line);
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            font-weight: 600;
+            font-size: .93rem;
+            cursor: pointer
+        }
+
+        .pay input:checked+span {
+            color: var(--cobalt)
+        }
+
+        .pay label:has(input:checked) {
+            border-color: var(--cobalt);
+            background: var(--sky)
+        }
+
+        .msg {
+            color: #C0261B;
+            font-size: .92rem;
+            min-height: 1.3em;
+            margin-bottom: 8px
+        }
+
+        .done {
+            text-align: center;
+            padding: 20px 6px
+        }
+
+        .done i {
+            font-size: 3rem;
+            color: var(--ok);
+            margin-bottom: 14px
+        }
+
+        .ref {
+            display: inline-block;
+            margin: 14px 0;
+            background: var(--sky);
+            color: var(--cobalt-d);
+            border-radius: 10px;
+            padding: 8px 16px;
+            font: 800 1.05rem var(--display);
+            letter-spacing: .04em
+        }
+
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: 26px;
+            transform: translate(-50%, 30px);
+            background: var(--ink);
+            color: #fff;
+            padding: 13px 22px;
+            border-radius: 99px;
+            font-weight: 600;
+            opacity: 0;
+            pointer-events: none;
+            transition: .3s;
+            z-index: 90;
+            display: flex;
+            gap: 10px;
+            align-items: center
+        }
+
+        .toast.on {
+            opacity: 1;
+            transform: translate(-50%, 0)
+        }
+
+        footer {
+            border-top: 1px solid var(--line);
+            padding: 30px 0;
+            color: var(--muted);
+            font-size: .95rem
+        }
+
+        @media(max-width:860px) {
+            .hero {
+                grid-template-columns: 1fr
+            }
+
+            .collage {
+                height: 300px;
+                max-width: 420px
+            }
+
+            .search {
+                display: none
+            }
+
+            .bar {
+                justify-content: space-between
+            }
+        }
+
+        @media(max-width:560px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 14px
+            }
+
+            .info {
+                flex-direction: column;
+                gap: 4px;
+                padding: 12px 12px 4px
+            }
+
+            .add {
+                margin: 10px 12px 14px
+            }
+
+            .pay {
+                grid-template-columns: 1fr
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            * {
+                transition: none !important;
+                animation: none !important
+            }
+
+            html {
+                scroll-behavior: auto
+            }
+        }
+    </style>
 </head>
+
 <body>
-   <header>
-    <div class="container">
-        <h1>Shopping</h1>
-        <nav>
-            <ul id="nav-links">
-                <li><a href="#Chaussures">Chaussures</a></li>
-                <li><a href="#Pantalons">Pantalons</a></li>
-                <li><a href="#Tee-shirts">Tee-shirts</a></li>
-                <li><a href="#Sacs">Sacs</a></li>
-                <li><a href="#Godasses">Godasses</a></li>
-            </ul>
-        </nav>
-    </div>
-   </header> 
-   <section class="hero">
-    <h2>Bienvenue dans votre boutique préférée!</h2>
-   </section>
-   <section class="container">
-    <h2 id="Chaussures">Chaussures</h2>
-    <div class="Produits">
-        <div class="Produit">
-            <img src="Capture d'écran 2025-05-09 195548.png" alt="Chaussure 1" />
-            <div class="Détails">
-                <h3>Chaussure 1</h3>
-                <p>10000 FCFA</p>
-                <button onclick="addTocart('Chaussure 1', 10000)">Ajouter au panier</button>
-            </div>
-        </div>
-        <div class="Produit">
-            <img src="Capture d'écran 2025-05-09 195616.png" alt="Chaussure 2" />
-            <div class="Détails">
-                <h3>Chaussure 2</h3>
-                <p>11000 FCFA</p>
-                <button onclick="addTocart('Chaussure 2', 11000)">Ajouter au panier</button>
-            </div>
-        </div>
-        <div class="Produit">
-            <img src="Capture d'écran 2025-05-09 195736.png" alt="Chaussure 3" />
-            <div class="Détails">
-                <h3>Chaussure 3</h3>
-                <p>10000 FCFA</p>
-                <button onclick="addTocart('Chaussure 3', 10000)">Ajouter au panier</button>
-            </div>
-        </div>
-        <div class="Produit">
-            <img src="Capture d'écran 2025-05-09 195751.png" alt="Chaussure 4" />
-            <div class="Détails">
-                <h3>Chaussure 4</h3>
-                <p>11000 FCFA</p>
-                <button onclick="addTocart('Chaussure 4', 11000)">Ajouter au panier</button>
-            </div>
-        </div>
-        <div class="Produit">
-            <img src="Capture d'écran 2025-05-09 195817.png" alt="Chaussure 5" />
-            <div class="Détails">
-                <h3>Chaussure 5</h3>
-                <p>12000 FCFA</p>
-                <button onclick="addTocart('Chaussure 5', 12000)">Ajouter au panier</button>
-            </div>
-        </div>
-    </div>
 
-    <h2 id="Pantalons">Pantalons</h2>
-    <div class="Produits">
-        <div class="Produit">
-            <img src="Capture d'écran 2025-05-09 202217.png" alt="Pantalon 1" />
-            <div class="Détails">
-                <h3>Pantalon 1</h3>
-                <p>10000 FCFA</p>
-                <button onclick="addTocart('Pantalon 1', 10000)">Ajouter au panier</button>
-            </div>
+    <header class="top">
+        <div class="wrap bar">
+            <a class="logo" href="#top">Shopping<span>.</span></a>
+            <label class="search"><i class="fa-solid fa-magnifying-glass"></i><input id="q" type="search"
+                    placeholder="Chercher un article…" aria-label="Rechercher un article" /></label>
+            <button class="cart-btn" id="openCart" aria-label="Ouvrir le panier"><i
+                    class="fa-solid fa-bag-shopping"></i><b id="badge">0</b></button>
         </div>
-        <div class="Produit">
-            <img src="Capture d'écran 2025-05-09 202248.png" alt="Pantalon 2" />
-            <div class="Détails">
-                <h3>Pantalon 2</h3>
-                <p>8000 FCFA</p>
-                <button onclick="addTocart('Pantalon 2', 8000)">Ajouter au panier</button>
-            </div>
-        </div>
-        <div class="Produit">
-            <img src="Capture d'écran 2025-05-09 202301.png" alt="Pantalon 3" />
-            <div class="Détails">
-                <h3>Pantalon 3</h3>
-                <p>7000 FCFA</p>
-                <button onclick="addTocart('Pantalon 3', 7000)">Ajouter au panier</button>
-            </div>
-        </div>
-        <div class="Produit">
-            <img src="Capture d'écran 2025-05-09 202358.png" alt="Pantalon 4" />
-            <div class="Détails">
-                <h3>Pantalon 4</h3>
-                <p>9000 FCFA</p>
-                <button onclick="addTocart('Pantalon 4', 9000)">Ajouter au panier</button>
-            </div>
-        </div>
-        <div class="Produit">
-            <img src="Capture d'écran 2025-05-09 202438.png" alt="Pantalon 5" />
-            <div class="Détails">
-                <h3>Pantalon 5</h3>
-                <p>10000 FCFA</p>
-                <button onclick="addTocart('Pantalon 5', 10000)">Ajouter au panier</button>
-            </div>
-        </div>
-    </div>
+    </header>
 
-    <h2 id="Tee-shirts">Tee-shirts</h2>
-    <div class="Produits">
-        <div class="Produit">
-            <img src="Images ventes/Capture d'écran 2025-05-09 204516.png" alt="Tee-shirt 1" />
-            <div class="Détails">
-                <h3>Tee-shirt 1</h3>
-                <p>6000 FCFA</p>
-                <button onclick="addTocart('Tee-shirt 1', 6000)">Ajouter au panier</button>
+    <main id="top">
+        <section class="wrap hero">
+            <div>
+                <h1>Votre boutique préférée, à prix doux.</h1>
+                <p>Chaussures, pantalons, tee-shirts, sacs et godasses. Ajoutez vos coups de cœur au panier et commandez
+                    en quelques secondes.</p>
+                <a class="btn" href="#catalogue"><i class="fa-solid fa-arrow-down"></i> Voir la boutique</a>
             </div>
-        </div>
-        <div class="Produit">
-            <img src="Images ventes/Capture d'écran 2025-05-09 204538.png" alt="Tee-shirt 2" />
-            <div class="Détails">
-                <h3>Tee-shirt 2</h3>
-                <p>6000 FCFA</p>
-                <button onclick="addTocart('Tee-shirt 2', 6000)">Ajouter au panier</button>
+            <div class="collage" aria-hidden="true">
+                <div class="pic p1"><img id="c1" alt=""></div>
+                <div class="pic p2"><img id="c2" alt=""></div>
+                <div class="pic p3"><img id="c3" alt=""></div>
             </div>
-        </div>
-        <div class="Produit">
-            <img src="Images ventes/Capture d'écran 2025-05-09 204611.png" alt="Tee-shirt 3" />
-            <div class="Détails">
-                <h3>Tee-shirt 3</h3>
-                <p>5000 FCFA</p>
-                <button onclick="addTocart('Tee-shirt 3', 5000)">Ajouter au panier</button>
-            </div>
-        </div>
-        <div class="Produit">
-            <img src="Images ventes/Capture d'écran 2025-05-09 204631.png" alt="Tee-shirt 4" />
-            <div class="Détails">
-                <h3>Tee-shirt 4</h3>
-                <p>6000 FCFA</p>
-                <button onclick="addTocart('Tee-shirt 4', 6000)">Ajouter au panier</button>
-            </div>
-        </div>
-        <div class="Produit">
-            <img src="Images ventes/Capture d'écran 2025-05-09 204658.png" alt="Tee-shirt 5" />
-            <div class="Détails">
-                <h3>Tee-shirt 5</h3>
-                <p>7000 FCFA</p>
-                <button onclick="addTocart('Tee-shirt 5', 7000)">Ajouter au panier</button>
-            </div>
-        </div>
-    </div>
+        </section>
 
-    <h2 id="Sacs">Sacs</h2>
-    <div class="Produits">
-        <div class="Produit">
-            <img src="Capture d'écran 2025-05-09 211107.png" alt="Sac 1" />
-            <div class="Détails">
-                <h3>Sac 1</h3>
-                <p>11000 FCFA</p>
-                <button onclick="addTocart('Sac 1', 11000)">Ajouter au panier</button>
+        <section class="wrap" id="catalogue">
+            <div class="toolbar">
+                <div class="chips" id="chips" role="group" aria-label="Catégories"></div>
+                <select class="sort" id="sort" aria-label="Trier les articles">
+                    <option value="def">Trier : sélection</option>
+                    <option value="asc">Prix croissant</option>
+                    <option value="desc">Prix décroissant</option>
+                </select>
             </div>
-        </div>
-        <div class="Produit">
-            <img src="Capture d'écran 2025-05-09 211136.png" alt="Sac 2" />
-            <div class="Détails">
-                <h3>Sac 2</h3>
-                <p>12000 FCFA</p>
-                <button onclick="addTocart('Sac 2', 12000)">Ajouter au panier</button>
-            </div>
-        </div>
-        <div class="Produit">
-            <img src="Capture d'écran 2025-05-09 211238.png" alt="Sac 3" />
-            <div class="Détails">
-                <h3>Sac 3</h3>
-                <p>10000 FCFA</p>
-                <button onclick="addTocart('Sac 3', 10000)">Ajouter au panier</button>
-            </div>
-        </div>
-        <div class="Produit">
-            <img src="Capture d'écran 2025-05-09 211313.png" alt="Sac 4" />
-            <div class="Détails">
-                <h3>Sac 4</h3>
-                <p>11000 FCFA</p>
-                <button onclick="addTocart('Sac 4', 11000)">Ajouter au panier</button>
-            </div>
-        </div>
-        <div class="Produit">
-            <img src="Capture d'écran 2025-05-09 211341.png" alt="Sac 5" />
-            <div class="Détails">
-                <h3>Sac 5</h3>
-                <p>12000 FCFA</p>
-                <button onclick="addTocart('Sac 5', 12000)">Ajouter au panier</button>
-            </div>
-        </div>
-    </div>
+            <div class="grid" id="grid"></div>
+            <p class="empty" id="empty" hidden>Aucun article ne correspond à votre recherche.</p>
+        </section>
+    </main>
 
-    <h2 id="Godasses">Godasses</h2>
-    <div class="Produits">
-        <div class="Produit">
-            <img src="Capture d'écran 2025-05-09 212840.png" alt="Godasse 1" />
-            <div class="Détails">
-                <h3>Godasse 1</h3>
-                <p>15000 FCFA</p>
-                <button onclick="addTocart('Godasse 1', 15000)">Ajouter au panier</button>
-            </div>
+    <footer>
+        <div class="wrap">© <span id="yr"></span> Shopping. Tous les prix sont en FCFA.</div>
+    </footer>
+
+    <div class="veil" id="veil"></div>
+    <aside class="drawer" id="drawer" aria-label="Panier" aria-hidden="true">
+        <div class="dh">
+            <h2>Mon panier</h2><button class="x" id="closeCart" aria-label="Fermer le panier"><i
+                    class="fa-solid fa-xmark"></i></button>
         </div>
-        <div class="Produit">
-            <img src="Capture d'écran 2025-05-09 212751.png" alt="Godasse 2" />
-            <div class="Détails">
-                <h3>Godasse 2</h3>
-                <p>16000 FCFA</p>
-                <button onclick="addTocart('Godasse 2', 16000)">Ajouter au panier</button>
-            </div>
+        <div class="items" id="items"></div>
+        <div class="df">
+            <div class="tot"><span>Total</span><span id="total">0 FCFA</span></div>
+            <button class="btn" id="checkoutBtn"><i class="fa-solid fa-lock"></i> Passer à la caisse</button>
+            <button class="link" id="clearBtn">Vider le panier</button>
         </div>
-        <div class="Produit">
-            <img src="Capture d'écran 2025-05-09 212825.png" alt="Godasse 3" />
-            <div class="Détails">
-                <h3>Godasse 3</h3>
-                <p>16900 FCFA</p>
-                <button onclick="addTocart('Godasse 3', 16900)">Ajouter au panier</button>
-            </div>
-        </div>
-        <div class="Produit">
-            <img src="Capture d'écran 2025-05-09 212856.png" alt="Godasse 4" />
-            <div class="Détails">
-                <h3>Godasse 4</h3>
-                <p>17000 FCFA</p>
-                <button onclick="addTocart('Godasse 4', 17000)">Ajouter au panier</button>
-            </div>
-        </div>
-        <div class="Produit">
-            <img src="Capture d'écran 2025-05-09 212907.png" alt="Godasse 5" />
-            <div class="Détails">
-                <h3>Godasse 5</h3>
-                <p>15500 FCFA</p>
-                <button onclick="addTocart('Godasse 5', 15500)">Ajouter au panier</button>
-            </div>
-        </div>
-    </div>
-   </section>
-    <div class="Cart">
-        <h2>Panier</h2>
-        <div class="cart-items"></div>
-        <div class="total">Total: 0 FCFA</div>
-        <div class="checkout">
-          <button onclick="checkout()">Passer à la caisse</button>
-        </div>
-    </div>
+    </aside>
 
-   <script>
-    // Tableau pour stocker les articles du panier
-    const cartItems = [];
+    <dialog id="checkout" aria-labelledby="coTitle"></dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-    // Fonction pour ajouter un produit au panier
-    function addTocart(name, price) {
-      cartItems.push({ name, price });
-      displayCart();
-    }
+    <script>
+        const $ = s => document.querySelector(s);
+        const fmt = n => n.toLocaleString('fr-FR') + ' FCFA';
+        const load = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } };
+        const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch { } };
 
-    // Fonction pour afficher le contenu du panier et mettre à jour le total
-    function displayCart() {
-      const cartContainer = document.querySelector('.cart-items');
-      const totalContainer = document.querySelector('.total');
-      cartContainer.innerHTML = ''; // Efface le contenu précédent du panier
-      
-      let total = 0;
+        /* ===== Catalogue (mêmes images et prix qu'avant) ===== */
+        const RAW = [
+            ['Chaussures', 'Chaussure', [["Capture d'écran 2025-05-09 195548.png", 10000], ["Capture d'écran 2025-05-09 195616.png", 11000], ["Capture d'écran 2025-05-09 195736.png", 10000], ["Capture d'écran 2025-05-09 195751.png", 11000], ["Capture d'écran 2025-05-09 195817.png", 12000]]],
+            ['Pantalons', 'Pantalon', [["Capture d'écran 2025-05-09 202217.png", 10000], ["Capture d'écran 2025-05-09 202248.png", 8000], ["Capture d'écran 2025-05-09 202301.png", 7000], ["Capture d'écran 2025-05-09 202358.png", 9000], ["Capture d'écran 2025-05-09 202438.png", 10000]]],
+            ['Tee-shirts', 'Tee-shirt', [["Images ventes/Capture d'écran 2025-05-09 204516.png", 6000], ["Images ventes/Capture d'écran 2025-05-09 204538.png", 6000], ["Images ventes/Capture d'écran 2025-05-09 204611.png", 5000], ["Images ventes/Capture d'écran 2025-05-09 204631.png", 6000], ["Images ventes/Capture d'écran 2025-05-09 204658.png", 7000]]],
+            ['Sacs', 'Sac', [["Capture d'écran 2025-05-09 211107.png", 11000], ["Capture d'écran 2025-05-09 211136.png", 12000], ["Capture d'écran 2025-05-09 211238.png", 10000], ["Capture d'écran 2025-05-09 211313.png", 11000], ["Capture d'écran 2025-05-09 211341.png", 12000]]],
+            ['Godasses', 'Godasse', [["Capture d'écran 2025-05-09 212840.png", 15000], ["Capture d'écran 2025-05-09 212751.png", 16000], ["Capture d'écran 2025-05-09 212825.png", 16900], ["Capture d'écran 2025-05-09 212856.png", 17000], ["Capture d'écran 2025-05-09 212907.png", 15500]]]
+        ];
+        const P = [];
+        RAW.forEach(([cat, one, items]) => items.forEach(([img, price], i) => P.push({ id: cat + (i + 1), cat, name: `${one} ${i + 1}`, img, price })));
+        const byId = Object.fromEntries(P.map(p => [p.id, p]));
 
-      cartItems.forEach((item, index) => {
-        total += item.price;
-        const cartItem = document.createElement('div');
-        cartItem.classList.add('cart-item');
-        cartItem.innerHTML = `
-          <span>${item.name} - ${item.price.toLocaleString()} FCFA</span>
-          <button onclick="removeFromCart(${index})" aria-label="Supprimer ${item.name} du panier">&times;</button>
-        `;
-        cartContainer.appendChild(cartItem);
-      });
-      
-      totalContainer.textContent = 'Total: ' + total.toLocaleString() + ' FCFA';
-    }
+        /* ===== État ===== */
+        let filter = 'all', query = '', sort = 'def';
+        let cart = load('shop-cart', {});
+        let favs = load('shop-favs', []);
+        Object.keys(cart).forEach(id => { if (!byId[id]) delete cart[id]; });
 
-    // Fonction pour supprimer un produit du panier
-    function removeFromCart(index) {
-      cartItems.splice(index, 1); // Supprime l'article à l'indice donné
-      displayCart(); // Met à jour l'affichage du panier
-    }
+        /* ===== Collage d'accueil ===== */
+        ['Chaussures1', 'Sacs1', 'Tee-shirts1'].forEach((id, i) => {
+            const el = $('#c' + (i + 1));
+            el.src = byId[id].img;
+            el.onerror = () => el.remove();
+        });
 
-    // Fonction pour passer à la caisse
-    function checkout() {
-      if (cartItems.length === 0) {
-        alert('Votre panier est vide !');
-        return;
-      }
-      const total = cartItems.reduce((sum, item) => sum + item.price, 0);
-      alert(`Merci pour votre achat ! Le montant total est de ${total.toLocaleString()} FCFA.`);
-      cartItems.length = 0; // Vide le panier après la validation
-      displayCart(); // Met à jour le panier (vide)
-    }
+        /* ===== Catégories ===== */
+        function renderChips() {
+            const cats = [['all', 'Tous', P.length], ...RAW.map(r => [r[0], r[0], r[2].length])];
+            $('#chips').innerHTML = cats.map(([id, label, n]) =>
+                `<button class="chip ${filter === id ? 'on' : ''}" data-cat="${id}" aria-pressed="${filter === id}">${label}<small>${n}</small></button>`).join('');
+        }
 
-    // Initial display
-    displayCart();
-   </script>
+        /* ===== Grille ===== */
+        function renderGrid() {
+            const q = query.trim().toLowerCase();
+            let list = P.filter(p => (filter === 'all' || p.cat === filter) && (!q || (p.name + ' ' + p.cat).toLowerCase().includes(q)));
+            if (sort === 'asc') list = [...list].sort((a, b) => a.price - b.price);
+            if (sort === 'desc') list = [...list].sort((a, b) => b.price - a.price);
+            $('#empty').hidden = list.length > 0;
+            $('#grid').innerHTML = list.map(p => {
+                const on = favs.includes(p.id);
+                return `<article class="card">
+      <div class="ph"><img loading="lazy" src="${p.img}" alt="${p.name}" onerror="this.parentNode.classList.add('noimg');this.remove()">
+        <button class="fav ${on ? 'on' : ''}" data-fav="${p.id}" aria-pressed="${on}" aria-label="Ajouter ${p.name} aux favoris"><i class="fa-solid fa-heart"></i></button></div>
+      <div class="info"><div><h3>${p.name}</h3><small>${p.cat}</small></div><strong>${fmt(p.price)}</strong></div>
+      <button class="add" data-add="${p.id}"><i class="fa-solid fa-plus"></i> Ajouter au panier</button>
+    </article>`;
+            }).join('');
+        }
+
+        /* ===== Panier ===== */
+        const count = () => Object.values(cart).reduce((a, b) => a + b, 0);
+        const total = () => Object.entries(cart).reduce((s, [id, q]) => s + byId[id].price * q, 0);
+
+        function renderCart() {
+            const ids = Object.keys(cart);
+            $('#badge').textContent = count();
+            $('#total').textContent = fmt(total());
+            $('#checkoutBtn').disabled = !ids.length;
+            $('#clearBtn').hidden = !ids.length;
+            $('#items').innerHTML = ids.length ? ids.map(id => {
+                const p = byId[id], q = cart[id];
+                return `<div class="line">
+      <div class="t"><img src="${p.img}" alt="" onerror="this.remove()"></div>
+      <div><b>${p.name}</b><small>${fmt(p.price)}</small>
+        <div class="qty"><button data-q="${id}" data-d="-1" aria-label="Retirer une unité">−</button><span>${q}</span><button data-q="${id}" data-d="1" aria-label="Ajouter une unité">+</button></div></div>
+      <button class="rm" data-rm="${id}" aria-label="Supprimer ${p.name}"><i class="fa-solid fa-trash"></i></button>
+    </div>`;
+            }).join('') : `<div class="none"><i class="fa-solid fa-bag-shopping"></i>Votre panier est vide.<br>Ajoutez des articles pour commencer.</div>`;
+            save('shop-cart', cart);
+        }
+
+        function toast(msg) {
+            const t = $('#toast');
+            t.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${msg}`;
+            t.classList.add('on');
+            clearTimeout(toast.t);
+            toast.t = setTimeout(() => t.classList.remove('on'), 2200);
+        }
+
+        function openCart(open) {
+            $('#drawer').classList.toggle('on', open);
+            $('#veil').classList.toggle('on', open);
+            $('#drawer').setAttribute('aria-hidden', !open);
+            document.body.style.overflow = open ? 'hidden' : '';
+        }
+
+        /* ===== Événements ===== */
+        $('#chips').addEventListener('click', e => {
+            const b = e.target.closest('[data-cat]'); if (!b) return;
+            filter = b.dataset.cat; renderChips(); renderGrid();
+        });
+        $('#q').addEventListener('input', e => { query = e.target.value; renderGrid(); });
+        $('#sort').addEventListener('change', e => { sort = e.target.value; renderGrid(); });
+
+        $('#grid').addEventListener('click', e => {
+            const add = e.target.closest('[data-add]');
+            const fav = e.target.closest('[data-fav]');
+            if (add) {
+                const id = add.dataset.add;
+                cart[id] = (cart[id] || 0) + 1;
+                renderCart();
+                const cb = $('#openCart'); cb.classList.remove('bump'); void cb.offsetWidth; cb.classList.add('bump');
+                toast(`${byId[id].name} ajouté au panier`);
+            }
+            if (fav) {
+                const id = fav.dataset.fav;
+                favs = favs.includes(id) ? favs.filter(f => f !== id) : [...favs, id];
+                save('shop-favs', favs);
+                fav.classList.toggle('on', favs.includes(id));
+                fav.setAttribute('aria-pressed', favs.includes(id));
+            }
+        });
+
+        $('#items').addEventListener('click', e => {
+            const q = e.target.closest('[data-q]'), rm = e.target.closest('[data-rm]');
+            if (q) {
+                const id = q.dataset.q; cart[id] += +q.dataset.d;
+                if (cart[id] <= 0) delete cart[id];
+                renderCart();
+            }
+            if (rm) { delete cart[rm.dataset.rm]; renderCart(); }
+        });
+
+        $('#openCart').onclick = () => openCart(true);
+        $('#closeCart').onclick = () => openCart(false);
+        $('#veil').onclick = () => openCart(false);
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') openCart(false); });
+        $('#clearBtn').onclick = () => { cart = {}; renderCart(); };
+
+        /* ===== Caisse ===== */
+        const dlg = $('#checkout');
+        $('#checkoutBtn').onclick = () => {
+            if (!count()) return;
+            openCart(false);
+            const lines = Object.entries(cart).map(([id, q]) => `<div><span>${byId[id].name} × ${q}</span><span>${fmt(byId[id].price * q)}</span></div>`).join('');
+            dlg.innerHTML = `<div class="dg">
+    <h2 id="coTitle">Finaliser la commande</h2>
+    <p class="sub">Vérifiez votre panier puis renseignez vos informations.</p>
+    <div class="recap">${lines}<div class="sum"><span>Total</span><span>${fmt(total())}</span></div></div>
+    <form id="coForm" novalidate>
+      <div class="fld"><label for="cn">Nom complet</label><input id="cn" autocomplete="name" required></div>
+      <div class="fld"><label for="cp">Téléphone</label><input id="cp" type="tel" autocomplete="tel" placeholder="+237 6…" required></div>
+      <div class="fld"><label for="cv">Ville et quartier de livraison</label><input id="cv" required></div>
+      <div class="pay">
+        <label><input type="radio" name="pay" value="Paiement à la livraison" checked><span>Paiement à la livraison</span></label>
+        <label><input type="radio" name="pay" value="Mobile Money"><span>Mobile Money</span></label>
+      </div>
+      <p class="msg" id="coMsg" role="alert"></p>
+      <button class="btn" style="width:100%;justify-content:center" type="submit">Confirmer la commande</button>
+      <button class="link" style="width:100%;margin-top:12px" type="button" id="coCancel">Retour au panier</button>
+    </form></div>`;
+            dlg.showModal();
+            $('#coCancel').onclick = () => { dlg.close(); openCart(true); };
+            $('#coForm').onsubmit = ev => {
+                ev.preventDefault();
+                const n = $('#cn').value.trim(), p = $('#cp').value.trim(), v = $('#cv').value.trim();
+                const msg = $('#coMsg');
+                if (!n || !p || !v) { msg.textContent = 'Merci de remplir tous les champs.'; return; }
+                if (!/^\+?\d[\d\s.-]{7,}$/.test(p)) { msg.textContent = 'Entrez un numéro de téléphone valide.'; return; }
+                const ref = 'CMD-' + Math.random().toString(36).slice(2, 8).toUpperCase();
+                const pay = document.querySelector('input[name=pay]:checked').value;
+                const amount = fmt(total());
+                cart = {}; renderCart();
+                dlg.innerHTML = `<div class="dg done"><i class="fa-solid fa-circle-check"></i>
+      <h2>Merci ${n.split(' ')[0]} !</h2>
+      <p class="sub">Votre commande est enregistrée.</p>
+      <div class="ref">${ref}</div>
+      <p>Montant : <b>${amount}</b><br>${pay}<br>Livraison : ${v}</p>
+      <button class="btn" style="margin-top:22px" id="coClose">Continuer mes achats</button></div>`;
+                $('#coClose').onclick = () => dlg.close();
+            };
+        };
+        dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+
+        /* ===== Init ===== */
+        $('#yr').textContent = new Date().getFullYear();
+        renderChips(); renderGrid(); renderCart();
+    </script>
 </body>
-</html>
 
-  
-   
+</html>
