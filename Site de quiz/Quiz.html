@@ -1,360 +1,887 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Quiz Interactif - 20 Questions</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-  
-  * {
-    box-sizing: border-box;
-  }
-
-  body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    padding: 20px;
-  }
-
-  #quiz-container {
-    background: #1f1f38;
-    border-radius: 12px;
-    max-width: 600px;
-    width: 100%;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  }
-
-  header {
-    padding: 30px 30px 10px;
-    text-align: center;
-    font-size: 1.8rem;
-    font-weight: 600;
-    letter-spacing: 1.2px;
-    user-select: none;
-  }
-
-  #progress-bar {
-    height: 8px;
-    background: #44476b;
-    width: 100%;
-    border-radius: 20px;
-    margin: 15px 0 20px;
-    overflow: hidden;
-  }
-  #progress-bar-inner {
-    height: 100%;
-    background: #d76ef5;
-    width: 0%;
-    transition: width 0.5s ease;
-    border-radius: 20px;
-  }
-
-  #question-container {
-    padding: 0 30px 40px 30px;
-    min-height: 220px;
-    position: relative;
-  }
-
-  .question {
-    font-size: 1.3rem;
-    margin-bottom: 20px;
-    line-height: 1.3;
-    animation: fadeInUp 0.5s ease forwards;
-  }
-
-  #answers {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  #answers li {
-    background: #2c2c50;
-    margin-bottom: 12px;
-    padding: 15px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-    color: #ccc;
-    user-select: none;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    position: relative;
-  }
-  #answers li:hover {
-    background: #764ba2;
-    color: #fff;
-  }
-  #answers li.selected {
-    background: #d76ef5;
-    color: #fff;
-  }
-
-  #answers li.correct {
-    background: #4caf50;
-    color: white;
-    font-weight: 600;
-  }
-  #answers li.incorrect {
-    background: #e74c3c;
-    color: white;
-    font-weight: 600;
-  }
-
-  nav {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 30px 30px 30px;
-  }
-
-  button {
-    background: #d76ef5;
-    border: none;
-    padding: 12px 28px;
-    border-radius: 30px;
-    color: #fff;
-    font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-    box-shadow: 0 5px 15px rgba(215,110,245,0.4);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    user-select: none;
-  }
-
-  button:disabled {
-    background: #6a4b90;
-    cursor: not-allowed;
-    box-shadow: none;
-  }
-
-  button:hover:not(:disabled) {
-    background: #b741ef;
-    box-shadow: 0 8px 20px rgba(183,65,239,0.7);
-  }
-
-  #result {
-    padding: 40px 30px;
-    font-size: 1.4rem;
-    text-align: center;
-  }
-
-  #result-score {
-    font-weight: 700;
-    font-size: 2.4rem;
-    margin-top: 12px;
-    color: #d76ef5;
-  }
-
-  /* Animations */
-  @keyframes fadeInUp {
-    0% {
-      opacity: 0;
-      transform: translateY(15px);
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz Informatique | GL, ASR, Cybersécurité, Web</title>
+  <meta name="description"
+    content="Testez vos connaissances en informatique : génie logiciel, algorithmique, bases de données, réseaux, systèmes, cybersécurité et web." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Sora:wght@400;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg: #0D1526;
+      --panel: #15203A;
+      --panel-2: #1B2948;
+      --line: #2A3B61;
+      --ink: #EAF0FF;
+      --muted: #9CABCB;
+      --ok: #34D399;
+      --bad: #F87171;
+      --accent: #7AA2FF;
+      --head: 'Sora', 'Segoe UI', sans-serif;
+      --mono: 'IBM Plex Mono', Consolas, monospace;
     }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
 
-  .fade-out {
-    animation: fadeOutDown 0.4s ease forwards;
-  }
-  @keyframes fadeOutDown {
-    0% {
-      opacity: 1;
-      transform: translateY(0);
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
     }
-    100% {
-      opacity: 0;
-      transform: translateY(15px);
-    }
-  }
 
-</style>
+    body {
+      font-family: var(--head);
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+      line-height: 1.55;
+      overflow-x: hidden
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      color: inherit
+    }
+
+    :focus-visible {
+      outline: 3px solid #FACC15;
+      outline-offset: 3px;
+      border-radius: 10px
+    }
+
+    .wrap {
+      width: min(920px, 100% - 36px);
+      margin-inline: auto;
+      padding: 40px 0 80px
+    }
+
+    code {
+      font-family: var(--mono);
+      background: rgba(122, 162, 255, .16);
+      padding: 2px 7px;
+      border-radius: 6px;
+      font-size: .92em
+    }
+
+    .screen {
+      display: none
+    }
+
+    .screen.on {
+      display: block;
+      animation: in .4s ease
+    }
+
+    @keyframes in {
+      from {
+        opacity: 0;
+        transform: translateY(12px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    /* Accueil */
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font: 500 .95rem var(--mono);
+      margin-bottom: 26px
+    }
+
+    .brand i {
+      color: var(--accent)
+    }
+
+    h1 {
+      font-size: clamp(2.1rem, 5.4vw, 3.6rem);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -.03em;
+      margin-bottom: 16px
+    }
+
+    h1 span {
+      color: var(--accent)
+    }
+
+    .lead {
+      color: var(--muted);
+      max-width: 56ch;
+      margin-bottom: 30px
+    }
+
+    .opts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 22px;
+      margin-bottom: 34px;
+      align-items: center
+    }
+
+    .opt {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: .95rem;
+      color: var(--muted)
+    }
+
+    .seg {
+      display: inline-flex;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 4px
+    }
+
+    .seg button {
+      border: none;
+      background: none;
+      padding: 8px 16px;
+      border-radius: 9px;
+      font-weight: 600;
+      color: var(--muted)
+    }
+
+    .seg button.on {
+      background: var(--accent);
+      color: #0D1526
+    }
+
+    .cats {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 16px
+    }
+
+    .cat {
+      text-align: left;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px;
+      display: grid;
+      gap: 10px;
+      transition: transform .2s, border-color .2s;
+      position: relative;
+      overflow: hidden
+    }
+
+    .cat::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 5px;
+      background: var(--c)
+    }
+
+    .cat:hover {
+      transform: translateY(-4px);
+      border-color: var(--c)
+    }
+
+    .cat .ic {
+      width: 46px;
+      height: 46px;
+      border-radius: 13px;
+      background: color-mix(in srgb, var(--c) 18%, transparent);
+      color: var(--c);
+      display: grid;
+      place-items: center;
+      font-size: 1.2rem
+    }
+
+    .cat h2 {
+      font-size: 1.1rem;
+      font-weight: 700
+    }
+
+    .cat p {
+      color: var(--muted);
+      font-size: .9rem
+    }
+
+    .cat .best {
+      font: 500 .82rem var(--mono);
+      color: var(--c)
+    }
+
+    .cat.mix {
+      grid-column: 1/-1;
+      background: var(--panel-2)
+    }
+
+    /* Quiz */
+    .qtop {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px
+    }
+
+    .quit {
+      background: none;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 8px 14px;
+      color: var(--muted);
+      font-size: .9rem
+    }
+
+    .quit:hover {
+      color: var(--ink);
+      border-color: var(--ink)
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font: 500 .9rem var(--mono);
+      color: var(--c)
+    }
+
+    .segs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 22px
+    }
+
+    .segs i {
+      flex: 1;
+      height: 7px;
+      border-radius: 99px;
+      background: var(--line)
+    }
+
+    .segs i.cur {
+      background: var(--muted)
+    }
+
+    .segs i.ok {
+      background: var(--ok)
+    }
+
+    .segs i.bad {
+      background: var(--bad)
+    }
+
+    .timer {
+      height: 5px;
+      background: var(--line);
+      border-radius: 99px;
+      overflow: hidden;
+      margin-bottom: 26px
+    }
+
+    .timer b {
+      display: block;
+      height: 100%;
+      width: 100%;
+      background: var(--accent);
+      transform-origin: left
+    }
+
+    .timer.off {
+      visibility: hidden
+    }
+
+    .qbox {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 30px
+    }
+
+    .qnum {
+      font: 500 .9rem var(--mono);
+      color: var(--muted);
+      margin-bottom: 10px
+    }
+
+    .qtext {
+      font-size: clamp(1.2rem, 2.6vw, 1.6rem);
+      font-weight: 600;
+      line-height: 1.35;
+      margin-bottom: 24px
+    }
+
+    .ans {
+      display: grid;
+      gap: 12px
+    }
+
+    .a {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-align: left;
+      background: var(--panel-2);
+      border: 2px solid var(--line);
+      border-radius: 14px;
+      padding: 15px 18px;
+      font-size: 1.02rem;
+      transition: border-color .15s, background .15s
+    }
+
+    .a kbd {
+      font: 500 .85rem var(--mono);
+      width: 30px;
+      height: 30px;
+      flex: 0 0 30px;
+      border-radius: 8px;
+      background: var(--bg);
+      display: grid;
+      place-items: center;
+      color: var(--muted)
+    }
+
+    .a:hover:not(:disabled) {
+      border-color: var(--accent)
+    }
+
+    .a:disabled {
+      cursor: default
+    }
+
+    .a.ok {
+      border-color: var(--ok);
+      background: rgba(52, 211, 153, .12)
+    }
+
+    .a.ok kbd {
+      background: var(--ok);
+      color: #06251A
+    }
+
+    .a.bad {
+      border-color: var(--bad);
+      background: rgba(248, 113, 113, .12)
+    }
+
+    .a.bad kbd {
+      background: var(--bad);
+      color: #2A0A0A
+    }
+
+    .a .mark {
+      margin-left: auto;
+      font-size: 1.1rem
+    }
+
+    .a.ok .mark {
+      color: var(--ok)
+    }
+
+    .a.bad .mark {
+      color: var(--bad)
+    }
+
+    .fb {
+      margin-top: 20px;
+      border-radius: 14px;
+      padding: 16px 18px;
+      background: var(--panel-2);
+      border-left: 5px solid var(--muted);
+      display: none
+    }
+
+    .fb.on {
+      display: block;
+      animation: in .3s
+    }
+
+    .fb.ok {
+      border-color: var(--ok)
+    }
+
+    .fb.bad {
+      border-color: var(--bad)
+    }
+
+    .fb b {
+      display: block;
+      margin-bottom: 4px
+    }
+
+    .next {
+      margin-top: 22px;
+      display: none;
+      justify-content: flex-end
+    }
+
+    .next.on {
+      display: flex
+    }
+
+    .btn {
+      background: var(--accent);
+      color: #0D1526;
+      border: none;
+      border-radius: 12px;
+      padding: 14px 26px;
+      font: 700 1rem var(--head);
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      transition: transform .2s
+    }
+
+    .btn:hover {
+      transform: translateY(-2px)
+    }
+
+    .btn.ghost {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--line)
+    }
+
+    /* Résultats */
+    .score {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      align-items: center;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 32px;
+      margin-bottom: 26px
+    }
+
+    .ring {
+      --p: 0;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: conic-gradient(var(--accent) calc(var(--p)*1%), var(--line) 0);
+      display: grid;
+      place-items: center;
+      flex: 0 0 150px
+    }
+
+    .ring div {
+      width: 116px;
+      height: 116px;
+      border-radius: 50%;
+      background: var(--panel);
+      display: grid;
+      place-items: center;
+      font: 800 2.1rem var(--head)
+    }
+
+    .score h2 {
+      font-size: 1.7rem;
+      margin-bottom: 6px
+    }
+
+    .score p {
+      color: var(--muted)
+    }
+
+    .res-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px
+    }
+
+    h3.sec {
+      font-size: 1.15rem;
+      margin: 30px 0 14px
+    }
+
+    .bk {
+      display: grid;
+      gap: 12px
+    }
+
+    .bk div {
+      display: grid;
+      grid-template-columns: 170px 1fr 60px;
+      gap: 14px;
+      align-items: center;
+      font-size: .95rem
+    }
+
+    .bk .bar {
+      height: 9px;
+      background: var(--line);
+      border-radius: 99px;
+      overflow: hidden
+    }
+
+    .bk .bar i {
+      display: block;
+      height: 100%;
+      border-radius: 99px;
+      background: var(--c)
+    }
+
+    .rev {
+      display: grid;
+      gap: 14px
+    }
+
+    .ri {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--bad);
+      border-radius: 14px;
+      padding: 18px 20px
+    }
+
+    .ri h4 {
+      font-size: 1rem;
+      margin-bottom: 8px
+    }
+
+    .ri p {
+      color: var(--muted);
+      font-size: .94rem
+    }
+
+    .ri p b {
+      color: var(--ok)
+    }
+
+    .perfect {
+      background: rgba(52, 211, 153, .12);
+      border: 1px solid var(--ok);
+      border-radius: 14px;
+      padding: 18px
+    }
+
+    @media(max-width:560px) {
+      .qbox {
+        padding: 20px
+      }
+
+      .bk div {
+        grid-template-columns: 110px 1fr 46px
+      }
+
+      .score {
+        padding: 22px
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      * {
+        animation: none !important;
+        transition: none !important
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <div id="quiz-container" role="main" aria-live="polite">
-    <header>Quiz Interactif: 20 Questions</header>
-    <div id="progress-bar" aria-label="Progression du quiz">
-      <div id="progress-bar-inner"></div>
-    </div>
-    <section id="question-container">
-      <div class="question" id="question"></div>
-      <ul id="answers" role="list"></ul>
+  <div class="wrap">
+
+    <!-- ===== Accueil ===== -->
+    <section class="screen on" id="home">
+      <div class="brand"><i class="fa-solid fa-terminal"></i> quiz.informatique</div>
+      <h1>Teste ton niveau en <span>informatique</span>.</h1>
+      <p class="lead">70 questions en génie logiciel, algorithmique, bases de données, réseaux, systèmes, cybersécurité
+        et web. Chaque réponse est expliquée pour t'aider à progresser.</p>
+      <div class="opts">
+        <div class="opt">Nombre de questions
+          <div class="seg" id="segN" role="group" aria-label="Nombre de questions"><button data-n="10"
+              class="on">10</button><button data-n="20">20</button></div>
+        </div>
+        <div class="opt">Chrono de 30 s
+          <div class="seg" id="segT" role="group" aria-label="Chronomètre"><button data-t="1"
+              class="on">Oui</button><button data-t="0">Non</button></div>
+        </div>
+      </div>
+      <div class="cats" id="cats"></div>
     </section>
-    <nav>
-      <button id="prev-btn" aria-label="Question précédente" disabled>Précédent</button>
-      <button id="next-btn" aria-label="Question suivante" disabled>Suivant</button>
-    </nav>
+
+    <!-- ===== Quiz ===== -->
+    <section class="screen" id="quiz">
+      <div class="qtop"><span class="tag" id="qtag"></span><button class="quit" id="quit"><i
+            class="fa-solid fa-xmark"></i> Quitter</button></div>
+      <div class="segs" id="segs" aria-hidden="true"></div>
+      <div class="timer" id="timer" aria-hidden="true"><b id="timerBar"></b></div>
+      <div class="qbox">
+        <div class="qnum" id="qnum"></div>
+        <div class="qtext" id="qtext"></div>
+        <div class="ans" id="ans"></div>
+        <div class="fb" id="fb" role="status" aria-live="polite"></div>
+        <div class="next" id="next"><button class="btn" id="nextBtn">Suivant <i
+              class="fa-solid fa-arrow-right"></i></button></div>
+      </div>
+    </section>
+
+    <!-- ===== Résultats ===== -->
+    <section class="screen" id="result">
+      <div class="score">
+        <div class="ring" id="ring">
+          <div id="ringTxt"></div>
+        </div>
+        <div>
+          <h2 id="rTitle"></h2>
+          <p id="rSub"></p>
+          <div class="res-actions"><button class="btn" id="replay"><i class="fa-solid fa-rotate-right"></i>
+              Rejouer</button><button class="btn ghost" id="homeBtn"><i class="fa-solid fa-house"></i> Accueil</button>
+          </div>
+        </div>
+      </div>
+      <div id="bkWrap">
+        <h3 class="sec">Résultats par thème</h3>
+        <div class="bk" id="bk"></div>
+      </div>
+      <h3 class="sec" id="revTitle">À revoir</h3>
+      <div class="rev" id="rev"></div>
+    </section>
   </div>
 
-<script>
-  const quizData = [
-    { question: "Quelle est la capitale de la France ?", answers: ["Paris", "Lyon", "Marseille", "Toulouse"], correct: 0 },
-    { question: "Lequel est un langage de programmation ?", answers: ["HTML", "CSS", "JavaScript", "Photoshop"], correct: 2 },
-    { question: "Quelle planète est la plus proche du Soleil ?", answers: ["Vénus", "Mars", "Mercure", "Jupiter"], correct: 2 },
-    { question: "Quel est l'élément chimique avec le symbole O ?", answers: ["Or", "Oxygène", "Osmium", "Argon"], correct: 1 },
-    { question: "Quelle est la langue la plus parlée au monde ?", answers: ["Anglais", "Mandarin", "Espagnol", "Hindi"], correct: 1 },
-    { question: "Qui a peint la Joconde ?", answers: ["Van Gogh", "Picasso", "Léonard de Vinci", "Michel-Ange"], correct: 2 },
-    { question: "Combien de continents y a-t-il ?", answers: ["5", "6", "7", "8"], correct: 2 },
-    { question: "Quel océan est le plus grand ?", answers: ["Atlantique", "Arctique", "Pacifique", "Indien"], correct: 2 },
-    { question: "Laquelle de ces villes est en Allemagne ?", answers: ["Vienne", "Berlin", "Zurich", "Bruxelles"], correct: 1 },
-    { question: "Quel animal est le plus rapide ?", answers: ["Guépard", "Tigre", "Lion", "Léopard"], correct: 0 },
-    { question: "Quel est le plus haut sommet du monde ?", answers: ["K2", "Everest", "Kangchenjunga", "Lhotse"], correct: 1 },
-    { question: "Quelle devise est utilisée au Japon ?", answers: ["Yen", "Won", "Dollar", "Euro"], correct: 0 },
-    { question: "Quelle est la formule chimique de l'eau ?", answers: ["H2", "CO2", "O2", "H2O"], correct: 3 },
-    { question: "Qui est l'auteur de « Les Misérables » ?", answers: ["Victor Hugo", "Albert Camus", "Émile Zola", "Gustave Flaubert"], correct: 0 },
-    { question: "Quel est le plus grand pays du monde ?", answers: ["Canada", "Chine", "États-Unis", "Russie"], correct: 3 },
-    { question: "Quelle ville est connue comme « La ville lumière » ?", answers: ["Rome", "Paris", "Venise", "Barcelone"], correct: 1 },
-    { question: "Qui a découvert la gravité ?", answers: ["Galilée", "Einstein", "Newton", "Tesla"], correct: 2 },
-    { question: "Lequel est un système d'exploitation ?", answers: ["Linux", "HTML", "Firefox", "Google"], correct: 0 },
-    { question: "Quelle est la capitale de l'Australie ?", answers: ["Sydney", "Melbourne", "Canberra", "Adélaïde"], correct: 2 },
-    { question: "Quel gaz est essentiel pour respirer ?", answers: ["Azote", "Oxygène", "Dioxyde de carbone", "Hélium"], correct: 1 },
-  ];
+  <script>
+    const $ = s => document.querySelector(s);
+    const CATS = {
+      gl: { n: 'Génie logiciel', i: 'fa-diagram-project', c: '#7AA2FF', d: 'UML, Scrum, Git, design patterns, tests' },
+      algo: { n: 'Algorithmique et POO', i: 'fa-code', c: '#FACC15', d: 'Complexité, structures de données, objets' },
+      bd: { n: 'Bases de données', i: 'fa-database', c: '#2DD4BF', d: 'SQL, normalisation, transactions, NoSQL' },
+      net: { n: 'Réseaux (ASR)', i: 'fa-network-wired', c: '#A3E635', d: 'OSI, TCP/IP, adressage, services' },
+      sys: { n: 'Systèmes et Linux (ASR)', i: 'fa-server', c: '#C084FC', d: 'Commandes, droits, processus, paquets' },
+      cyber: { n: 'Cybersécurité', i: 'fa-shield-halved', c: '#FB7185', d: 'Attaques, cryptographie, bonnes pratiques' },
+      web: { n: 'Développement web', i: 'fa-globe', c: '#FB923C', d: 'HTML, CSS, JavaScript, HTTP, PHP' }
+    };
 
-  let currentIndex = 0;
-  let score = 0;
-  let userAnswers = new Array(quizData.length).fill(null);
+    /* [catégorie, question, [réponses], index de la bonne réponse, explication] */
+    const Q = [
+      /* Génie logiciel */
+      ['gl', "Quel diagramme UML décrit les fonctionnalités du système du point de vue des acteurs ?", ["Diagramme de cas d'utilisation", "Diagramme de classes", "Diagramme de déploiement", "Diagramme d'états-transitions"], 0, "Le diagramme de cas d'utilisation montre qui (les acteurs) utilise le système et pour faire quoi."],
+      ['gl', "Dans Scrum, comment s'appelle une itération courte de développement ?", ["Un sprint", "Une release", "Un backlog", "Un daily"], 0, "Un sprint dure en général de 1 à 4 semaines et produit un incrément livrable."],
+      ['gl', "Que signifie le « S » de SOLID ?", ["Single Responsibility (responsabilité unique)", "Simple Syntax", "Structured Sharing", "Secure Software"], 0, "Une classe ne doit avoir qu'une seule raison de changer."],
+      ['gl', "Quel patron de conception garantit qu'une classe n'a qu'une seule instance ?", ["Singleton", "Observer", "Factory", "Decorator"], 0, "Le Singleton fournit aussi un point d'accès global à cette instance unique."],
+      ['gl', "Quelle relation UML exprime « est composé de » avec un cycle de vie lié ?", ["Composition", "Héritage", "Dépendance", "Association simple"], 0, "Dans une composition, si le tout est détruit, ses parties le sont aussi (ex. une maison et ses pièces)."],
+      ['gl', "Un test unitaire vérifie…", ["une petite unité de code isolée (fonction, méthode)", "l'ensemble du système en production", "la charge maximale du serveur", "l'ergonomie de l'interface"], 0, "Les tests unitaires ciblent la plus petite partie testable du code, indépendamment du reste."],
+      ['gl', "Quelle commande Git crée une nouvelle branche et bascule dessus ?", ["`git checkout -b ma-branche`", "`git branch -d ma-branche`", "`git merge ma-branche`", "`git clone ma-branche`"], 0, "`git switch -c ma-branche` fait la même chose avec la syntaxe récente."],
+      ['gl', "Que signifie « CI » dans CI/CD ?", ["Intégration continue", "Contrôle interne", "Code incrémental", "Conception initiale"], 0, "L'intégration continue consiste à fusionner et tester le code très fréquemment, de façon automatique."],
+      ['gl', "Quel cycle de vie associe chaque phase de conception à une phase de test ?", ["Le cycle en V", "Le modèle en cascade pur", "Scrum", "Kanban"], 0, "Dans le cycle en V, la spécification correspond aux tests de recette, la conception aux tests d'intégration, etc."],
+      ['gl', "Dans Scrum, qui priorise le backlog produit ?", ["Le Product Owner", "Le Scrum Master", "Le testeur", "Le chef de projet technique"], 0, "Le Product Owner représente les besoins métier et ordonne le backlog par valeur."],
 
-  const questionEl = document.getElementById('question');
-  const answersEl = document.getElementById('answers');
-  const prevBtn = document.getElementById('prev-btn');
-  const nextBtn = document.getElementById('next-btn');
-  const progressBarInner = document.getElementById('progress-bar-inner');
-  const quizContainer = document.getElementById('quiz-container');
+      /* Algorithmique et POO */
+      ['algo', "Quelle est la complexité de la recherche dichotomique dans un tableau trié de n éléments ?", ["O(log n)", "O(n)", "O(n²)", "O(1)"], 0, "À chaque étape, on divise l'espace de recherche par deux."],
+      ['algo', "Quelle structure de données suit le principe LIFO ?", ["La pile", "La file", "Le tableau", "La liste chaînée"], 0, "LIFO signifie « dernier entré, premier sorti » (Last In, First Out)."],
+      ['algo', "Quelle est la complexité moyenne du tri fusion ?", ["O(n log n)", "O(n²)", "O(log n)", "O(n³)"], 0, "Le tri fusion divise en deux (log n niveaux) puis fusionne en temps linéaire."],
+      ['algo', "Quel concept de la POO consiste à cacher les détails internes d'un objet ?", ["L'encapsulation", "L'héritage", "Le polymorphisme", "La surcharge"], 0, "L'encapsulation protège l'état interne et n'expose que des méthodes publiques."],
+      ['algo', "Que vaut `7 // 2` en Python ?", ["3", "3.5", "4", "2"], 0, "L'opérateur `//` effectue une division entière. `7 / 2` donnerait 3.5."],
+      ['algo', "Quelle boucle s'exécute toujours au moins une fois ?", ["do … while", "while", "for", "foreach"], 0, "Dans `do … while`, la condition est testée après l'exécution du corps."],
+      ['algo', "Qu'est-ce que la récursivité ?", ["Une fonction qui s'appelle elle-même", "Une boucle infinie", "Une fonction sans paramètre", "Un algorithme de tri"], 0, "Une fonction récursive doit avoir un cas de base pour s'arrêter."],
+      ['algo', "Quelle structure de données suit le principe FIFO ?", ["La file", "La pile", "L'arbre binaire", "Le graphe"], 0, "FIFO signifie « premier entré, premier sorti » (First In, First Out), comme une file d'attente."],
+      ['algo', "Le polymorphisme permet de…", ["traiter des objets de classes différentes via une même interface", "copier un objet", "masquer un attribut", "empêcher l'héritage"], 0, "Un même appel de méthode peut avoir des comportements différents selon la classe réelle de l'objet."],
+      ['algo', "Quelle est la complexité d'un accès à un élément de tableau par son indice ?", ["O(1)", "O(n)", "O(log n)", "O(n log n)"], 0, "L'adresse se calcule directement : c'est un accès en temps constant."],
 
-  function updateProgress() {
-    const progressPercent = ((currentIndex) / quizData.length) * 100;
-    progressBarInner.style.width = progressPercent + '%';
-  }
+      /* Bases de données */
+      ['bd', "Quelle clause SQL filtre les lignes avant tout regroupement ?", ["WHERE", "HAVING", "ORDER BY", "LIMIT"], 0, "`WHERE` filtre les lignes ; `HAVING` filtre les groupes après `GROUP BY`."],
+      ['bd', "Une clé primaire doit être…", ["unique et non nulle", "répétable", "toujours textuelle", "facultative"], 0, "Elle identifie de façon unique chaque enregistrement de la table."],
+      ['bd', "Quelle jointure conserve toutes les lignes de la table de gauche ?", ["LEFT JOIN", "INNER JOIN", "CROSS JOIN", "SELF JOIN"], 0, "Les lignes sans correspondance à droite apparaissent avec des valeurs NULL."],
+      ['bd', "Dans ACID, que garantit l'atomicité ?", ["Une transaction s'exécute entièrement ou pas du tout", "Les données survivent à une panne", "Les transactions parallèles ne se gênent pas", "Les contraintes sont toujours respectées"], 0, "Les autres propositions décrivent la durabilité, l'isolation et la cohérence."],
+      ['bd', "La 3e forme normale (3NF) supprime…", ["les dépendances transitives", "les clés étrangères", "les index", "les doublons de lignes"], 0, "Aucun attribut non clé ne doit dépendre d'un autre attribut non clé."],
+      ['bd', "Quelle commande SQL supprime des lignes d'une table ?", ["DELETE", "DROP", "ALTER", "UPDATE"], 0, "`DROP` supprime la table elle-même, `DELETE` supprime des lignes."],
+      ['bd', "À quoi sert la clause HAVING ?", ["Filtrer les groupes après un GROUP BY", "Trier les résultats", "Joindre deux tables", "Créer un index"], 0, "Exemple : `HAVING COUNT(*) > 5` garde les groupes de plus de 5 lignes."],
+      ['bd', "Un index sert principalement à…", ["accélérer les recherches", "chiffrer les données", "dupliquer une table", "limiter le nombre de colonnes"], 0, "Il accélère les lectures mais ralentit un peu les écritures."],
+      ['bd', "Lequel est une base de données NoSQL orientée documents ?", ["MongoDB", "MySQL", "PostgreSQL", "Oracle Database"], 0, "MongoDB stocke des documents JSON/BSON. Les trois autres sont relationnelles."],
+      ['bd', "Que signifie MCD dans la méthode Merise ?", ["Modèle conceptuel de données", "Modèle central de données", "Méthode de conception dynamique", "Modèle de contrôle distribué"], 0, "Le MCD se traduit ensuite en MLD (logique) puis en MPD (physique)."],
 
-  function clearAnswersSelection() {
-    Array.from(answersEl.children).forEach(li => {
-      li.classList.remove('selected', 'correct', 'incorrect');
-      li.removeAttribute('aria-checked');
-    });
-  }
+      /* Réseaux */
+      ['net', "Combien de couches compte le modèle OSI ?", ["7", "4", "5", "9"], 0, "Physique, liaison, réseau, transport, session, présentation, application. Le modèle TCP/IP en compte 4."],
+      ['net', "Quel est le port par défaut de HTTPS ?", ["443", "80", "21", "25"], 0, "80 = HTTP, 21 = FTP, 25 = SMTP."],
+      ['net', "Quel protocole attribue automatiquement des adresses IP aux machines ?", ["DHCP", "DNS", "FTP", "SNMP"], 0, "Le serveur DHCP distribue adresse, masque, passerelle et DNS."],
+      ['net', "Quel masque correspond à /24 ?", ["255.255.255.0", "255.255.0.0", "255.255.255.128", "255.0.0.0"], 0, "/24 signifie 24 bits à 1 : 255.255.255.0."],
+      ['net', "Quel service traduit un nom de domaine en adresse IP ?", ["DNS", "DHCP", "NAT", "ARP"], 0, "Le DNS fait le lien entre `exemple.com` et son adresse IP."],
+      ['net', "À quelle couche OSI le routeur travaille-t-il principalement ?", ["La couche réseau (3)", "La couche liaison (2)", "La couche transport (4)", "La couche physique (1)"], 0, "Le routeur achemine les paquets en fonction des adresses IP."],
+      ['net', "Quel protocole de transport est orienté connexion et fiable ?", ["TCP", "UDP", "ICMP", "ARP"], 0, "TCP assure l'ordre, la retransmission et le contrôle de flux. UDP ne les garantit pas."],
+      ['net', "Combien d'adresses d'hôtes utilisables offre un réseau /24 ?", ["254", "256", "255", "252"], 0, "256 adresses moins l'adresse réseau et l'adresse de diffusion."],
+      ['net', "Quel port utilise SSH par défaut ?", ["22", "23", "25", "3389"], 0, "23 = Telnet (non chiffré), 3389 = Bureau à distance Windows."],
+      ['net', "Quelle commande Windows affiche la configuration IP d'une machine ?", ["`ipconfig`", "`chkdsk`", "`tasklist`", "`sfc`"], 0, "Sous Linux, on utilise `ip a` (ou l'ancien `ifconfig`)."],
 
-  function renderQuestion() {
-    const data = quizData[currentIndex];
-    // Animate fade out before changing question
-    questionEl.classList.add('fade-out');
-    answersEl.classList.add('fade-out');
+      /* Systèmes */
+      ['sys', "Quelle commande Linux affiche le répertoire courant ?", ["`pwd`", "`ls`", "`cd`", "`whoami`"], 0, "`pwd` signifie « print working directory »."],
+      ['sys', "Que signifie `chmod 755 fichier` ?", ["rwxr-xr-x : tous les droits pour le propriétaire, lecture et exécution pour les autres", "rw-r--r-- : lecture et écriture pour le propriétaire", "rwx------ : accès réservé au propriétaire", "rwxrwxrwx : tous les droits pour tout le monde"], 0, "7 = rwx, 5 = r-x. Les trois chiffres concernent propriétaire, groupe et autres."],
+      ['sys', "Quel fichier contient la liste des comptes utilisateurs sous Linux ?", ["`/etc/passwd`", "`/var/log/users`", "`/home/users.conf`", "`/bin/accounts`"], 0, "Les mots de passe hachés sont dans `/etc/shadow`, lisible uniquement par root."],
+      ['sys', "Quelle commande recherche un motif dans un fichier texte ?", ["`grep`", "`chown`", "`tar`", "`mkdir`"], 0, "Exemple : `grep erreur journal.log`."],
+      ['sys', "Quel gestionnaire de paquets est utilisé par défaut sur Ubuntu et Debian ?", ["`apt`", "`yum`", "`pacman`", "`brew`"], 0, "`yum`/`dnf` sont pour Red Hat/Fedora, `pacman` pour Arch."],
+      ['sys', "Quelle commande affiche dynamiquement les processus en cours ?", ["`top`", "`mkdir`", "`mv`", "`ln`"], 0, "`htop` en est une version plus confortable."],
+      ['sys', "Quel est le rôle du noyau (kernel) ?", ["Gérer le matériel et les ressources pour les programmes", "Fournir l'interface graphique", "Compiler les programmes", "Stocker les mots de passe"], 0, "Il fait l'interface entre le matériel et les applications."],
+      ['sys', "Quel symbole redirige la sortie d'une commande vers un fichier en l'écrasant ?", ["`>`", "`>>`", "`|`", "`<`"], 0, "`>>` ajoute à la fin du fichier, `|` envoie la sortie vers une autre commande."],
+      ['sys', "Quel compte possède tous les droits sur un système Linux ?", ["root", "guest", "nobody", "daemon"], 0, "Le compte root (UID 0) est le super-utilisateur."],
+      ['sys', "Que fait la commande `sudo` ?", ["Exécute une commande avec les droits d'un autre utilisateur (souvent root)", "Supprime un utilisateur", "Redémarre le noyau", "Compresse un dossier"], 0, "`sudo` évite de travailler en permanence en root."],
 
-    setTimeout(() => {
-      questionEl.classList.remove('fade-out');
-      answersEl.classList.remove('fade-out');
+      /* Cybersécurité */
+      ['cyber', "Que désigne le phishing ?", ["Une tentative d'hameçonnage pour voler des informations", "Un virus qui chiffre les fichiers", "Une panne de réseau", "Une mise à jour forcée"], 0, "Le phishing se fait souvent par e-mail ou SMS avec un faux lien."],
+      ['cyber', "Que représente la triade CIA en sécurité ?", ["Confidentialité, Intégrité, Disponibilité", "Contrôle, Identité, Accès", "Chiffrement, Inspection, Audit", "Compatibilité, Interopérabilité, Authenticité"], 0, "Ce sont les trois objectifs fondamentaux de la sécurité de l'information."],
+      ['cyber', "Quelle protection est la plus efficace contre l'injection SQL ?", ["Les requêtes préparées (paramétrées)", "Masquer le formulaire", "Utiliser un mot de passe long", "Désactiver le CSS"], 0, "Les paramètres sont transmis séparément du code SQL, donc jamais interprétés comme du SQL."],
+      ['cyber', "Quel protocole sécurise HTTPS ?", ["TLS", "FTP", "SMTP", "ARP"], 0, "TLS (successeur de SSL) chiffre et authentifie la connexion."],
+      ['cyber', "Que caractérise l'authentification multifacteur ?", ["Deux preuves de catégories différentes (ex. mot de passe + code SMS)", "Deux mots de passe différents", "Un mot de passe changé chaque mois", "Un mot de passe stocké sur deux appareils"], 0, "Catégories : ce que je sais, ce que je possède, ce que je suis."],
+      ['cyber', "Quel algorithme est adapté au stockage des mots de passe ?", ["bcrypt ou Argon2", "MD5", "Base64", "ROT13"], 0, "MD5 est rapide et cassé ; Base64 et ROT13 ne sont pas du hachage."],
+      ['cyber', "Qu'est-ce qu'une attaque DDoS ?", ["Saturer un service avec un trafic massif venant de nombreuses machines", "Voler une base de données", "Installer un keylogger", "Usurper une adresse e-mail"], 0, "Le but est de rendre le service indisponible."],
+      ['cyber', "Que fait un pare-feu (firewall) ?", ["Il filtre le trafic selon des règles", "Il chiffre les disques", "Il sauvegarde les données", "Il accélère le Wi-Fi"], 0, "Il autorise ou bloque les connexions selon adresses, ports et protocoles."],
+      ['cyber', "Que signifie XSS ?", ["Cross-Site Scripting : injection de scripts dans des pages vues par d'autres", "Extended Secure Socket", "Cross-Server Sync", "XML Security Standard"], 0, "On s'en protège en échappant les données affichées et avec une politique CSP."],
+      ['cyber', "Quel principe donne à chaque utilisateur uniquement les droits nécessaires ?", ["Le moindre privilège", "La défense en profondeur", "Le chiffrement de bout en bout", "La redondance"], 0, "Cela limite les dégâts en cas de compte compromis."],
 
-      questionEl.textContent = `Q${currentIndex + 1}. ${data.question}`;
-      answersEl.innerHTML = "";
+      /* Web */
+      ['web', "Quelle balise HTML5 regroupe les liens de navigation ?", ["`<nav>`", "`<menu-links>`", "`<header>`", "`<aside>`"], 0, "`<nav>` est une balise sémantique utile aux lecteurs d'écran."],
+      ['web', "Quelle méthode HTTP sert habituellement à créer une ressource dans une API REST ?", ["POST", "GET", "DELETE", "HEAD"], 0, "GET lit, POST crée, PUT/PATCH modifient, DELETE supprime."],
+      ['web', "Que signifie le code HTTP 404 ?", ["Ressource introuvable", "Erreur interne du serveur", "Accès refusé", "Redirection permanente"], 0, "500 = erreur serveur, 403 = accès refusé, 301 = redirection permanente."],
+      ['web', "Quelle déclaration CSS active Flexbox ?", ["`display: flex`", "`flex: display`", "`position: flex`", "`float: flex`"], 0, "On l'applique au conteneur parent."],
+      ['web', "Que fait l'opérateur `===` en JavaScript ?", ["Il compare la valeur et le type", "Il compare uniquement la valeur", "Il affecte une valeur", "Il compare seulement les références"], 0, "`5 === '5'` est faux, alors que `5 == '5'` est vrai."],
+      ['web', "Quel format est le plus utilisé pour échanger des données avec une API ?", ["JSON", "BMP", "PSD", "MP3"], 0, "JSON est léger, lisible et natif en JavaScript."],
+      ['web', "En PHP, un nom de variable commence par…", ["`$`", "`@`", "`#`", "`&`"], 0, "Exemple : `$nom = 'Modeste';`."],
+      ['web', "À quoi sert `async/await` en JavaScript ?", ["Écrire du code asynchrone de façon lisible avec les promesses", "Déclarer une constante", "Boucler sur un tableau", "Importer un module"], 0, "`await` attend la résolution d'une promesse dans une fonction `async`."],
+      ['web', "Quel est le rôle de CSS ?", ["Mettre en forme les pages", "Structurer le contenu", "Interroger la base de données", "Exécuter la logique serveur"], 0, "HTML structure, CSS présente, JavaScript rend la page interactive."],
+      ['web', "Quel mécanisme du navigateur contrôle les requêtes entre origines différentes ?", ["CORS", "CRUD", "CDN", "CLI"], 0, "CORS (Cross-Origin Resource Sharing) est configuré côté serveur avec des en-têtes HTTP."]
+    ];
 
-      data.answers.forEach((answer, i) => {
-        const li = document.createElement('li');
-        li.setAttribute('role', 'option');
-        li.setAttribute('tabindex', '0');
-        li.textContent = answer;
+    /* ===== Utilitaires ===== */
+    const esc = s => s.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+    const rich = s => esc(s).replace(/`([^`]+)`/g, '<code>$1</code>');
+    const shuffle = a => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[a[i], a[j]] = [a[j], a[i]]; } return a; };
+    const load = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } };
+    const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch { } };
+    const screen = id => { document.querySelectorAll('.screen').forEach(s => s.classList.toggle('on', s.id === id)); window.scrollTo(0, 0); };
 
-        if (userAnswers[currentIndex] === i) {
-          li.classList.add('selected');
-          li.setAttribute('aria-checked', 'true');
-        } else {
-          li.setAttribute('aria-checked', 'false');
-        }
+    const opt = { n: 10, timer: true };
+    let best = load('quiz-best', {});
+    let run = null, tick = null;
+    const LIMIT = 30;
 
-        li.addEventListener('click', () => selectAnswer(i));
-        li.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            selectAnswer(i);
-          }
-        });
+    /* ===== Accueil ===== */
+    function renderCats() {
+      const total = Q.length;
+      const card = (k, c, count, mix) => `<button class="cat ${mix ? 'mix' : ''}" style="--c:${c.c}" data-cat="${k}">
+    <span class="ic"><i class="fa-solid ${c.i}"></i></span>
+    <h2>${c.n}</h2><p>${c.d}</p>
+    <span class="best">${count} questions${best[k] != null ? ' · meilleur score : ' + best[k] + '%' : ''}</span></button>`;
+      $('#cats').innerHTML =
+        card('all', { n: 'Mélange de tous les thèmes', i: 'fa-shuffle', c: '#EAF0FF', d: 'Des questions tirées au hasard dans les 7 thèmes.' }, total, true) +
+        Object.entries(CATS).map(([k, c]) => card(k, c, Q.filter(q => q[0] === k).length)).join('');
+    }
+    $('#segN').addEventListener('click', e => { const b = e.target.closest('[data-n]'); if (!b) return; opt.n = +b.dataset.n;[...$('#segN').children].forEach(x => x.classList.toggle('on', x === b)); });
+    $('#segT').addEventListener('click', e => { const b = e.target.closest('[data-t]'); if (!b) return; opt.timer = b.dataset.t === '1';[...$('#segT').children].forEach(x => x.classList.toggle('on', x === b)); });
+    $('#cats').addEventListener('click', e => { const b = e.target.closest('[data-cat]'); if (b) start(b.dataset.cat); });
 
-        answersEl.appendChild(li);
+    /* ===== Déroulement ===== */
+    function start(cat) {
+      const pool = cat === 'all' ? Q : Q.filter(q => q[0] === cat);
+      const picked = shuffle(pool).slice(0, Math.min(opt.n, pool.length)).map(q => {
+        const order = shuffle(q[2].map((t, i) => ({ t, ok: i === q[3] })));
+        return { cat: q[0], q: q[1], a: order, right: order.findIndex(o => o.ok), why: q[4] };
       });
+      run = { cat, list: picked, i: 0, score: 0, res: [], locked: false };
+      const c = cat === 'all' ? { n: 'Mélange', i: 'fa-shuffle', c: '#EAF0FF' } : CATS[cat];
+      const tag = $('#qtag'); tag.style.setProperty('--c', c.c);
+      tag.innerHTML = `<i class="fa-solid ${c.i}"></i> ${c.n}`;
+      $('#segs').innerHTML = picked.map(() => '<i></i>').join('');
+      $('#timer').classList.toggle('off', !opt.timer);
+      screen('quiz'); showQ();
+    }
 
-      updateProgress();
-      updateNavigationButtons();
-    }, 400);
-  }
+    function showQ() {
+      const x = run.list[run.i]; run.locked = false;
+      $('#qnum').textContent = `Question ${run.i + 1} sur ${run.list.length}` + (run.cat === 'all' ? ` · ${CATS[x.cat].n}` : '');
+      $('#qtext').innerHTML = rich(x.q);
+      $('#ans').innerHTML = x.a.map((o, k) => `<button class="a" data-k="${k}"><kbd>${'ABCD'[k]}</kbd><span>${rich(o.t)}</span><span class="mark"></span></button>`).join('');
+      $('#fb').className = 'fb'; $('#next').classList.remove('on');
+      [...$('#segs').children].forEach((s, k) => { s.className = k < run.res.length ? (run.res[k].ok ? 'ok' : 'bad') : (k === run.i ? 'cur' : ''); });
+      startTimer();
+    }
 
-  function selectAnswer(index) {
-    userAnswers[currentIndex] = index;
-    score = 0;
-    // Recalculate score counting correct answers so far
-    userAnswers.forEach((ans, idx) => {
-      if (ans === quizData[idx].correct) {
-        score++;
-      }
+    function startTimer() {
+      clearInterval(tick);
+      const bar = $('#timerBar'); bar.style.transition = 'none'; bar.style.transform = 'scaleX(1)'; bar.style.background = 'var(--accent)';
+      if (!opt.timer) return;
+      void bar.offsetWidth;
+      bar.style.transition = `transform ${LIMIT}s linear, background .3s`; bar.style.transform = 'scaleX(0)';
+      const t0 = Date.now();
+      tick = setInterval(() => {
+        const left = LIMIT - (Date.now() - t0) / 1000;
+        if (left < 8) bar.style.background = 'var(--bad)';
+        if (left <= 0) answer(-1);
+      }, 250);
+    }
+
+    function answer(k) {
+      if (run.locked) return; run.locked = true;
+      clearInterval(tick);
+      const bar = $('#timerBar'); bar.style.transition = 'none'; bar.style.transform = getComputedStyle(bar).transform;
+      const x = run.list[run.i], ok = k === x.right;
+      if (ok) run.score++;
+      run.res.push({ ok, k, x });
+      [...$('#ans').children].forEach((b, i) => {
+        b.disabled = true;
+        if (i === x.right) { b.classList.add('ok'); b.querySelector('.mark').innerHTML = '<i class="fa-solid fa-check"></i>'; }
+        else if (i === k) { b.classList.add('bad'); b.querySelector('.mark').innerHTML = '<i class="fa-solid fa-xmark"></i>'; }
+      });
+      const fb = $('#fb');
+      fb.className = 'fb on ' + (ok ? 'ok' : 'bad');
+      fb.innerHTML = `<b>${ok ? 'Bonne réponse !' : (k === -1 ? 'Temps écoulé.' : 'Pas tout à fait.')}</b>${rich(x.why)}`;
+      $('#segs').children[run.i].className = ok ? 'ok' : 'bad';
+      $('#nextBtn').innerHTML = run.i === run.list.length - 1 ? 'Voir mon résultat <i class="fa-solid fa-flag-checkered"></i>' : 'Suivant <i class="fa-solid fa-arrow-right"></i>';
+      $('#next').classList.add('on');
+      $('#nextBtn').focus({ preventScroll: true });
+    }
+
+    $('#ans').addEventListener('click', e => { const b = e.target.closest('[data-k]'); if (b) answer(+b.dataset.k); });
+    $('#nextBtn').onclick = () => { if (run.i < run.list.length - 1) { run.i++; showQ(); } else finish(); };
+    $('#quit').onclick = () => { clearInterval(tick); renderCats(); screen('home'); };
+    document.addEventListener('keydown', e => {
+      if (!$('#quiz').classList.contains('on') || !run) return;
+      const map = { '1': 0, '2': 1, '3': 2, '4': 3, a: 0, b: 1, c: 2, d: 3 };
+      const k = map[e.key.toLowerCase()];
+      if (k !== undefined && !run.locked && k < run.list[run.i].a.length) answer(k);
     });
-    // Update UI selected state
-    clearAnswersSelection();
-    const items = answersEl.children;
-    if (items[index]) {
-      items[index].classList.add('selected');
-      items[index].setAttribute('aria-checked', 'true');
+
+    /* ===== Résultats ===== */
+    function finish() {
+      clearInterval(tick);
+      const total = run.list.length, pct = Math.round(run.score / total * 100);
+      if (best[run.cat] == null || pct > best[run.cat]) { best[run.cat] = pct; save('quiz-best', best); }
+      $('#ring').style.setProperty('--p', pct);
+      $('#ringTxt').textContent = pct + '%';
+      $('#rTitle').textContent = `${run.score} bonne${run.score > 1 ? 's' : ''} réponse${run.score > 1 ? 's' : ''} sur ${total}`;
+      $('#rSub').textContent = pct >= 80 ? 'Excellent niveau, tu maîtrises bien ces notions.' : pct >= 60 ? 'Bon niveau. Relis les explications des erreurs pour progresser.' : pct >= 40 ? 'Les bases sont là, mais quelques notions sont à consolider.' : 'Pas de panique : relis les explications ci-dessous et réessaie.';
+
+      const by = {};
+      run.res.forEach(r => { const c = r.x.cat; by[c] = by[c] || [0, 0]; by[c][1]++; if (r.ok) by[c][0]++; });
+      const multi = Object.keys(by).length > 1;
+      $('#bkWrap').hidden = !multi;
+      $('#bk').innerHTML = Object.entries(by).map(([c, [ok, n]]) =>
+        `<div style="--c:${CATS[c].c}"><span>${CATS[c].n}</span><span class="bar"><i style="width:${ok / n * 100}%"></i></span><span>${ok}/${n}</span></div>`).join('');
+
+      const wrong = run.res.filter(r => !r.ok);
+      $('#revTitle').textContent = wrong.length ? `À revoir (${wrong.length})` : 'Sans faute';
+      $('#rev').innerHTML = wrong.length ? wrong.map(r => `<div class="ri">
+      <h4>${rich(r.x.q)}</h4>
+      <p>Ta réponse : ${r.k === -1 ? '<i>aucune (temps écoulé)</i>' : rich(r.x.a[r.k].t)}</p>
+      <p>Bonne réponse : <b>${rich(r.x.a[r.x.right].t)}</b></p>
+      <p style="margin-top:8px">${rich(r.x.why)}</p></div>`).join('')
+        : '<div class="perfect"><i class="fa-solid fa-trophy"></i> Bravo, aucune erreur sur cette série !</div>';
+      screen('result');
     }
-    updateNavigationButtons();
-  }
+    $('#replay').onclick = () => start(run.cat);
+    $('#homeBtn').onclick = () => { renderCats(); screen('home'); };
 
-  function updateNavigationButtons() {
-    prevBtn.disabled = currentIndex === 0;
-    nextBtn.disabled = userAnswers[currentIndex] === null;
-    if(currentIndex === quizData.length - 1) {
-      nextBtn.textContent = "Terminer";
-    } else {
-      nextBtn.textContent = "Suivant";
-    }
-  }
-
-  function showResult() {
-    quizContainer.innerHTML = `
-      <header>Résultat du quiz</header>
-      <div id="result" aria-live="polite">
-        Vous avez répondu correctement à <span id="result-score">${score}</span> sur <span>${quizData.length}</span> questions
-      </div>
-      <div style="text-align:center; padding-bottom: 30px;">
-        <button id="restart-btn">Recommencer</button>
-      </div>
-    `;
-
-    const restartBtn = document.getElementById('restart-btn');
-    restartBtn.addEventListener('click', () => {
-      currentIndex = 0;
-      score = 0;
-      userAnswers.fill(null);
-      location.reload();
-    });
-  }
-
-  prevBtn.addEventListener('click', () => {
-    if (currentIndex > 0) {
-      currentIndex--;
-      renderQuestion();
-    }
-  });
-
-  nextBtn.addEventListener('click', () => {
-    if (userAnswers[currentIndex] === null) return; // safety check
-    if (currentIndex < quizData.length - 1) {
-      currentIndex++;
-      renderQuestion();
-    } else {
-      showResult();
-    }
-  });
-
-  // Initialize quiz
-  renderQuestion();
-</script>
+    renderCats();
+  </script>
 </body>
-</html>
 
+</html>
