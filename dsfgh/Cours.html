@@ -1,130 +1,1356 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Inscription aux Cours en Ligne</title>
-<link rel="stylesheet" href="Cours.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CoursEnLigne | De la 6ème à la Licence 3</title>
+  <meta name="description"
+    content="Tous les cours de la 6ème à la Terminale (toutes séries) et de la Licence 1 à la Licence 3 (toutes filières). Inscris-toi et suis ta progression." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --board: #123B33;
+      --board-2: #1A4A40;
+      --chalk: #F6F7F2;
+      --yellow: #F6D55C;
+      --bg: #F4F6F5;
+      --surface: #fff;
+      --ink: #14201D;
+      --muted: #586763;
+      --line: #DCE3E0;
+      --col: #2459D6;
+      --lyc: #B84A14;
+      --uni: #6D3FD6;
+      --ok: #12805C;
+      --err: #C0261B;
+      --f: 'Lexend', 'Segoe UI', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      font-family: var(--f);
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+      overflow-x: hidden
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      color: inherit
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--yellow);
+      outline-offset: 3px;
+      border-radius: 8px
+    }
+
+    .wrap {
+      width: min(1180px, 100% - 40px);
+      margin-inline: auto
+    }
+
+    /* Header */
+    header.top {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: var(--board);
+      color: var(--chalk);
+      border-bottom: 1px solid rgba(255, 255, 255, .08)
+    }
+
+    .bar {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      height: 70px
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      text-decoration: none;
+      color: var(--chalk);
+      cursor: pointer;
+      background: none;
+      border: none
+    }
+
+    .logo i {
+      background: var(--yellow);
+      color: var(--board);
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-size: 1rem
+    }
+
+    .search {
+      flex: 1;
+      max-width: 560px;
+      margin-inline: auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #fff;
+      border-radius: 999px;
+      padding: 0 18px;
+      height: 44px;
+      color: var(--ink)
+    }
+
+    .search i {
+      color: var(--muted)
+    }
+
+    .search input {
+      border: none;
+      outline: none;
+      width: 100%;
+      font: 400 .98rem var(--f);
+      background: none
+    }
+
+    .mine {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1.5px solid rgba(255, 255, 255, .35);
+      background: none;
+      color: var(--chalk);
+      border-radius: 999px;
+      padding: 9px 18px;
+      font-weight: 500;
+      font-size: .95rem
+    }
+
+    .mine:hover {
+      background: rgba(255, 255, 255, .1)
+    }
+
+    .mine b {
+      background: var(--yellow);
+      color: var(--board);
+      border-radius: 99px;
+      min-width: 22px;
+      height: 22px;
+      display: grid;
+      place-items: center;
+      font-size: .8rem;
+      padding: 0 6px
+    }
+
+    /* Hero */
+    .hero {
+      background: var(--board);
+      color: var(--chalk);
+      padding: 60px 0 120px
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5.4vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -.02em;
+      max-width: 18ch;
+      margin-bottom: 18px
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--yellow)
+    }
+
+    .hero p {
+      color: #BFD0CA;
+      font-size: 1.12rem;
+      max-width: 56ch
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 34px;
+      margin-top: 30px;
+      color: #BFD0CA
+    }
+
+    .stats b {
+      display: block;
+      color: var(--chalk);
+      font-size: 1.7rem;
+      font-weight: 700;
+      line-height: 1.1
+    }
+
+    .cycles {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: -76px;
+      position: relative
+    }
+
+    .cy {
+      background: var(--surface);
+      border: none;
+      border-radius: 22px;
+      padding: 28px;
+      text-align: left;
+      box-shadow: 0 14px 34px rgba(18, 59, 51, .16);
+      display: grid;
+      gap: 10px;
+      transition: transform .25s;
+      border-top: 6px solid var(--c)
+    }
+
+    .cy:hover {
+      transform: translateY(-6px)
+    }
+
+    .cy .ic {
+      width: 54px;
+      height: 54px;
+      border-radius: 15px;
+      background: var(--c);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 1.4rem
+    }
+
+    .cy h2 {
+      font-size: 1.5rem;
+      font-weight: 700
+    }
+
+    .cy p {
+      color: var(--muted);
+      font-size: .95rem
+    }
+
+    .cy .go {
+      color: var(--c);
+      font-weight: 600;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: 4px
+    }
+
+    main {
+      padding: 40px 0 90px;
+      min-height: 60vh
+    }
+
+    .how {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 56px
+    }
+
+    .how div {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px
+    }
+
+    .how i {
+      color: var(--board);
+      background: #E3EFEA;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 12px
+    }
+
+    .how h3 {
+      font-size: 1.05rem;
+      margin-bottom: 4px
+    }
+
+    .how p {
+      color: var(--muted);
+      font-size: .93rem
+    }
+
+    /* Navigation */
+    .crumbs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      font-size: .92rem;
+      color: var(--muted);
+      margin-bottom: 22px
+    }
+
+    .crumbs button {
+      background: none;
+      border: none;
+      color: var(--muted);
+      text-decoration: underline;
+      font-size: inherit
+    }
+
+    .crumbs button:hover {
+      color: var(--ink)
+    }
+
+    .crumbs b {
+      color: var(--ink);
+      font-weight: 600
+    }
+
+    .vh {
+      margin-bottom: 26px
+    }
+
+    .vh h2 {
+      font-size: clamp(1.7rem, 3.6vw, 2.4rem);
+      font-weight: 700;
+      line-height: 1.15
+    }
+
+    .vh p {
+      color: var(--muted);
+      margin-top: 6px
+    }
+
+    h3.step {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 30px 0 14px
+    }
+
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px
+    }
+
+    .pill {
+      border: 2px solid var(--line);
+      background: var(--surface);
+      border-radius: 14px;
+      padding: 14px 26px;
+      font-weight: 600;
+      font-size: 1.02rem;
+      transition: .2s
+    }
+
+    .pill:hover {
+      border-color: var(--c)
+    }
+
+    .pill.on {
+      background: var(--c);
+      border-color: var(--c);
+      color: #fff
+    }
+
+    .grp {
+      margin-bottom: 14px
+    }
+
+    .grp small {
+      display: block;
+      color: var(--muted);
+      margin-bottom: 8px;
+      font-size: .9rem
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px
+    }
+
+    .chip {
+      border: 2px solid var(--line);
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 10px 16px;
+      font-weight: 500;
+      font-size: .95rem;
+      text-align: left
+    }
+
+    .chip:hover {
+      border-color: var(--c)
+    }
+
+    .chip.on {
+      background: var(--c);
+      border-color: var(--c);
+      color: #fff
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 18px
+    }
+
+    .course {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 20px;
+      text-align: left;
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: 6px 14px;
+      align-items: center;
+      transition: transform .2s, border-color .2s
+    }
+
+    .course:hover {
+      transform: translateY(-4px);
+      border-color: var(--c)
+    }
+
+    .course .ic {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--c) 14%, #fff);
+      color: var(--c);
+      display: grid;
+      place-items: center;
+      font-size: 1.25rem
+    }
+
+    .course b {
+      font-weight: 600;
+      font-size: 1rem;
+      line-height: 1.3;
+      display: block
+    }
+
+    .course small {
+      color: var(--muted);
+      font-size: .85rem
+    }
+
+    .course .pg {
+      grid-column: 1/-1;
+      margin-top: 8px
+    }
+
+    .bar-p {
+      height: 7px;
+      border-radius: 99px;
+      background: var(--line);
+      overflow: hidden
+    }
+
+    .bar-p i {
+      display: block;
+      height: 100%;
+      background: var(--ok);
+      border-radius: 99px
+    }
+
+    .tick {
+      color: var(--ok);
+      font-size: .8rem;
+      font-weight: 600
+    }
+
+    .fil {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px;
+      text-align: left;
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      transition: .2s
+    }
+
+    .fil:hover {
+      border-color: var(--c);
+      transform: translateY(-3px)
+    }
+
+    .fil .ic {
+      width: 46px;
+      height: 46px;
+      flex: 0 0 46px;
+      border-radius: 12px;
+      background: var(--c);
+      color: #fff;
+      display: grid;
+      place-items: center
+    }
+
+    .fil b {
+      font-weight: 600;
+      font-size: .98rem;
+      line-height: 1.3
+    }
+
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 60px 0
+    }
+
+    .count {
+      color: var(--muted);
+      margin-bottom: 16px;
+      font-size: .95rem
+    }
+
+    /* Panneau */
+    .veil {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 26, 22, .55);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s;
+      z-index: 50
+    }
+
+    .veil.on {
+      opacity: 1;
+      pointer-events: auto
+    }
+
+    .panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: min(480px, 100%);
+      background: var(--surface);
+      z-index: 60;
+      transform: translateX(100%);
+      transition: transform .35s cubic-bezier(.2, .8, .2, 1);
+      display: flex;
+      flex-direction: column
+    }
+
+    .panel.on {
+      transform: none
+    }
+
+    .ph {
+      padding: 24px 26px;
+      background: var(--c, var(--board));
+      color: #fff;
+      position: relative
+    }
+
+    .ph small {
+      opacity: .85
+    }
+
+    .ph h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin: 4px 40px 0 0
+    }
+
+    .close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255, 255, 255, .2);
+      color: #fff;
+      font-size: 1rem
+    }
+
+    .pb {
+      flex: 1;
+      overflow: auto;
+      padding: 22px 26px
+    }
+
+    .pb h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 10px
+    }
+
+    .pgl {
+      display: flex;
+      justify-content: space-between;
+      font-size: .9rem;
+      color: var(--muted);
+      margin-bottom: 6px
+    }
+
+    .chl {
+      list-style: none;
+      margin: 18px 0
+    }
+
+    .chl li {
+      border-bottom: 1px solid var(--line)
+    }
+
+    .chl label {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 13px 2px;
+      cursor: pointer
+    }
+
+    .chl input {
+      appearance: none;
+      width: 22px;
+      height: 22px;
+      flex: 0 0 22px;
+      border-radius: 7px;
+      border: 2px solid #B7C4BF;
+      margin-top: 2px;
+      display: grid;
+      place-items: center;
+      cursor: pointer
+    }
+
+    .chl input:checked {
+      background: var(--ok);
+      border-color: var(--ok)
+    }
+
+    .chl input:checked::after {
+      content: "\f00c";
+      font: 900 .7rem "Font Awesome 6 Free";
+      color: #fff
+    }
+
+    .chl input:checked+span {
+      color: var(--muted);
+      text-decoration: line-through
+    }
+
+    .pf {
+      padding: 18px 26px;
+      border-top: 1px solid var(--line)
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--board);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 14px 24px;
+      font: 600 1rem var(--f);
+      width: 100%;
+      transition: transform .2s
+    }
+
+    .btn:hover {
+      transform: translateY(-2px)
+    }
+
+    .btn.done {
+      background: #E3F4EC;
+      color: var(--ok);
+      cursor: default;
+      transform: none
+    }
+
+    .btn.ghost {
+      background: none;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      width: auto
+    }
+
+    .mi {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px 12px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--line);
+      align-items: center
+    }
+
+    .mi b {
+      font-weight: 600
+    }
+
+    .mi small {
+      color: var(--muted)
+    }
+
+    .mi button {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 10px;
+      padding: 8px 14px;
+      font-size: .9rem
+    }
+
+    .mi .bar-p {
+      grid-column: 1/-1
+    }
+
+    dialog {
+      border: none;
+      border-radius: 24px;
+      padding: 0;
+      width: min(480px, calc(100% - 28px));
+      box-shadow: 0 30px 80px rgba(10, 26, 22, .4);
+      color: var(--ink)
+    }
+
+    dialog::backdrop {
+      background: rgba(10, 26, 22, .6)
+    }
+
+    .dg {
+      padding: 30px
+    }
+
+    .dg h2 {
+      font-size: 1.4rem;
+      margin-bottom: 4px
+    }
+
+    .dg .sub {
+      color: var(--muted);
+      margin-bottom: 18px;
+      font-size: .95rem
+    }
+
+    .target {
+      background: #E3EFEA;
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-bottom: 18px;
+      font-weight: 500
+    }
+
+    .fld {
+      display: grid;
+      gap: 6px;
+      margin-bottom: 14px
+    }
+
+    .fld label {
+      font-weight: 500;
+      font-size: .92rem
+    }
+
+    .fld input {
+      border: 1.5px solid var(--line);
+      border-radius: 12px;
+      padding: 13px 14px;
+      font: 400 1rem var(--f);
+      width: 100%
+    }
+
+    .fld input:focus {
+      outline: none;
+      border-color: var(--board)
+    }
+
+    .msg {
+      color: var(--err);
+      font-size: .92rem;
+      min-height: 1.3em;
+      margin-bottom: 6px
+    }
+
+    .ok-box {
+      text-align: center;
+      padding: 12px 0
+    }
+
+    .ok-box i {
+      font-size: 3rem;
+      color: var(--ok);
+      margin-bottom: 12px
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 30px);
+      background: var(--board);
+      color: #fff;
+      padding: 13px 22px;
+      border-radius: 99px;
+      opacity: 0;
+      pointer-events: none;
+      transition: .3s;
+      z-index: 90;
+      font-weight: 500
+    }
+
+    .toast.on {
+      opacity: 1;
+      transform: translate(-50%, 0)
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 26px 0;
+      color: var(--muted);
+      font-size: .92rem
+    }
+
+    @media(max-width:860px) {
+
+      .cycles,
+      .how {
+        grid-template-columns: 1fr
+      }
+
+      .cycles {
+        margin-top: -60px
+      }
+
+      .search {
+        display: none
+      }
+
+      .bar {
+        justify-content: space-between
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      * {
+        transition: none !important
+      }
+
+      html {
+        scroll-behavior: auto
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<header>
-  <div class="nav-container">
-    <div class="logo">CoursEnLigne</div>
-    <nav>
-      <a href="#home">Accueil</a>
-      <a href="#courses">Cours</a>
-      <a href="#register">Inscription</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </div>
-</header>
+  <header class="top">
+    <div class="wrap bar">
+      <button class="logo" id="logo" aria-label="Retour à l'accueil"><i class="fa-solid fa-book-open-reader"></i>
+        CoursEnLigne</button>
+      <label class="search"><i class="fa-solid fa-magnifying-glass"></i><input id="q" type="search"
+          placeholder="Cherche un cours : maths terminale C, droit L1…" aria-label="Rechercher un cours"
+          autocomplete="off"></label>
+      <button class="mine" id="mineBtn"><i class="fa-solid fa-bookmark"></i> Mes cours <b id="mineN">0</b></button>
+    </div>
+  </header>
 
-<section class="hero" id="home">
-  <h1>Apprenez. Progressez. Réussissez.</h1>
-  <p>Découvrez nos formations en ligne et inscrivez-vous facilement pour booster votre avenir.</p>
-  <button class="btn-primary" onclick="document.getElementById('courses').scrollIntoView({behavior:'smooth'});">Voir les cours</button>
-</section>
-<section class="courses" id="courses">
-  <h2 class="section-title">Cours Populaires</h2>
-  <div class="course-list" id="courseCards">
-    <article class="course-card" data-course="Programmation Python">
-      <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80" alt="Programmation Python" class="course-img" />
-      <div class="course-content">
-        <h3 class="course-title">Programmation Python</h3>
-        <p class="course-desc">Apprenez les bases de la programmation en Python, parfait pour débutants.</p>
-      </div>
-    </article>
-    <article class="course-card" data-course="Design Graphique">
-      <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80" alt="Design Graphique" class="course-img" />
-      <div class="course-content">
-        <h3 class="course-title">Design Graphique</h3>
-        <p class="course-desc">Maîtrisez les concepts visuels et les outils modernes de design.</p>
-      </div>
-    </article>
-    <article class="course-card" data-course="Marketing Digital">
-      <img src="image.png" alt="Marketing Digital" class="course-img" />
-      <div class="course-content">
-        <h3 class="course-title">Marketing Digital</h3>
-        <p class="course-desc">Apprenez à promouvoir vos produits avec efficacité sur les plateformes en ligne.</p>
-      </div>
-    </article>
-    <article class="course-card" data-course="Développement Web">
-      <img src="Capture d'écran 2025-05-18 070449.png" alt="Développement Web" class="course-img" />
-      <div class="course-content">
-        <h3 class="course-title">Développement Web</h3>
-        <p class="course-desc">Devenez développeur full stack avec nos cours HTML, CSS et JavaScript.</p>
-      </div>
-    </article>
-  </div>
-</section>
+  <div id="heroZone"></div>
+  <main>
+    <div class="wrap" id="view"></div>
+  </main>
+  <footer>
+    <div class="wrap">© <span id="yr"></span> CoursEnLigne. Programmes indicatifs, à compléter avec les consignes de ton
+      établissement.</div>
+  </footer>
 
-<section class="registration" id="register">
-  <h2>Inscription Étudiant</h2>
-  <form id="registrationForm">
-    <label for="fullname">Nom complet</label>
-    <input type="text" id="fullname" name="fullname" placeholder="Votre nom complet" required />
+  <div class="veil" id="veil"></div>
+  <aside class="panel" id="panel" aria-hidden="true"></aside>
+  <dialog id="dlg"></dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-    <label for="email">Adresse email</label>
-    <input type="email" id="email" name="email" placeholder="votre.email@example.com" required />
+  <script>
+    const $ = s => document.querySelector(s);
+    const load = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } };
+    const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch { } };
+    const norm = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 
-    <label for="courseSelect">Choisissez un cours</label>
-    <select id="courseSelect" name="courseSelect" required>
-      <option value="" disabled selected>-- Sélectionnez un cours --</option>
-    </select>
+    /* =========================================================
+       MATIÈRES
+       ========================================================= */
+    const SUBJ = {
+      maths: ['Mathématiques', 'fa-square-root-variable'], fr: ['Français', 'fa-book'], ang: ['Anglais', 'fa-language'],
+      hist: ['Histoire', 'fa-landmark'], geo: ['Géographie', 'fa-earth-africa'], ecm: ['Éducation à la citoyenneté et à la morale', 'fa-scale-balanced'],
+      svt: ['Sciences de la vie et de la Terre', 'fa-seedling'], pct: ['Physique-Chimie-Technologie', 'fa-atom'], phy: ['Physique', 'fa-atom'],
+      chi: ['Chimie', 'fa-flask'], info: ['Informatique', 'fa-laptop-code'], philo: ['Philosophie', 'fa-brain'], lit: ['Littérature et Français', 'fa-feather'],
+      esp: ['Espagnol', 'fa-language'], all: ['Allemand', 'fa-language'], tec: ['Technologie industrielle', 'fa-gears'],
+      mec: ['Construction mécanique', 'fa-gears'], dess: ['Dessin industriel', 'fa-pen-ruler'], fab: ['Fabrication mécanique', 'fa-industry'],
+      elt: ['Électronique', 'fa-microchip'], nume: ['Électronique numérique', 'fa-microchip'], etc: ['Électrotechnique', 'fa-bolt'], mach: ['Machines électriques', 'fa-plug'],
+      bat: ['Technologie du bâtiment', 'fa-building'], beton: ['Béton armé', 'fa-trowel-bricks'], topo: ['Topographie', 'fa-compass-drafting'],
+      droit: ['Droit', 'fa-gavel'], eco: ['Économie', 'fa-chart-line'], bur: ['Bureautique et secrétariat', 'fa-keyboard'], comm: ['Communication', 'fa-comments'],
+      compta: ['Comptabilité', 'fa-calculator'], mfin: ['Mathématiques financières', 'fa-percent'], tcom: ['Techniques commerciales', 'fa-handshake'], mark: ['Marketing', 'fa-bullhorn']
+    };
+    const LBL = { '6': '6ème', '5': '5ème', '4': '4ème', '3': '3ème', '2': '2nde', '1': '1ère', 'T': 'Terminale' };
 
-    <button type="submit">S'inscrire</button>
-  </form>
-</section>
-
-<footer id="contact">
-  <p>Contact : <a href="mailto:contact@coursenligne.com">contact@coursenligne.com</a> | 
-    Suivez-nous : 
-    <a href="#" aria-label="Facebook">Facebook</a> - 
-    <a href="#" aria-label="Twitter">Twitter</a> - 
-    <a href="#" aria-label="LinkedIn">LinkedIn</a>
-  </p>
-</footer>
-<script>
-  // Populate course dropdown dynamically based on displayed courses
-  const courses = document.querySelectorAll('.course-card');
-  const courseSelect = document.getElementById('courseSelect');
-  courses.forEach(card => {
-    const courseName = card.getAttribute('data-course');
-    if (courseName) {
-      const option = document.createElement('option');
-      option.value = courseName;
-      option.textContent = courseName;
-      courseSelect.appendChild(option);
+    /* Chapitres : clé = matière + niveau (+ groupe de série). "*" = valable pour plusieurs niveaux. */
+    const CH = {
+      maths6: "Nombres entiers et décimaux|Opérations et priorités|Fractions simples|Proportionnalité|Droites, angles et triangles|Périmètres et aires|Statistiques simples",
+      maths5: "Nombres relatifs|Fractions et opérations|Calcul littéral|Symétrie centrale et parallélogrammes|Triangles et angles|Aires et volumes|Organisation des données",
+      maths4: "Puissances et racines carrées|Calcul littéral et équations|Théorème de Pythagore|Initiation au théorème de Thalès|Vecteurs et translations|Fonctions linéaires|Statistiques",
+      maths3: "Équations et inéquations|Systèmes d'équations|Théorème de Thalès|Trigonométrie|Fonctions affines|Vecteurs et repérage|Probabilités et statistiques",
+      maths2: "Ensembles et logique|Calcul algébrique|Équations, inéquations et systèmes|Fonctions numériques|Géométrie plane et vecteurs|Trigonométrie|Statistiques",
+      maths1S: "Second degré|Dérivation|Suites numériques|Trigonométrie|Produit scalaire|Dénombrement et probabilités|Statistiques",
+      maths1D: "Second degré|Dérivation et étude de fonctions|Suites arithmétiques et géométriques|Dénombrement|Probabilités|Statistiques|Géométrie dans l'espace",
+      maths1A: "Calcul algébrique|Fonctions et variations|Suites|Pourcentages|Statistiques|Probabilités",
+      mathsTS: "Limites et continuité|Dérivation et primitives|Fonctions exponentielles et logarithmes|Calcul intégral|Nombres complexes|Suites numériques|Probabilités et statistiques",
+      mathsTD: "Limites et continuité|Fonctions logarithmes et exponentielles|Calcul intégral|Suites numériques|Probabilités et dénombrement|Statistiques|Équations différentielles",
+      mathsTA: "Fonctions et limites|Dérivation|Logarithme et exponentielle|Suites numériques|Statistiques|Probabilités",
+      fr6: "Grammaire : la phrase et les classes de mots|Conjugaison : présent, imparfait, futur|Orthographe d'usage|Vocabulaire : familles de mots|Le récit et la description|Lecture de contes et fables|Expression écrite",
+      fr5: "Analyse grammaticale|Passé simple et passé composé|Accords et orthographe|Vocabulaire : sens propre et figuré|Le récit : narration et dialogue|Lecture de textes variés|Rédaction",
+      fr4: "Analyse logique de la phrase|Modes et temps verbaux|Figures de style simples|Texte narratif et descriptif|Initiation au texte argumentatif|Lecture suivie d'une œuvre|Rédaction et résumé",
+      fr3: "Propositions subordonnées|Concordance des temps|Le texte argumentatif|Résumé et contraction de texte|Lecture méthodique|Œuvres africaines et françaises|Préparation au BEPC",
+      fr2: "Grammaire du texte|Figures de style|Les genres littéraires|Commentaire dirigé|Étude d'une œuvre intégrale|Initiation à la dissertation|Expression écrite",
+      fr1: "Le roman et la nouvelle|Le théâtre|La poésie|Commentaire composé|Dissertation littéraire|Œuvres au programme|Préparation au Probatoire",
+      frT: "Mouvements littéraires|Texte argumentatif et essai|Commentaire composé|Dissertation littéraire|Contraction de texte|Œuvres au programme|Préparation au Baccalauréat",
+      'lit*': "Histoire littéraire et mouvements|Le roman et la nouvelle|Le théâtre|La poésie|Commentaire composé|Dissertation littéraire|Œuvres au programme",
+      ang6: "Greetings and introductions|The verbs to be and to have|Present simple|Family, school and daily life|Numbers, time and dates|Reading comprehension|Writing short texts",
+      ang5: "Present continuous|Past simple|Question forms|Food, health and places|Comparatives and superlatives|Listening and speaking|Short compositions",
+      ang4: "Past continuous|Present perfect|Modal verbs|Future forms|Reading comprehension|Letter writing|Vocabulary: environment and technology",
+      ang3: "Conditionals|Passive voice|Reported speech|Relative clauses|Essay and dialogue writing|Reading comprehension|BEPC preparation",
+      ang2: "Tenses review|Modal verbs and conditionals|Passive voice|Reported speech|Reading comprehension|Essay writing|Vocabulary: society and media",
+      ang1: "Advanced grammar|Reading and text analysis|Essay writing|Summary and note-taking|Oral expression|Literary texts|Probatoire preparation",
+      angT: "Grammar consolidation|Comprehension of long texts|Argumentative essay writing|Letter and report writing|Oral expression|Contemporary issues vocabulary|Baccalauréat preparation",
+      'esp*': "Salutations et présentations|Grammaire : présent, passé, futur|Compréhension de textes|Expression écrite|Civilisation hispanique|Préparation à l'examen",
+      'all*': "Grammaire de base|Conjugaison des verbes|Compréhension écrite|Expression écrite|Civilisation allemande|Préparation à l'examen",
+      hist6: "Les premières traces de l'homme|Les grandes civilisations anciennes|L'Égypte antique|La Grèce et Rome|Les royaumes africains anciens|Initiation au Moyen Âge",
+      hist5: "Le Moyen Âge en Europe|Les civilisations islamiques|Les empires du Ghana, du Mali et du Songhaï|La Renaissance et les grandes découvertes|Les royaumes précoloniaux du Cameroun|Les débuts de la traite négrière",
+      hist4: "La traite négrière et ses conséquences|Les Lumières et la Révolution française|L'industrialisation|L'expansion coloniale|Le partage de l'Afrique|Le Cameroun sous la colonisation allemande",
+      hist3: "La Première Guerre mondiale|L'entre-deux-guerres|La Seconde Guerre mondiale|La décolonisation|Le Cameroun sous mandat et tutelle|L'indépendance du Cameroun|La guerre froide",
+      hist2: "Le monde avant 1914|Les relations internationales au XXe siècle|Les régimes totalitaires|Les mouvements nationalistes en Afrique|Naissance de l'ONU et de l'Union africaine|Le Cameroun depuis l'indépendance",
+      hist1: "Les Lumières et les révolutions|La colonisation et les résistances africaines|La Première Guerre mondiale|L'entre-deux-guerres|La Seconde Guerre mondiale|Le Cameroun colonial",
+      histT: "Le monde bipolaire|La décolonisation et le tiers-monde|Les indépendances africaines|Les grandes crises contemporaines|La mondialisation|Le Cameroun depuis l'indépendance|L'intégration régionale en Afrique",
+      geo6: "La Terre et ses représentations|Les continents et les océans|Le relief et les paysages|Les climats et la végétation|Les populations du monde|Le Cameroun : localisation et milieu",
+      geo5: "Les climats et les zones bioclimatiques|La population mondiale|Les villes et l'urbanisation|Les activités agricoles|Le Cameroun : relief et hydrographie|L'Afrique : milieux naturels",
+      geo4: "L'Afrique : population et villes|Les ressources minières et énergétiques|L'agriculture africaine|Les transports|Le Cameroun : économie|Le tourisme",
+      geo3: "La mondialisation|Les grandes puissances économiques|Les inégalités de développement|Les migrations|Le Cameroun dans le monde|Les enjeux environnementaux",
+      geo2: "Cartographie et lecture de cartes|Les milieux naturels|Population et urbanisation|Les activités économiques|Ressources et énergie|Le Cameroun et la CEMAC",
+      geo1: "Les grands ensembles géographiques|Les systèmes agricoles|L'industrialisation|Transports et échanges|La croissance urbaine|L'Afrique centrale",
+      geoT: "Mondialisation et territoires|Les inégalités mondiales|L'Afrique dans la mondialisation|Développement durable|Les migrations internationales|Le Cameroun : atouts et défis",
+      ecm6: "La famille et l'école|Les règles de vie en société|Les droits et devoirs de l'enfant|Le respect et la tolérance|Les symboles de la République du Cameroun",
+      ecm5: "La citoyenneté|L'hygiène et la santé|Les institutions locales|La solidarité et l'entraide|L'environnement",
+      ecm4: "Les droits de l'homme|Les institutions de la République|La démocratie et les élections|Le civisme et la lutte contre la corruption|L'éducation à la paix",
+      ecm3: "La Constitution|Les pouvoirs de l'État|Les organisations internationales|La citoyenneté responsable|Les valeurs morales et la vie en société",
+      'ecm*': "Les droits de l'homme et les libertés|La Constitution et les institutions|Démocratie et bonne gouvernance|Lutte contre la corruption|Citoyenneté, paix et développement",
+      svt6: "La cellule et le vivant|Les êtres vivants et leur milieu|La nutrition des plantes|Le corps humain : les grandes fonctions|Hygiène et santé|L'écosystème",
+      svt5: "La digestion|La respiration|La circulation sanguine|La reproduction des plantes|Les roches et le sol|Les maladies courantes",
+      svt4: "Le système nerveux|La reproduction humaine|La classification du vivant|Microbes et immunité|Géologie : roches et minéraux|Éducation à l'environnement",
+      svt3: "La génétique et l'hérédité|Immunité et vaccination|Reproduction et planning familial|Écologie et développement durable|Géologie : volcans et séismes|Préparation au BEPC",
+      svt2: "La cellule|Organisation de l'organisme|La nutrition|La reproduction|Géologie : structure du globe|Écologie",
+      svt1: "Génétique et hérédité|Immunologie|Physiologie : nerfs et muscles|Métabolisme énergétique|Tectonique des plaques|Évolution",
+      svtT: "Génétique moléculaire|Évolution et biodiversité|Immunologie|Physiologie de la reproduction|Géologie et ressources|Écologie et environnement",
+      pct6: "Les états de la matière|Mélanges et corps purs|L'eau|Le mouvement et la vitesse|Masse et volume|Notions d'électricité et de technologie",
+      pct5: "Séparation des mélanges|L'air et la combustion|Les circuits électriques|La lumière|Les forces|Technologie : objets techniques",
+      phy4: "Forces et équilibre|La pression|Les circuits électriques|Le courant électrique|Les mouvements|L'énergie",
+      phy3: "Poids et masse|Courant continu et loi d'Ohm|L'énergie électrique|Réfraction et lentilles|Travail et puissance|Préparation au BEPC",
+      phy2: "Mouvement et repère|Forces et principe d'inertie|Gravitation|Énergie et travail|Électricité : circuits et lois|Optique",
+      phy1S: "Cinématique et dynamique|Travail et énergie|Champs gravitationnel et électrique|Électromagnétisme|Oscillations mécaniques|Optique",
+      phy1D: "Mouvement et lois de Newton|Travail et énergie|Condensateurs et dipôles|Champ magnétique|Optique|Ondes",
+      phyTS: "Mouvements dans les champs|Oscillateurs mécaniques et électriques|Ondes mécaniques et lumineuses|Physique nucléaire|Dynamique du solide|Électromagnétisme",
+      phyTD: "Mouvement dans les champs|Circuits RLC|Ondes|Radioactivité|Optique|Énergie",
+      chi3: "Atomes et molécules|Solutions aqueuses|Acides et bases|Métaux et corrosion|La combustion|Initiation à la chimie organique",
+      chi2: "Constitution de l'atome|Classification périodique|Liaisons chimiques|La mole et les concentrations|Réactions chimiques|Solutions aqueuses",
+      chi1: "Acides et bases|Oxydoréduction|Chimie organique : alcools et dérivés|Cinétique chimique|Dosages|Équilibres chimiques",
+      chiT: "Cinétique et équilibres|Acides et bases : pH et dosages|Chimie organique : estérification, amines, acides aminés|Piles et électrolyse|Polymères|Chimie de l'environnement",
+      info4: "Découverte de l'ordinateur|Windows et gestion des fichiers|Traitement de texte|Notions de tableur|Internet et sécurité",
+      info3: "Traitement de texte avancé|Tableur : formules et graphiques|Présentation assistée par ordinateur|Recherche sur Internet|Initiation à l'algorithmique",
+      info2: "Architecture d'un ordinateur|Systèmes d'exploitation|Bureautique|Internet et réseaux|Bases de l'algorithmique et de la programmation",
+      info1: "Algorithmique et programmation|Notions de bases de données|Réseaux informatiques|Pages web : HTML et CSS|Sécurité informatique",
+      infoT: "Programmation structurée|Bases de données et SQL|Réseaux et protocoles|Développement web|Systèmes d'exploitation|Préparation au Baccalauréat",
+      info1TI: "Algorithmique et programmation (C, Java)|Bases de données et SQL|Réseaux et administration|Développement web|Systèmes d'exploitation|Génie logiciel et UML",
+      infoTTI: "Programmation avancée|Bases de données et SQL|Réseaux et administration|Développement web et mobile|Systèmes d'exploitation|Projet et préparation au Baccalauréat",
+      philoT: "Introduction à la philosophie|La connaissance et la vérité|La conscience et l'inconscient|La liberté et le déterminisme|La morale et la justice|L'État et la société|Dissertation et commentaire de texte",
+      'tec*': "Dessin technique|Résistance des matériaux|Mécanique appliquée|Fabrication mécanique|Électricité industrielle|Technologie des machines",
+      'mec*': "Dessin de construction|Technologie de construction|Résistance des matériaux|Mécanique générale|Éléments de machines|Métrologie",
+      'dess*': "Projections et coupes|Cotation|Assemblages|Schémas et nomenclatures|Dessin assisté par ordinateur|Tolérances",
+      'fab*': "Usinage : tournage et fraisage|Soudage et assemblage|Outils de coupe|Méthodes et gammes de fabrication|Commande numérique|Hygiène et sécurité",
+      'elt*': "Composants passifs et actifs|Diodes et transistors|Amplificateurs opérationnels|Électronique numérique|Systèmes logiques|Mesures et dépannage",
+      'nume*': "Systèmes de numération|Algèbre de Boole|Circuits combinatoires|Bascules et compteurs|Microprocesseurs|Initiation à la programmation",
+      'etc*': "Circuits en courant alternatif|Transformateurs|Machines électriques|Installations électriques|Distribution et protection|Sécurité électrique",
+      'mach*': "Machines à courant continu|Machines asynchrones|Alternateurs|Moteurs et démarrage|Maintenance|Schémas électriques",
+      'bat*': "Matériaux de construction|Fondations et structures|Maçonnerie et gros œuvre|Second œuvre|Étanchéité et finitions|Hygiène et sécurité sur chantier",
+      'beton*': "Propriétés du béton et de l'acier|Calcul des poutres|Calcul des poteaux|Dalles et planchers|Fondations|Normes et règlements",
+      'topo*': "Lever de plans|Nivellement|Mesures d'angles et de distances|Calcul de surfaces|Implantation|Dessin topographique",
+      'droit*': "Introduction au droit|Droit des personnes|Droit des contrats|Droit commercial|Organisation judiciaire|Droit du travail",
+      'eco*': "Notions fondamentales|Production et consommation|Monnaie et crédit|Commerce international|Marché et prix|Développement économique",
+      'bur*': "Traitement de texte|Tableur|Classement et archivage|Correspondance administrative|Accueil et communication|Organisation du travail",
+      'comm*': "Communication orale et écrite|Techniques de rédaction|Communication d'entreprise|Réunions et comptes rendus|Relations publiques|Outils numériques",
+      'compta*': "Principes comptables|Plan comptable OHADA (SYSCOHADA)|Journaux et grand livre|Balance et inventaire|États financiers|Achats et ventes",
+      'mfin*': "Pourcentages et intérêts simples|Intérêts composés|Annuités|Emprunts|Escompte|Statistiques appliquées",
+      'tcom*': "Négociation et vente|Gestion des stocks|Facturation et règlement|Prospection|Logistique|Relation client",
+      'mark*': "Étude de marché|Produit, prix, distribution, promotion|Segmentation et ciblage|Stratégie marketing|Communication commerciale|Marketing digital"
+    };
+    const GR = { A: ['A'], C: ['S'], D: ['D'], E: ['S'], TI: ['TI', 'S'], F1: ['F', 'S'], F2: ['F', 'S'], F3: ['F', 'S'], F4: ['F', 'S'], G1: ['G', 'A'], G2: ['G', 'A'], G3: ['G', 'A'] };
+    function ch(subj, lvl, serie) {
+      const keys = [...(GR[serie] || []).map(g => subj + lvl + g), subj + lvl, subj + '*'];
+      for (const k of keys) if (CH[k]) return CH[k].split('|');
+      return ['Introduction et notions fondamentales', 'Cours et exercices d\'application', 'Méthodes et révisions', 'Évaluation'];
     }
-  });
 
-  // Form submission handling with simple confirmation
-  const form = document.getElementById('registrationForm');
-  form.addEventListener('submit', function(event) {
-    event.preventDefault();
+    /* Collège et lycée */
+    const COL = {
+      '6': ['maths', 'fr', 'ang', 'hist', 'geo', 'ecm', 'svt', 'pct'], '5': ['maths', 'fr', 'ang', 'hist', 'geo', 'ecm', 'svt', 'pct'],
+      '4': ['maths', 'fr', 'ang', 'hist', 'geo', 'ecm', 'svt', 'phy', 'info'], '3': ['maths', 'fr', 'ang', 'hist', 'geo', 'ecm', 'svt', 'phy', 'chi', 'info']
+    };
+    const L2 = ['maths', 'fr', 'ang', 'hist', 'geo', 'ecm', 'svt', 'phy', 'chi', 'info'];
+    const SER = {
+      A: ['A · Littéraire', ['lit', 'philo', 'hist', 'geo', 'ang', 'esp', 'all', 'maths', 'ecm']],
+      C: ['C · Mathématiques et sciences physiques', ['maths', 'phy', 'chi', 'svt', 'fr', 'ang', 'hist', 'geo', 'philo', 'info', 'ecm']],
+      D: ['D · Mathématiques et sciences de la vie et de la Terre', ['maths', 'phy', 'chi', 'svt', 'fr', 'ang', 'hist', 'geo', 'philo', 'info', 'ecm']],
+      E: ['E · Mathématiques et technologie', ['maths', 'phy', 'chi', 'tec', 'fr', 'ang', 'hist', 'geo', 'philo', 'ecm']],
+      TI: ['TI · Technologies de l\'information', ['maths', 'phy', 'info', 'fr', 'ang', 'hist', 'geo', 'philo', 'ecm']],
+      F1: ['F1 · Construction mécanique', ['maths', 'phy', 'mec', 'dess', 'fab', 'fr', 'ang', 'ecm']],
+      F2: ['F2 · Électronique', ['maths', 'phy', 'elt', 'nume', 'fr', 'ang', 'ecm']],
+      F3: ['F3 · Électrotechnique', ['maths', 'phy', 'etc', 'mach', 'fr', 'ang', 'ecm']],
+      F4: ['F4 · Génie civil', ['maths', 'phy', 'bat', 'beton', 'topo', 'fr', 'ang', 'ecm']],
+      G1: ['G1 · Techniques administratives', ['droit', 'eco', 'bur', 'comm', 'fr', 'ang', 'maths', 'ecm']],
+      G2: ['G2 · Comptabilité et gestion', ['compta', 'mfin', 'droit', 'info', 'eco', 'fr', 'ang', 'ecm']],
+      G3: ['G3 · Techniques commerciales', ['tcom', 'mark', 'droit', 'eco', 'fr', 'ang', 'maths', 'ecm']]
+    };
+    const SER_GROUPS = [['Enseignement général', ['A', 'C', 'D', 'E', 'TI']], ['Enseignement technique industriel', ['F1', 'F2', 'F3', 'F4']], ['Enseignement commercial et administratif', ['G1', 'G2', 'G3']]];
 
-    const fullname = form.fullname.value.trim();
-    const email = form.email.value.trim();
-    const course = form.courseSelect.value;
+    /* Université : [id, filière, icône, [L1, L2, L3]] ; UE = "Titre: sujets" séparées par | */
+    const FIL = [
+      ['info', 'Informatique (GL, ASR, Cybersécurité)', 'fa-laptop-code', [
+        "Algorithmique et programmation C: variables, boucles, fonctions, tableaux, pointeurs|Architecture des ordinateurs: numération, portes logiques, processeur, mémoire|Mathématiques pour l'informatique: logique, ensembles, matrices, algèbre de Boole|Introduction aux systèmes d'exploitation: Linux, shell, processus, fichiers|Anglais technique et communication: vocabulaire informatique, rédaction, présentation",
+        "Programmation orientée objet (Java): classes, héritage, polymorphisme, exceptions|Structures de données: listes, piles, files, arbres, graphes, tris|Bases de données relationnelles: modèle entité-association, SQL, normalisation, transactions|Réseaux informatiques: modèle OSI, TCP/IP, adressage IP, routage|Développement web: HTML, CSS, JavaScript, PHP, MySQL",
+        "Génie logiciel et UML: cycle de vie, UML, design patterns, tests, méthodes agiles|Administration systèmes et réseaux: Linux serveur, DNS, DHCP, virtualisation, supervision|Cybersécurité: cryptographie, attaques web, pare-feu, audit de sécurité|Frameworks et développement mobile: Laravel, React, API REST, Android|Projet tutoré et mémoire: cahier des charges, conception, rapport, soutenance"]],
+      ['maths', 'Mathématiques', 'fa-square-root-variable', [
+        "Analyse 1: suites, limites, continuité, dérivation|Algèbre linéaire 1: espaces vectoriels, applications linéaires, matrices|Algèbre générale: ensembles, relations, groupes, anneaux|Probabilités et statistiques descriptives: dénombrement, variables aléatoires, variance|Initiation à l'informatique: algorithmique, Python, tableur",
+        "Analyse 2: séries, intégrales, séries entières|Algèbre linéaire 2: déterminants, réduction des endomorphismes|Topologie: normes, ouverts, fermés, compacité|Équations différentielles: ordres 1 et 2, systèmes linéaires|Probabilités: lois usuelles, convergences, théorèmes limites",
+        "Analyse fonctionnelle: espaces de Banach et de Hilbert, opérateurs|Calcul différentiel: différentiabilité, fonctions implicites|Algèbre avancée: groupes, anneaux, corps|Analyse numérique: interpolation, intégration, systèmes linéaires|Statistiques inférentielles: estimation, tests, régression"]],
+      ['phys', 'Physique', 'fa-atom', [
+        "Mécanique du point: cinématique, dynamique, énergie|Électricité: électrostatique, courant, circuits|Thermodynamique 1: principes, gaz parfait|Mathématiques pour la physique: fonctions, intégrales, vecteurs|Chimie générale: atome, liaisons, réactions",
+        "Mécanique analytique: Lagrange, Hamilton|Électromagnétisme: équations de Maxwell, ondes|Optique: géométrique et ondulatoire|Thermodynamique 2: entropie, machines thermiques|Physique quantique 1: dualité onde-corpuscule, équation de Schrödinger",
+        "Mécanique quantique: opérateurs, spin, perturbations|Physique statistique: ensembles, distributions|Physique des solides: cristaux, bandes d'énergie|Physique nucléaire: radioactivité, réactions|Électronique et instrumentation: capteurs, mesures, acquisition"]],
+      ['chim', 'Chimie', 'fa-flask', [
+        "Chimie générale: atome, tableau périodique, liaisons|Thermochimie: enthalpie, entropie|Chimie des solutions: acides, bases, équilibres|Mathématiques et physique pour chimistes: calcul, mécanique, électricité|Travaux pratiques: manipulations, sécurité, rapports",
+        "Chimie organique 1: nomenclature, stéréochimie, réactivité|Cinétique chimique: vitesse, ordre, catalyse|Électrochimie: piles, électrolyse|Chimie analytique: dosages, spectrophotométrie|Chimie minérale: éléments et complexes",
+        "Chimie organique 2: synthèse, mécanismes|Chimie physique: spectroscopie, chimie quantique appliquée|Chimie des polymères: synthèse et propriétés|Chimie de l'environnement: analyse des eaux, pollution|Génie des procédés: opérations unitaires"]],
+      ['bio', 'Biologie et sciences de la vie', 'fa-dna', [
+        "Biologie cellulaire: structure, organites, division|Biologie végétale: organisation, photosynthèse|Biologie animale: embryologie, anatomie comparée|Chimie générale et biochimie: molécules du vivant|Statistiques et informatique: tableur, tests simples",
+        "Génétique: lois de Mendel, génétique moléculaire|Microbiologie: bactéries, virus, hygiène|Physiologie animale: fonctions de nutrition et relation|Biochimie métabolique: enzymes, voies métaboliques|Écologie: écosystèmes, populations, environnement",
+        "Biologie moléculaire: ADN, expression des gènes, PCR|Immunologie: immunité innée et adaptative|Biotechnologies: génie génétique, fermentation|Parasitologie: parasites et maladies tropicales|Méthodologie et mémoire: recherche documentaire, rédaction"]],
+      ['droit', 'Droit privé et public', 'fa-gavel', [
+        "Introduction au droit: sources, personnes, preuves|Droit constitutionnel: État, pouvoirs, Constitution|Droit des personnes et de la famille: état civil, mariage, filiation|Histoire des institutions: institutions africaines et camerounaises|Économie politique: notions de base",
+        "Droit des obligations: contrats, responsabilité civile|Droit administratif: acte administratif, contentieux|Droit pénal: infractions, responsabilité pénale|Droit des biens: propriété, droits réels|Droit des affaires OHADA: commerçants, actes de commerce",
+        "Contrats spéciaux: vente, bail, mandat|Droit du travail: contrat, licenciement, sécurité sociale|Procédure civile et pénale: juridictions, voies de recours|Droit international public: sources, organisations|Droit des sociétés OHADA: SARL, SA, dissolution"]],
+      ['eco', 'Sciences économiques', 'fa-chart-line', [
+        "Microéconomie: consommateur, producteur, marchés|Macroéconomie: PIB, inflation, chômage|Mathématiques pour économistes: fonctions, dérivées, matrices|Statistiques descriptives: moyennes, séries, indices|Comptabilité générale: bilan, compte de résultat",
+        "Microéconomie avancée: concurrence, monopole, théorie des jeux|Macroéconomie: modèle IS-LM, politiques économiques|Économétrie 1: régression linéaire simple et multiple|Monnaie et finance: banques, taux, marchés|Économie du développement: croissance, pauvreté",
+        "Économétrie 2: séries temporelles, tests|Économie publique: fiscalité, dépenses publiques|Commerce international: avantages comparatifs, politiques commerciales|Analyse financière: ratios, rentabilité|Mémoire: méthodologie de recherche, rédaction"]],
+      ['gest', 'Gestion et management', 'fa-briefcase', [
+        "Introduction à la gestion: entreprise, organisation, fonctions|Comptabilité générale: écritures, bilan, résultat|Mathématiques de gestion: pourcentages, intérêts, matrices|Droit commercial: commerçants, contrats, OHADA|Informatique de gestion: tableur, bases de données",
+        "Comptabilité analytique: coûts, seuil de rentabilité|Marketing: étude de marché, mix marketing|Gestion financière: financement, investissement|Gestion des ressources humaines: recrutement, paie, motivation|Statistiques et probabilités: lois, estimation",
+        "Management stratégique: diagnostic, stratégies|Contrôle de gestion: budgets, tableaux de bord|Gestion de projet: planification, risques|Fiscalité: impôts des entreprises, TVA|Entrepreneuriat et mémoire: business plan, soutenance"]],
+      ['lett', 'Lettres modernes françaises', 'fa-feather', [
+        "Introduction à l'analyse littéraire: genres, outils de lecture|Grammaire et linguistique françaises: phrase, syntaxe, lexique|Littérature française du Moyen Âge à l'âge classique: grandes œuvres|Littérature africaine francophone: origines, thèmes|Techniques d'expression: dissertation, résumé, oral",
+        "Littérature des Lumières et du XIXe siècle: romantisme, réalisme|Stylistique: figures, registres, énonciation|Théorie littéraire: poétique, narratologie|Littérature camerounaise: auteurs et courants|Langues et civilisations: culture générale",
+        "Littérature du XXe siècle: surréalisme, nouveau roman|Analyse du discours: argumentation, pragmatique|Littérature comparée: thèmes et influences|Critique littéraire: méthodes et écoles|Mémoire: problématique, plan, rédaction"]],
+      ['angl', 'Études anglophones', 'fa-language', [
+        "English Grammar and Usage: tenses, modals, syntax|Phonetics and Phonology: sounds, stress, intonation|Introduction to Literature: poetry, prose, drama|Written Expression: paragraph, essay writing|Introduction to Linguistics: language, structure, meaning",
+        "British Literature: Shakespeare to modern authors|American Literature: major authors and movements|Syntax: phrase structure, clauses|Translation: English-French techniques|Civilization: history and culture of English-speaking countries",
+        "African Literature in English: Achebe, Ngugi, Soyinka|Sociolinguistics: language and society|Discourse Analysis: coherence, cohesion|Applied Linguistics and Teaching Methods: pedagogy|Dissertation: research methods, writing"]],
+      ['hist', 'Histoire', 'fa-landmark', [
+        "Introduction à l'histoire et méthodes: sources, critique, historiographie|Histoire ancienne: Orient, Grèce, Rome|Histoire de l'Afrique précoloniale: empires et royaumes|Histoire du Moyen Âge: féodalité, Église, villes|Géographie humaine: peuplement, activités",
+        "Histoire moderne: Renaissance, Lumières, révolutions|Histoire de l'Afrique coloniale: conquêtes, administrations, résistances|Histoire du Cameroun: du peuplement à l'indépendance|Archéologie et historiographie: méthodes, grands courants|Relations internationales: du XIXe siècle à nos jours",
+        "Histoire contemporaine: guerres mondiales, guerre froide|Histoire de l'Afrique centrale: États, sociétés, économies|Décolonisation et indépendances: mouvements nationalistes|Histoire économique et sociale: développement, inégalités|Mémoire: sources, problématique, rédaction"]],
+      ['geo', 'Géographie', 'fa-earth-africa', [
+        "Géographie physique: climats, relief, hydrographie|Géographie humaine: population, peuplement|Cartographie et SIG: lecture de cartes, initiation aux SIG|Statistiques appliquées: données, graphiques|Histoire de la pensée géographique: écoles et courants",
+        "Géomorphologie: formes du relief, érosion|Hydroclimatologie: bilans, régimes des cours d'eau|Géographie urbaine: villes, croissance, réseaux|Géographie économique: agriculture, industrie, commerce|Télédétection: images satellites, traitement",
+        "Aménagement du territoire: politiques, acteurs|Géographie du Cameroun et de l'Afrique centrale: milieux et sociétés|SIG avancés: bases de données géographiques, analyse spatiale|Développement durable: environnement, risques|Mémoire: terrain, analyse, rédaction"]],
+      ['socio', 'Sociologie et anthropologie', 'fa-people-group', [
+        "Introduction à la sociologie: concepts, méthodes|Anthropologie sociale: parenté, rites, cultures|Histoire de la pensée sociologique: Durkheim, Weber, Marx|Statistiques: description, tableaux, graphiques|Psychologie sociale: groupes, attitudes",
+        "Sociologie de la famille: structures, évolutions|Sociologie urbaine et rurale: villes, campagnes|Méthodes d'enquête: questionnaire, entretien, observation|Sociologie du développement: changement social|Sociologie politique: pouvoir, partis, État",
+        "Sociologie des organisations: entreprises, institutions|Sociologie du travail: emploi, métiers|Sociologie de la santé: systèmes de soins, inégalités|Analyse de données: tris, croisements, tests|Mémoire: enquête et rédaction"]],
+      ['psy', 'Psychologie', 'fa-brain', [
+        "Introduction à la psychologie: courants, méthodes|Psychologie générale: perception, mémoire, apprentissage|Biologie humaine et neurosciences: cerveau, hormones|Statistiques: description et probabilités|Psychologie du développement: enfance, adolescence",
+        "Psychologie cognitive: attention, langage, raisonnement|Psychologie sociale: influence, stéréotypes|Psychopathologie: troubles, classifications|Psychométrie: tests, mesures|Méthodes de recherche: expérimentation, enquête",
+        "Psychologie clinique: entretien, approches thérapeutiques|Psychologie du travail: motivation, stress, organisation|Psychologie scolaire: apprentissages, orientation|Évaluation et entretien: bilans, éthique|Stage et mémoire: terrain, analyse, rédaction"]],
+      ['comm', 'Communication et journalisme', 'fa-bullhorn', [
+        "Sciences de l'information et de la communication: théories, modèles|Histoire des médias: presse, radio, télévision, internet|Techniques d'expression écrite: style, rédaction|Culture générale: actualité, société|Informatique et bureautique: outils numériques",
+        "Journalisme de presse écrite: genres, enquête|Radio et télévision: reportage, interview|Communication d'entreprise: image, stratégie|Droit de la communication: liberté de presse, déontologie|Photographie et montage: prise de vue, édition",
+        "Journalisme numérique: web, réseaux sociaux|Relations publiques: événementiel, gestion de crise|Marketing et publicité: campagnes, supports|Production audiovisuelle: scénario, tournage, post-production|Stage et mémoire: terrain, rédaction"]],
+      ['gcivil', 'Génie civil', 'fa-helmet-safety', [
+        "Mathématiques: analyse, algèbre|Physique: mécanique, énergie|Dessin technique: plans, normes|Matériaux de construction: béton, acier, bois|Informatique: bureautique, programmation",
+        "Résistance des matériaux: poutres, contraintes|Mécanique des sols: portance, tassement|Topographie: levés, nivellement|Hydraulique: écoulements, réseaux|Béton armé 1: dimensionnement de base",
+        "Béton armé 2: structures, fondations|Routes et ouvrages d'art: conception, chaussées|Construction métallique: assemblages, charpentes|Gestion de chantier: planning, coûts, sécurité|Projet de fin d'études: conception et soutenance"]],
+      ['gelec', 'Génie électrique', 'fa-bolt', [
+        "Mathématiques: analyse, algèbre|Physique: mécanique, électricité|Électricité générale: lois, circuits|Électronique de base: diodes, transistors|Programmation: algorithmique, langage C",
+        "Électronique analogique: amplificateurs, filtres|Électronique numérique: logique, microcontrôleurs|Électrotechnique: transformateurs, machines|Automatique: systèmes asservis|Traitement du signal: Fourier, échantillonnage",
+        "Machines électriques: moteurs, alternateurs|Électronique de puissance: convertisseurs|Réseaux électriques: production, transport, distribution|Systèmes embarqués: capteurs, programmation|Projet: conception et réalisation"]],
+      ['gmeca', 'Génie mécanique', 'fa-gears', [
+        "Mathématiques: analyse, algèbre|Physique: mécanique, thermique|Dessin industriel: vues, coupes, cotation|Mécanique générale: statique, cinématique|Informatique: bureautique, programmation",
+        "Résistance des matériaux: traction, flexion, torsion|Thermodynamique: cycles, machines|Mécanique des fluides: statique, dynamique|Fabrication mécanique: usinage, procédés|Conception assistée par ordinateur: modélisation 3D",
+        "Transferts thermiques: conduction, convection, rayonnement|Machines thermiques: moteurs, turbines|Maintenance industrielle: fiabilité, planification|Science des matériaux: métaux, alliages, essais|Projet: conception et soutenance"]],
+      ['agro', 'Agronomie et sciences agricoles', 'fa-seedling', [
+        "Biologie végétale: morphologie, physiologie|Chimie et biochimie: bases et applications|Mathématiques et statistiques: calcul, probabilités|Écologie: milieux, ressources|Introduction à l'agronomie: systèmes de culture",
+        "Pédologie: sols, fertilité|Production végétale: cultures vivrières et de rente|Production animale: élevage, nutrition|Protection des cultures: ravageurs, maladies|Économie agricole: filières, marchés",
+        "Amélioration des plantes: sélection, semences|Agroécologie: pratiques durables|Génie rural et irrigation: aménagements, eau|Transformation agroalimentaire: conservation, qualité|Mémoire: expérimentation et rédaction"]],
+      ['spo', 'Sciences politiques et relations internationales', 'fa-landmark-flag', [
+        "Introduction à la science politique: concepts, régimes|Droit constitutionnel: institutions, Constitution|Histoire des idées politiques: de l'Antiquité à nos jours|Sociologie politique: pouvoir, participation|Économie: notions de base",
+        "Relations internationales: théories, acteurs|Politiques publiques: conception, évaluation|Systèmes politiques africains: partis, élections|Droit administratif: administration, contentieux|Méthodes: enquête, analyse de données",
+        "Géopolitique: territoires, puissances, conflits|Organisations internationales: ONU, UA, CEMAC|Gouvernance et développement: institutions, corruption|Analyse des conflits: causes, médiation|Mémoire: problématique et rédaction"]]
+    ];
 
-    if (!fullname || !email || !course) {
-      alert("Merci de compléter tous les champs du formulaire.");
-      return;
+    /* =========================================================
+       CONSTRUCTION DES COURS
+       ========================================================= */
+    const CY = {
+      col: { n: 'Collège', c: '#2459D6', i: 'fa-school', d: 'De la 6ème à la 3ème, avec préparation au BEPC' },
+      lyc: { n: 'Lycée', c: '#B84A14', i: 'fa-building-columns', d: '2nde, 1ère et Terminale : toutes les séries' },
+      uni: { n: 'Université', c: '#6D3FD6', i: 'fa-graduation-cap', d: 'Licence 1 à 3 : toutes les filières' }
+    };
+    const mk = (id, title, icon, sub, topics, cy) => ({ id, title, icon, sub, topics, cy });
+    const colC = (lvl, s) => mk(`c|${lvl}|${s}`, SUBJ[s][0], SUBJ[s][1], LBL[lvl], ch(s, lvl, ''), 'col');
+    const lycC = (lvl, serie, s) => mk(`l|${lvl}|${serie}|${s}`, SUBJ[s][0], SUBJ[s][1], lvl === '2' ? '2nde' : `${LBL[lvl]} · Série ${serie}`, ch(s, lvl, serie), 'lyc');
+    const filById = id => FIL.find(f => f[0] === id);
+    function uniC(fid, y, i) {
+      const f = filById(fid), ue = f[3][y - 1].split('|')[i], [t, tp] = ue.split(': ');
+      return mk(`u|${fid}|${y}|${i}`, t, f[2], `${f[1]} · Licence ${y}`, tp.split(', '), 'uni');
+    }
+    const colList = lvl => COL[lvl].map(s => colC(lvl, s));
+    const lycList = (lvl, serie) => lvl === '2' ? L2.map(s => lycC('2', '', s)) : SER[serie][1].filter(s => !(s === 'philo' && lvl !== 'T')).map(s => lycC(lvl, serie, s));
+    const uniList = (fid, y) => filById(fid)[3][y - 1].split('|').map((_, i) => uniC(fid, y, i));
+
+    function byId(id) {
+      const p = id.split('|');
+      if (p[0] === 'c') return colC(p[1], p[2]);
+      if (p[0] === 'l') return lycC(p[1], p[2], p[3]);
+      if (p[0] === 'u') return uniC(p[1], +p[2], +p[3]);
+    }
+    let ALL = null;
+    function allCourses() {
+      if (ALL) return ALL;
+      ALL = [];
+      Object.keys(COL).forEach(l => ALL.push(...colList(l)));
+      ALL.push(...lycList('2'));
+      ['1', 'T'].forEach(l => Object.keys(SER).forEach(s => ALL.push(...lycList(l, s))));
+      FIL.forEach(f => [1, 2, 3].forEach(y => ALL.push(...uniList(f[0], y))));
+      return ALL;
     }
 
-    // Basic email validation
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(email)) {
-      alert("Veuillez saisir une adresse email valide.");
-      return;
+    /* =========================================================
+       ÉTAT, PERSISTANCE
+       ========================================================= */
+    const S = { cy: null, lvl: null, serie: null, fil: null, year: null, q: '' };
+    let enrolled = load('cel-enrolled', {});
+    let prog = load('cel-prog', {});
+    let profile = load('cel-profile', {});
+    const done = c => (prog[c.id] || []).length;
+    const pct = c => Math.round(done(c) / c.topics.length * 100);
+
+    /* =========================================================
+       VUES
+       ========================================================= */
+    const crumb = items => `<nav class="crumbs" aria-label="Fil d'Ariane">${items.map((it, i) =>
+      i === items.length - 1 ? `<b>${it[0]}</b>` : `<button data-go='${JSON.stringify(it[1])}'>${it[0]}</button><span>›</span>`).join('')}</nav>`;
+
+    const courseCard = c => {
+      const e = enrolled[c.id], p = pct(c);
+      return `<button class="course" style="--c:${CY[c.cy].c}" data-open="${c.id}">
+    <span class="ic"><i class="fa-solid ${c.icon}"></i></span>
+    <span><b>${c.title}</b><small>${c.sub}</small></span>
+    ${e || p ? `<span class="pg"><span class="bar-p"><i style="width:${p}%"></i></span>${e ? `<span class="tick"><i class="fa-solid fa-check"></i> Inscrit · ${p}%</span>` : ''}</span>` : ''}</button>`;
+    };
+    const grid = list => `<div class="grid">${list.map(courseCard).join('')}</div>`;
+    const pills = (items, cur, key, c) => `<div class="pills" style="--c:${c}">${items.map(([k, l]) => `<button class="pill ${cur === k ? 'on' : ''}" data-go='${JSON.stringify({ [key]: k, ...(key === 'lvl' ? { serie: null } : {}), ...(key === 'fil' ? { year: null } : {}) })}'>${l}</button>`).join('')}</div>`;
+
+    function hero() {
+      $('#heroZone').innerHTML = S.cy || S.q.trim().length >= 2 ? '' : `
+  <section class="hero"><div class="wrap">
+    <h1>Apprends à ton rythme, de la <em>6ème</em> à la <em>Licence 3</em>.</h1>
+    <p>Choisis ta classe, ta série ou ta filière, ouvre un cours, coche les chapitres terminés et suis ta progression. Tout est gratuit et enregistré sur ton appareil.</p>
+    <div class="stats"><div><b>${allCourses().length}</b>cours</div><div><b>12</b>séries au lycée</div><div><b>${FIL.length}</b>filières universitaires</div></div>
+  </div></section>`;
     }
 
-    alert(`Merci ${fullname} pour votre inscription au cours : "${course}". Nous vous contacterons bientôt par email.`);
-    form.reset();
-  });
-</script>
+    function viewHome() {
+      return `<div class="cycles" style="margin-top:-76px">${Object.entries(CY).map(([k, c]) => `
+    <button class="cy" style="--c:${c.c}" data-go='{"cy":"${k}","lvl":null,"serie":null,"fil":null,"year":null}'>
+      <span class="ic"><i class="fa-solid ${c.i}"></i></span><h2>${c.n}</h2><p>${c.d}</p>
+      <span class="go">Choisir <i class="fa-solid fa-arrow-right"></i></span></button>`).join('')}</div>
+    <div class="how">
+      <div><i class="fa-solid fa-hand-pointer"></i><h3>1. Choisis ton niveau</h3><p>Classe, série ou filière : on te montre uniquement les cours qui te concernent.</p></div>
+      <div><i class="fa-solid fa-list-check"></i><h3>2. Suis les chapitres</h3><p>Chaque cours affiche son programme. Coche les chapitres au fur et à mesure.</p></div>
+      <div><i class="fa-solid fa-bookmark"></i><h3>3. Inscris-toi</h3><p>Retrouve tous tes cours et ta progression dans « Mes cours ».</p></div>
+    </div>`;
+    }
 
+    function viewCol() {
+      const c = CY.col.c;
+      let h = crumb([['Accueil', { cy: null }], S.lvl ? [CY.col.n, { lvl: null }] : [CY.col.n], ...(S.lvl ? [[LBL[S.lvl]]] : [])]);
+      h += `<div class="vh"><h2>Collège</h2><p>Choisis ta classe pour voir tes cours.</p></div>`;
+      h += pills([['6', '6ème'], ['5', '5ème'], ['4', '4ème'], ['3', '3ème']], S.lvl, 'lvl', c);
+      if (S.lvl) h += `<h3 class="step">Cours de ${LBL[S.lvl]}${S.lvl === '3' ? ' (préparation au BEPC)' : ''}</h3>` + grid(colList(S.lvl));
+      return h;
+    }
+
+    function viewLyc() {
+      const c = CY.lyc.c;
+      let h = crumb([['Accueil', { cy: null }], S.lvl ? [CY.lyc.n, { lvl: null, serie: null }] : [CY.lyc.n], ...(S.lvl ? [[LBL[S.lvl]]] : [])]);
+      h += `<div class="vh"><h2>Lycée</h2><p>Choisis ta classe, puis ta série à partir de la 1ère.</p></div>`;
+      h += pills([['2', '2nde'], ['1', '1ère'], ['T', 'Terminale']], S.lvl, 'lvl', c);
+      if (S.lvl === '2') h += `<h3 class="step">Cours de 2nde (tronc commun)</h3>` + grid(lycList('2'));
+      if (S.lvl === '1' || S.lvl === 'T') {
+        h += `<h3 class="step">Choisis ta série</h3>` + SER_GROUPS.map(([g, ids]) => `<div class="grp"><small>${g}</small><div class="chips" style="--c:${c}">${ids.map(id =>
+          `<button class="chip ${S.serie === id ? 'on' : ''}" data-go='{"serie":"${id}"}'>${SER[id][0]}</button>`).join('')}</div></div>`).join('');
+        if (S.serie) h += `<h3 class="step">${LBL[S.lvl]}, série ${SER[S.serie][0]}${S.lvl === '1' ? ' (préparation au Probatoire)' : ' (préparation au Baccalauréat)'}</h3>` + grid(lycList(S.lvl, S.serie));
+      }
+      return h;
+    }
+
+    function viewUni() {
+      const c = CY.uni.c;
+      const f = S.fil && filById(S.fil);
+      let h = crumb([['Accueil', { cy: null }], f ? [CY.uni.n, { fil: null, year: null }] : [CY.uni.n], ...(f ? [[f[1]]] : [])]);
+      h += `<div class="vh"><h2>Université</h2><p>${f ? f[1] : 'Choisis ta filière, puis ton année de Licence.'}</p></div>`;
+      if (!f) return h + `<div class="grid" style="--c:${c}">${FIL.map(x => `<button class="fil" style="--c:${c}" data-go='{"fil":"${x[0]}","year":1}'><span class="ic"><i class="fa-solid ${x[2]}"></i></span><b>${x[1]}</b></button>`).join('')}</div>`;
+      h += pills([[1, 'Licence 1'], [2, 'Licence 2'], [3, 'Licence 3']], S.year, 'year', c);
+      if (S.year) h += `<h3 class="step">Unités d'enseignement, Licence ${S.year}</h3>` + grid(uniList(S.fil, S.year));
+      return h;
+    }
+
+    function viewSearch() {
+      const t = norm(S.q.trim()).split(/\s+/);
+      const names = { col: 'collège', lyc: 'lycée', uni: 'université licence' };
+      const res = allCourses().filter(c => { const hay = norm(`${c.title} ${c.sub} ${names[c.cy]} ${c.topics.join(' ')}`); return t.every(w => hay.includes(w)); });
+      const shown = res.slice(0, 60);
+      return `<div class="vh"><h2>Résultats pour « ${S.q.trim().replace(/[<>&]/g, '')} »</h2></div>
+    <p class="count">${res.length} cours trouvé${res.length > 1 ? 's' : ''}${res.length > 60 ? ' (60 premiers affichés, précise ta recherche)' : ''}</p>` +
+        (shown.length ? grid(shown) : `<div class="empty"><i class="fa-regular fa-face-frown" style="font-size:2rem"></i><p>Aucun cours trouvé. Essaie « maths 3ème », « droit L1 » ou « réseaux ».</p></div>`);
+    }
+
+    function render() {
+      hero();
+      const searching = S.q.trim().length >= 2;
+      $('#view').innerHTML = searching ? viewSearch() : !S.cy ? viewHome() : S.cy === 'col' ? viewCol() : S.cy === 'lyc' ? viewLyc() : viewUni();
+      $('#mineN').textContent = Object.keys(enrolled).length;
+    }
+    function go(p) { Object.assign(S, p); if (p.cy === null) { S.lvl = S.serie = S.fil = S.year = null; } $('#q').value = S.q = ''; render(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+    /* =========================================================
+       PANNEAU DE COURS
+       ========================================================= */
+    const panel = $('#panel'), veil = $('#veil');
+    function showPanel(open) {
+      panel.classList.toggle('on', open); veil.classList.toggle('on', open);
+      panel.setAttribute('aria-hidden', !open); document.body.style.overflow = open ? 'hidden' : '';
+    }
+    function openCourse(id) {
+      const c = byId(id); if (!c) return;
+      const d = prog[id] || [], e = enrolled[id], p = pct(c);
+      panel.dataset.cur = id;
+      panel.style.setProperty('--c', CY[c.cy].c);
+      panel.innerHTML = `<div class="ph"><button class="close" data-close aria-label="Fermer"><i class="fa-solid fa-xmark"></i></button><small>${c.sub}</small><h2>${c.title}</h2></div>
+    <div class="pb">
+      <div class="pgl"><span>${d.length} chapitre${d.length > 1 ? 's' : ''} sur ${c.topics.length}</span><span>${p}%</span></div>
+      <div class="bar-p"><i style="width:${p}%"></i></div>
+      <ul class="chl">${c.topics.map((t, i) => `<li><label><input type="checkbox" data-ch="${i}" ${d.includes(i) ? 'checked' : ''}><span>${t}</span></label></li>`).join('')}</ul>
+    </div>
+    <div class="pf">${e ? `<button class="btn done" disabled><i class="fa-solid fa-circle-check"></i> Tu es inscrit à ce cours</button>` : `<button class="btn" data-enroll="${id}"><i class="fa-solid fa-user-plus"></i> S'inscrire à ce cours</button>`}</div>`;
+      showPanel(true);
+    }
+    function openMine() {
+      const ids = Object.keys(enrolled);
+      panel.dataset.cur = ''; panel.style.setProperty('--c', '#123B33');
+      panel.innerHTML = `<div class="ph"><button class="close" data-close aria-label="Fermer"><i class="fa-solid fa-xmark"></i></button><small>${ids.length} inscription${ids.length > 1 ? 's' : ''}</small><h2>Mes cours</h2></div>
+    <div class="pb">${ids.length ? ids.map(id => { const c = byId(id); return `<div class="mi"><div><b>${c.title}</b><br><small>${c.sub}</small></div><button data-open="${id}">Ouvrir</button><div class="bar-p"><i style="width:${pct(c)}%"></i></div></div>`; }).join('')
+          : `<div class="empty"><i class="fa-regular fa-bookmark" style="font-size:2rem"></i><p>Tu n'es inscrit à aucun cours pour le moment.</p></div>`}</div>`;
+      showPanel(true);
+    }
+    function toast(m) { const t = $('#toast'); t.textContent = m; t.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('on'), 2400); }
+
+    /* Inscription */
+    const dlg = $('#dlg');
+    function openEnroll(id) {
+      const c = byId(id);
+      dlg.innerHTML = `<div class="dg"><h2>Inscription</h2><p class="sub">Renseigne tes informations pour t'inscrire.</p>
+    <div class="target"><i class="fa-solid ${c.icon}"></i> ${c.title} · ${c.sub}</div>
+    <form id="enForm" novalidate>
+      <div class="fld"><label for="en">Nom complet</label><input id="en" autocomplete="name" value="${profile.name || ''}"></div>
+      <div class="fld"><label for="ee">Adresse email</label><input id="ee" type="email" autocomplete="email" value="${profile.email || ''}"></div>
+      <p class="msg" id="em" role="alert"></p>
+      <button class="btn" type="submit">Confirmer mon inscription</button>
+      <button class="btn ghost" type="button" id="ec" style="width:100%;margin-top:10px">Annuler</button>
+    </form></div>`;
+      dlg.showModal();
+      $('#ec').onclick = () => dlg.close();
+      $('#enForm').onsubmit = ev => {
+        ev.preventDefault();
+        const n = $('#en').value.trim(), m = $('#ee').value.trim();
+        if (n.length < 3) return $('#em').textContent = 'Entre ton nom complet.';
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(m)) return $('#em').textContent = 'Entre une adresse email valide.';
+        profile = { name: n, email: m }; save('cel-profile', profile);
+        enrolled[id] = { at: Date.now() }; save('cel-enrolled', enrolled);
+        dlg.innerHTML = `<div class="dg ok-box"><i class="fa-solid fa-circle-check"></i><h2>Bienvenue ${n.split(' ')[0]} !</h2><p class="sub">Tu es inscrit à « ${c.title} » (${c.sub}).<br>Retrouve-le dans « Mes cours ».</p><button class="btn" id="eo">Commencer le cours</button></div>`;
+        $('#eo').onclick = () => { dlg.close(); openCourse(id); };
+        render();
+      };
+    }
+    dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+
+    /* =========================================================
+       ÉVÉNEMENTS
+       ========================================================= */
+    document.addEventListener('click', e => {
+      const g = e.target.closest('[data-go]'); if (g) { go(JSON.parse(g.dataset.go)); return; }
+      const o = e.target.closest('[data-open]'); if (o) { openCourse(o.dataset.open); return; }
+      const en = e.target.closest('[data-enroll]'); if (en) { openEnroll(en.dataset.enroll); return; }
+      if (e.target.closest('[data-close]') || e.target === veil) showPanel(false);
+    });
+    panel.addEventListener('change', e => {
+      const cb = e.target.closest('[data-ch]'); if (!cb) return;
+      const id = panel.dataset.cur, set = new Set(prog[id] || []), i = +cb.dataset.ch;
+      cb.checked ? set.add(i) : set.delete(i);
+      prog[id] = [...set]; save('cel-prog', prog);
+      const c = byId(id), p = pct(c);
+      panel.querySelector('.pgl').innerHTML = `<span>${set.size} chapitre${set.size > 1 ? 's' : ''} sur ${c.topics.length}</span><span>${p}%</span>`;
+      panel.querySelector('.pb .bar-p i').style.width = p + '%';
+      if (p === 100) toast('Bravo, cours terminé !');
+      render();
+    });
+    $('#q').addEventListener('input', e => { S.q = e.target.value; render(); });
+    $('#logo').onclick = () => go({ cy: null });
+    $('#mineBtn').onclick = openMine;
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') showPanel(false); });
+
+    $('#yr').textContent = new Date().getFullYear();
+    render();
+  </script>
 </body>
-</html>
 
+</html>
